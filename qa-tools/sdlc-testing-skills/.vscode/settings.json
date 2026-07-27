@@ -1,0 +1,25 @@
+{
+  "robot.outputDir": "testing-output/reports",
+  "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
+  "robot.run.defaultProfile": "staging",
+  "robot.run.openOutputAfterRun": false,
+
+  "robotcode.run.outputDir": "testing-output/reports",
+  "robotcode.debug.outputDir": "testing-output/reports",
+
+  "terminal.integrated.env.windows": {
+    "ROBOT_OPTIONS": "--outputdir testing-output/reports"
+  },
+  "terminal.integrated.env.linux": {
+    "ROBOT_OPTIONS": "--outputdir testing-output/reports"
+  },
+  "terminal.integrated.env.osx": {
+    "ROBOT_OPTIONS": "--outputdir testing-output/reports"
+  },
+
+  "files.exclude": {
+    "**/output.xml": false,
+    "**/log.html": false,
+    "**/report.html": false
+  }
+}
