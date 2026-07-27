@@ -11,21 +11,21 @@ class LanguageInitial extends LanguageState {
 }
 
 class LanguageUpdated extends LanguageState {
-  final String lang;
-  const LanguageUpdated({required this.lang});
+  final Locale locale;
+  LanguageUpdated({required this.locale});
   @override
-  List<Object?> get props => [lang];
+  List<Object?> get props => [locale];
 }
 
 class PerEntityLanguageUpdated extends LanguageState {
   final String entityId;
-  final String lang;
-  final String globalLang;
+  final Locale locale;
+  final Locale globalLocale;
   const PerEntityLanguageUpdated({
     required this.entityId,
-    required this.lang,
-    required this.globalLang,
+    required this.locale,
+    required this.globalLocale,
   });
   @override
-  List<Object?> get props => [entityId, lang, globalLang];
+  List<Object?> get props => [entityId, locale, globalLocale];
 }

@@ -1,39 +1,13 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
+import '../../utils/font_manager.dart';
+import '../../utils/size_manager.dart';
 
 class AppTextStyles {
-  static const heading = TextStyle(
-    fontFamily: 'Nunito',
-    fontSize: 32,
-    fontWeight: FontWeight.bold,
-    color: AppColors.darkText,
-  );
-
-  static const title = TextStyle(
-    fontFamily: 'Nunito',
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-    color: AppColors.darkText,
-  );
-
-  static const body = TextStyle(
-    fontFamily: 'Nunito',
-    fontSize: 16,
-    fontWeight: FontWeight.normal,
-    color: AppColors.darkText,
-  );
-
-  static const button = TextStyle(
-    fontFamily: 'Nunito',
-    fontSize: 18,
-    fontWeight: FontWeight.w600,
-    color: AppColors.white,
-  );
-
-  static const signpost = TextStyle(
-    fontFamily: 'Nunito',
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    color: AppColors.white,
-  );
+  static TextStyle get heading => FontManager.instance.heading;
+  static TextStyle get title => FontManager.instance.title;
+  static TextStyle get body => FontManager.instance.body;
+  static TextStyle get button => FontManager.instance.button;
+  static TextStyle get signpost => FontManager.instance.signpost;
+  static TextStyle get small => FontManager.instance.small;
+  static TextStyle get caption => FontManager.instance.caption;
 }

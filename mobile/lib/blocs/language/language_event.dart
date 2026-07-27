@@ -7,16 +7,16 @@ sealed class LanguageEvent extends Equatable {
 }
 
 class ChangeLanguage extends LanguageEvent {
-  final String lang;
-  const ChangeLanguage(this.lang);
+  final Locale locale;
+  const ChangeLanguage(this.locale);
   @override
-  List<Object?> get props => [lang];
+  List<Object?> get props => [locale];
 }
 
 class TogglePerEntity extends LanguageEvent {
   final String entityId;
-  final String lang;
-  const TogglePerEntity({required this.entityId, required this.lang});
+  final Locale locale;
+  const TogglePerEntity({required this.entityId, required this.locale});
   @override
-  List<Object?> get props => [entityId, lang];
+  List<Object?> get props => [entityId, locale];
 }

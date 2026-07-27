@@ -74,8 +74,8 @@ class _AirplaneAnimationState extends State<AirplaneAnimation>
                   boxShadow: _glowOpacity.value > 0
                       ? [
                           BoxShadow(
-                            color: AppColors.sunnyYellow
-                                .withOpacity(_glowOpacity.value),
+                             color: AppColors.sunnyYellow
+                                 .withValues(alpha: _glowOpacity.value),
                             blurRadius: 50,
                             spreadRadius: 20,
                           ),

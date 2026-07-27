@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import '../../utils/size_manager.dart';
 
 class SignpostWidget extends StatelessWidget {
   final String title;
@@ -22,7 +23,7 @@ class SignpostWidget extends StatelessWidget {
         height: 80,
         decoration: BoxDecoration(
           color: AppColors.earthBrown,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusSmall),
           border: Border.all(color: AppColors.earthBrown, width: 4),
           boxShadow: [
             BoxShadow(

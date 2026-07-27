@@ -72,7 +72,7 @@ class EntityListScreen extends StatelessWidget {
                                 ? AirplaneAnimation(
                                     child: DetailPanel(entity: selectedEntity),
                                   )
-                                : const Center(
+                                : Center(
                                     child: Text(
                                       'Chọn một thực thể để xem chi tiết',
                                       style: AppTextStyles.body,

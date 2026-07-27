@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import '../../utils/size_manager.dart';
 
 class ProgressBarWidget extends StatelessWidget {
   final int learned;
@@ -18,12 +19,15 @@ class ProgressBarWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Tiến độ: $learned/$total từ', style: AppTextStyles.body),
-        const SizedBox(height: 8),
+        Text(
+          '$learned/$total',
+          style: AppTextStyles.small,
+        ),
+        SizedBox(height: SizeManager.instance.spacingSmall),
         LinearProgressIndicator(
           value: progress,
-          minHeight: 8,
-          borderRadius: BorderRadius.circular(4),
+          minHeight: SizeManager.instance.spacingSmall,
+          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusSmall),
           backgroundColor: Colors.white,
           valueColor: const AlwaysStoppedAnimation<Color>(AppColors.leafGreen),
         ),

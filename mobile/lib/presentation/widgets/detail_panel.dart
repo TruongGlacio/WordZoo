@@ -6,6 +6,7 @@ import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import '../../utils/size_manager.dart';
 
 class DetailPanel extends StatefulWidget {
   final Entity entity;
@@ -32,16 +33,16 @@ class _DetailPanelState extends State<DetailPanel> {
         !(context.watch<IapBloc>().state is PremiumActive);
 
     return Padding(
-      padding: const EdgeInsets.all(24),
+      padding: SizeManager.instance.paddingLarge,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Real image
           Container(
-            width: 200,
-            height: 200,
+            width: SizeManager.instance.imageXLarge,
+            height: SizeManager.instance.imageXLarge,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusLarge),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.softShadow,

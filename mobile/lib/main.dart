@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
@@ -17,6 +18,7 @@ import 'package:wordzoo/blocs/entity/entity_bloc.dart';
 import 'package:wordzoo/blocs/progress/progress_bloc.dart';
 import 'package:wordzoo/blocs/iap/iap_bloc.dart';
 import 'package:wordzoo/blocs/language/language_bloc.dart';
+import 'package:wordzoo/l10n/app_localizations.dart';
 import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
@@ -36,7 +38,7 @@ Future<void> main() async {
 
   await Supabase.initialize(
     url: dotenv.get('SUPABASE_URL'),
-    anonKey: dotenv.get('SUPABASE_ANON_KEY'),
+    publishableKey: dotenv.get('SUPABASE_ANON_KEY'),
   );
 
   AppLogger.i('Supabase initialized');
@@ -95,6 +97,17 @@ class WordZooApp extends StatelessWidget {
       child: MaterialApp(
         title: 'WordZoo',
         theme: AppTheme.lightTheme,
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('vi'),
+          Locale('en'),
+          Locale('zh'),
+        ],
         home: const AuthGate(),
       ),
     );

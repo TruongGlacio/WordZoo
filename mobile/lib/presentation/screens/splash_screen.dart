@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import 'package:wordzoo/l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -23,8 +24,8 @@ class SplashScreen extends StatelessWidget {
                 color: AppColors.leafGreen,
               ),
               const SizedBox(height: 24),
-              const Text(
-                'WordZoo',
+              Text(
+                AppLocalizations.of(context)!.appName,
                 style: AppTextStyles.heading,
               ),
               const SizedBox(height: 48),

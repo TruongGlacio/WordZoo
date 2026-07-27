@@ -4,6 +4,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import '../../utils/size_manager.dart';
+import 'package:wordzoo/l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -29,7 +31,10 @@ class HomeScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('WordZoo', style: AppTextStyles.title),
+                    Text(
+                      AppLocalizations.of(context)!.appName,
+                      style: AppTextStyles.title,
+                    ),
                     IconButton(
                       onPressed: () {
                         context.read<AuthBloc>().add(const LogoutRequested());
@@ -41,7 +46,10 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 24),
                 Text('Xin chào, $userName!', style: AppTextStyles.body),
                 const SizedBox(height: 8),
-                const Text('Hôm nay học gì nào? 😊', style: AppTextStyles.title),
+                Text(
+                  AppLocalizations.of(context)!.todayIsNewDay,
+                  style: AppTextStyles.title,
+                ),
                 const SizedBox(height: 32),
                 Expanded(
                   child: GridView.count(
@@ -51,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                     children: [
                       _CategoryCard(
                         icon: Icons.pets,
-                        title: 'Động vật',
+                        title: AppLocalizations.of(context)!.animals,
                         color: AppColors.leafGreen,
                         onTap: () {
                           // Navigate to Animal World
@@ -59,7 +67,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       _CategoryCard(
                         icon: Icons.eco,
-                        title: 'Thực vật',
+                        title: AppLocalizations.of(context)!.plants,
                         color: AppColors.grassGreen,
                         onTap: () {
                           // Navigate to Plant World
@@ -67,7 +75,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       _CategoryCard(
                         icon: Icons.directions_car,
-                        title: 'Xe cộ',
+                        title: AppLocalizations.of(context)!.vehicles,
                         color: AppColors.oceanBlue,
                         onTap: () {
                           // Navigate to Vehicle World
@@ -75,7 +83,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       _CategoryCard(
                         icon: Icons.people,
-                        title: 'Quan hệ xã hội',
+                        title: AppLocalizations.of(context)!.humanRelations,
                         color: AppColors.earthBrown,
                         onTap: () {
                           // Navigate to Human Relations
@@ -119,7 +127,7 @@ class _CategoryCard extends StatelessWidget {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [color, color.withOpacity(0.7)],
+              colors: [color, color.withValues(alpha: 0.7)],
             ),
             borderRadius: BorderRadius.circular(16),
           ),
@@ -129,7 +137,14 @@ class _CategoryCard extends StatelessWidget {
               children: [
                 Icon(icon, size: 64, color: Colors.white),
                 const SizedBox(height: 16),
-                Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white)),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: SizeManager.instance.titleFontSize,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
           ),

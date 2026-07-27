@@ -1,6 +1,34 @@
 import 'package:flutter/material.dart';
-import 'app_colors.dart';
-import 'app_text_styles.dart';
+import 'package:responsive_framework/responsive_framework.dart';
+import '../../utils/font_manager.dart';
+import '../../utils/size_manager.dart';
+
+class AppColors {
+  static const skyBlue = Color(0xFF87CEEB);
+  static const leafGreen = Color(0xFF4CAF50);
+  static const sunnyYellow = Color(0xFFFFEB3B);
+  static const earthBrown = Color(0xFF795548);
+  static const oceanBlue = Color(0xFF2196F3);
+  static const coralRed = Color(0xFFF44336);
+  static const white = Color(0xFFFFFFFF);
+  static const darkText = Color(0xFF333333);
+  static const softShadow = Color(0xFFE0E0E0);
+  static const gradientSkyGrass = LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [skyBlue, leafGreen],
+  );
+}
+
+class AppTextStyles {
+  static TextStyle get heading => FontManager.instance.heading;
+  static TextStyle get title => FontManager.instance.title;
+  static TextStyle get body => FontManager.instance.body;
+  static TextStyle get button => FontManager.instance.button;
+  static TextStyle get signpost => FontManager.instance.signpost;
+  static TextStyle get small => FontManager.instance.small;
+  static TextStyle get caption => FontManager.instance.caption;
+}
 
 class AppTheme {
   static ThemeData get lightTheme {
@@ -13,17 +41,17 @@ class AppTheme {
       fontFamily: 'Nunito',
       scaffoldBackgroundColor: AppColors.skyBlue,
       cardColor: AppColors.white,
-      textTheme: const TextTheme(
-        displayLarge: AppTextStyles.heading,
-        headlineMedium: AppTextStyles.title,
-        bodyLarge: AppTextStyles.body,
-        labelLarge: AppTextStyles.button,
+      textTheme: TextTheme(
+        displayLarge: FontManager.instance.heading,
+        headlineMedium: FontManager.instance.title,
+        bodyLarge: FontManager.instance.body,
+        labelLarge: FontManager.instance.button,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.white,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusMedium),
           borderSide: const BorderSide(color: AppColors.earthBrown),
         ),
       ),
@@ -31,9 +59,9 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.leafGreen,
           foregroundColor: AppColors.white,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          padding: SizeManager.instance.paddingHorizontalLarge,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusMedium),
           ),
         ),
       ),
