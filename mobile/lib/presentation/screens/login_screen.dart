@@ -17,70 +17,114 @@ class LoginScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: AppColors.gradientSkyGrass,
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(24),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 400),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(Icons.pets, size: 80, color: AppColors.leafGreen),
-                  const SizedBox(height: 24),
-                  const Text('WordZoo', style: AppTextStyles.heading),
-                  const SizedBox(height: 48),
-                  TextField(
-                    controller: emailController,
-                    decoration: const InputDecoration(
-                      labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
-                    ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            const Padding(
+              padding: EdgeInsets.all(50.0),
+              child: Center(
+                child: SizedBox(
+                  width: 150,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.pets, size: 80, color: AppColors.leafGreen),
+                      SizedBox(height: 24),
+                      Text('WordZoo', style: AppTextStyles.heading),
+                      SizedBox(height: 48),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: passwordController,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'Mật khẩu',
-                      prefixIcon: Icon(Icons.lock),
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(
-                            LoginRequested(
-                              emailController.text,
-                              passwordController.text,
-                            ),
-                          );
-                    },
-                    child: const Text('Đăng nhập'),
-                  ),
-                  const SizedBox(height: 12),
-                  TextButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(
-                            RegisterRequested(
-                              emailController.text,
-                              passwordController.text,
-                              emailController.text.split('@')[0],
-                            ),
-                          );
-                    },
-                    child: const Text('Đăng ký'),
-                  ),
-                  const SizedBox(height: 12),
-                  OutlinedButton(
-                    onPressed: () {
-                      context.read<AuthBloc>().add(const GuestModeRequested());
-                    },
-                    child: const Text('Khách (Guest)'),
-                  ),
-                ],
+                ),
               ),
             ),
-          ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 450),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(
+                            controller: emailController,
+                            decoration: const InputDecoration(
+                              labelText: 'Email',
+                              prefixIcon: Icon(Icons.email),
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          TextField(
+                            controller: passwordController,
+                            obscureText: true,
+                            decoration: const InputDecoration(
+                              labelText: 'Mật khẩu',
+                              prefixIcon: Icon(Icons.lock),
+                            ),
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  context.read<AuthBloc>().add(
+                                        LoginRequested(
+                                          emailController.text,
+                                          passwordController.text,
+                                        ),
+                                      );
+                                },
+                                style: const ButtonStyle(
+                                    fixedSize: WidgetStatePropertyAll(Size(150, 50))
+                                ),
+                                child: const Text('Đăng nhập'),
+                              ),
+                              const SizedBox(width: 12),
+                              ElevatedButton(
+                                onPressed: () {
+                                  context.read<AuthBloc>().add(
+                                    RegisterRequested(
+                                      emailController.text,
+                                      passwordController.text,
+                                      emailController.text.split('@')[0],
+                                    ),
+                                  );
+                                },
+                                style: const ButtonStyle(
+                                  backgroundColor: WidgetStatePropertyAll(AppColors.white),
+                                  fixedSize: WidgetStatePropertyAll(Size(150, 50))
+                                ),
+                                child: const Text('Đăng ký', style: TextStyle(color: AppColors.darkText),),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 12),
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<AuthBloc>().add(const GuestModeRequested());
+                            },
+                            style: const ButtonStyle(
+                                backgroundColor: WidgetStatePropertyAll(AppColors.sunnyYellow),
+                                fixedSize: WidgetStatePropertyAll(Size(180, 50))
+                            ),
+                            child: const Text('Khách (Guest)',style: TextStyle(color: AppColors.coralRed)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
