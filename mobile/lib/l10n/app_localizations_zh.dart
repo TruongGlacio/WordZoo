@@ -780,5 +780,23 @@ class AppLocalizationsZh extends AppLocalizations {
   String get company => 'WordZoo Inc.';
 
   @override
-  String get tagline => '学习英语，一起玩耍';
+  String get tagline => '学英语，一起玩';
+
+  @override
+  String get selectEntityToViewDetails => '选择一个实体查看详情';
+
+  @override
+  String errorWithMessage(Object message) {
+    return '错误：$message';
+  }
+
+  @override
+  String englishLabel(Object text) {
+    return '英文：$text';
+  }
+
+  @override
+  String chineseLabel(Object text) {
+    return '中文：$text';
+  }
 }

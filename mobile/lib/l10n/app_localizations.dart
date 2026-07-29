@@ -1620,6 +1620,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Learn English, Play Together'**
   String get tagline;
+
+  /// No description provided for @selectEntityToViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an entity to view details'**
+  String get selectEntityToViewDetails;
+
+  /// No description provided for @errorWithMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Error: {message}'**
+  String errorWithMessage(Object message);
+
+  /// No description provided for @englishLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'EN: {text}'**
+  String englishLabel(Object text);
+
+  /// No description provided for @chineseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'ZH: {text}'**
+  String chineseLabel(Object text);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
@@ -23,11 +24,11 @@ class ProgressBarWidget extends StatelessWidget {
           '$learned/$total',
           style: AppTextStyles.small,
         ),
-        SizedBox(height: SizeManager.instance.spacingSmall),
+        Gap(SizeManager().spacingSmall),
         LinearProgressIndicator(
           value: progress,
-          minHeight: SizeManager.instance.spacingSmall,
-          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusSmall),
+          minHeight: SizeManager().spacingSmall,
+          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall),
           backgroundColor: Colors.white,
           valueColor: const AlwaysStoppedAnimation<Color>(AppColors.leafGreen),
         ),

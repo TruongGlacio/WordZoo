@@ -12,6 +12,7 @@ Subcategory _$SubcategoryFromJson(Map<String, dynamic> json) =>
       final val = Subcategory(
         id: $checkedConvert('id', (v) => v as String),
         order: $checkedConvert('order', (v) => (v as num).toInt()),
+        icon: $checkedConvert('icon', (v) => (v as String)),
         names: $checkedConvert(
           'names',
           (v) => LocalizedNames.fromJson(v as Map<String, dynamic>),
@@ -30,6 +31,7 @@ Map<String, dynamic> _$SubcategoryToJson(Subcategory instance) =>
     <String, dynamic>{
       'id': instance.id,
       'order': instance.order,
+      'icon':instance.icon,
       'names': instance.names.toJson(),
       'entities': instance.entities.map((e) => e.toJson()).toList(),
     };

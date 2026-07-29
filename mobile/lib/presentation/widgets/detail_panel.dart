@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:gap/gap.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
+import 'package:wordzoo/l10n/app_localizations.dart';
 
 class DetailPanel extends StatefulWidget {
   final Entity entity;
@@ -33,16 +35,16 @@ class _DetailPanelState extends State<DetailPanel> {
         !(context.watch<IapBloc>().state is PremiumActive);
 
     return Padding(
-      padding: SizeManager.instance.paddingLarge,
+      padding: SizeManager().paddingLarge,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Real image
           Container(
-            width: SizeManager.instance.imageXLarge,
-            height: SizeManager.instance.imageXLarge,
+            width: SizeManager().imageXLarge,
+            height: SizeManager().imageXLarge,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusLarge),
+              borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
               boxShadow: [
                 BoxShadow(
                   color: AppColors.softShadow,
@@ -65,16 +67,16 @@ class _DetailPanelState extends State<DetailPanel> {
               ),
             ),
           ),
-          const SizedBox(height: 24),
+          Gap(SizeManager().spacing24),
           // Names
           Text(
             widget.entity.names.getBy(_currentLang),
             style: AppTextStyles.heading,
           ),
-          const SizedBox(height: 8),
-          Text('EN: ${widget.entity.names.en}', style: AppTextStyles.body),
-          Text('ZH: ${widget.entity.names.zh}', style: AppTextStyles.body),
-          const SizedBox(height: 16),
+          Gap(SizeManager().spacing8),
+          Text(AppLocalizations.of(context)!.englishLabel(widget.entity.names.en), style: AppTextStyles.body),
+          Text(AppLocalizations.of(context)!.chineseLabel(widget.entity.names.zh), style: AppTextStyles.body),
+          Gap(SizeManager().spacing16),
           // Language toggles
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -84,13 +86,13 @@ class _DetailPanelState extends State<DetailPanel> {
                 isSelected: _currentLang == 'vi',
                 onTap: () => setState(() => _currentLang = 'vi'),
               ),
-              const SizedBox(width: 12),
+              Gap(SizeManager().spacing12),
               _LangButton(
                 label: 'EN',
                 isSelected: _currentLang == 'en',
                 onTap: () => setState(() => _currentLang = 'en'),
               ),
-              const SizedBox(width: 12),
+              Gap(SizeManager().spacing12),
               _LangButton(
                 label: 'ZH',
                 isSelected: _currentLang == 'zh',
@@ -98,7 +100,7 @@ class _DetailPanelState extends State<DetailPanel> {
               ),
             ],
           ),
-          const SizedBox(height: 16),
+          Gap(SizeManager().spacing16),
           // Audio buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +125,7 @@ class _DetailPanelState extends State<DetailPanel> {
                 ),
             ],
           ),
-          const SizedBox(height: 16),
+          Gap(SizeManager().spacing16),
           // Action buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -133,9 +135,9 @@ class _DetailPanelState extends State<DetailPanel> {
                   context.read<EntityBloc>().add(MarkAsLearned(widget.entity.id));
                 },
                 icon: const Icon(Icons.check_circle),
-                label: const Text('Đã học'),
+                label: Text(AppLocalizations.of(context)!.learned),
               ),
-              const SizedBox(width: 16),
+              Gap(SizeManager().spacing16),
               IconButton(
                 onPressed: () {
                   context.read<EntityBloc>().add(ToggleFavorite(widget.entity.id));
@@ -145,10 +147,10 @@ class _DetailPanelState extends State<DetailPanel> {
             ],
           ),
           if (isPremiumLocked) ...[
-            const SizedBox(height: 16),
-            const Text(
-              '🔒 Nâng cấp Premium để mở khóa',
-              style: TextStyle(color: AppColors.coralRed),
+            Gap(SizeManager().spacing16),
+            Text(
+              AppLocalizations.of(context)!.premiumLocked,
+              style: const TextStyle(color: AppColors.coralRed),
             ),
           ],
         ],

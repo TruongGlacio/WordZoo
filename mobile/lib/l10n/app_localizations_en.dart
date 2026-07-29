@@ -781,4 +781,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get tagline => 'Learn English, Play Together';
+
+  @override
+  String get selectEntityToViewDetails => 'Select an entity to view details';
+
+  @override
+  String errorWithMessage(Object message) {
+    return 'Error: $message';
+  }
+
+  @override
+  String englishLabel(Object text) {
+    return 'EN: $text';
+  }
+
+  @override
+  String chineseLabel(Object text) {
+    return 'ZH: $text';
+  }
 }

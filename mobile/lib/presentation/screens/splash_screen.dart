@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
+import '../../utils/size_manager.dart';
 import 'package:wordzoo/l10n/app_localizations.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,12 +24,12 @@ class SplashScreen extends StatelessWidget {
                 size: 120,
                 color: AppColors.leafGreen,
               ),
-              const SizedBox(height: 24),
+              Gap(SizeManager().spacing24),
               Text(
                 AppLocalizations.of(context)!.appName,
                 style: AppTextStyles.heading,
               ),
-              const SizedBox(height: 48),
+              Gap(SizeManager().spacing48),
               const CircularProgressIndicator(
                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.leafGreen),
               ),

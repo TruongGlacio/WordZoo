@@ -781,4 +781,22 @@ class AppLocalizationsVi extends AppLocalizations {
 
   @override
   String get tagline => 'Học tiếng Anh, Chơi cùng nhau';
+
+  @override
+  String get selectEntityToViewDetails => 'Chọn một thực thể để xem chi tiết';
+
+  @override
+  String errorWithMessage(Object message) {
+    return 'Lỗi: $message';
+  }
+
+  @override
+  String englishLabel(Object text) {
+    return 'EN: $text';
+  }
+
+  @override
+  String chineseLabel(Object text) {
+    return 'ZH: $text';
+  }
 }

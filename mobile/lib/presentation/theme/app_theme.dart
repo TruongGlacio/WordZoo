@@ -51,7 +51,7 @@ class AppTheme {
         filled: true,
         fillColor: AppColors.white,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusMedium),
+          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
           borderSide: const BorderSide(color: AppColors.earthBrown),
         ),
       ),
@@ -59,9 +59,9 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.leafGreen,
           foregroundColor: AppColors.white,
-          padding: SizeManager.instance.paddingHorizontalLarge,
+          padding: SizeManager().paddingHorizontalLarge,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusMedium),
+            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
           ),
         ),
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gap/gap.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
+import '../../utils/size_manager.dart';
 
 class HorizontalEntityList extends StatelessWidget {
   final List<Entity> entities;
@@ -77,7 +79,7 @@ class HorizontalEntityList extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  Gap(SizeManager().spacing4),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     child: Text(
@@ -91,7 +93,7 @@ class HorizontalEntityList extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  Gap(SizeManager().spacing4),
                 ],
               ),
             ),

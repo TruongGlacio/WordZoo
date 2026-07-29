@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'entity.dart';
@@ -9,14 +11,18 @@ part 'subcategory.g.dart';
 class Subcategory extends Equatable {
   final String id;
   final int order;
+  final String icon;
+  Offset? position;
   final LocalizedNames names;
   final List<Entity> entities;
 
-  const Subcategory({
+  Subcategory({
     required this.id,
     required this.order,
+    required this.icon,
     required this.names,
     required this.entities,
+    this.position
   });
 
   factory Subcategory.fromJson(Map<String, dynamic> json) =>

@@ -249,5 +249,9 @@
   "madeWithLove": "Made with ❤️ for kids",
   "developer": "Developer",
   "company": "WordZoo Inc.",
-  "tagline": "Learn English, Play Together"
+  "tagline": "Learn English, Play Together",
+  "selectEntityToViewDetails": "Select an entity to view details",
+  "errorWithMessage": "Error: {message}",
+  "englishLabel": "EN: {text}",
+  "chineseLabel": "ZH: {text}"
 }

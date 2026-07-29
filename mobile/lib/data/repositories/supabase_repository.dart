@@ -30,6 +30,7 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
           .select()
           .eq('id', user.id)
           .single();
+      AppLogger.e('response',response);
 
       return UserProfile.fromJson(response);
     } catch (e, st) {
@@ -74,11 +75,23 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
   @override
   Future<void> signUp(String email, String password, String displayName) async {
     try {
-      await _client.auth.signUp(
+      final response = await _client.auth.signUp(
         email: email,
         password: password,
         data: {'display_name': displayName},
       );
+
+      final user = response.user;
+      if (user != null) {
+        await _client.from('user_profiles').insert({
+          'id': user.id,
+          'email': email,
+          'display_name': displayName,
+          'preferred_language': 'vi',
+          'is_guest': false,
+          'is_premium': false,
+        });
+      }
     } catch (e, st) {
       AppLogger.e('signUp failed', e, st);
       rethrow;

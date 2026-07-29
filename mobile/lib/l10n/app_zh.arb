@@ -249,5 +249,9 @@
   "madeWithLove": "为孩子们用心制作 ❤️",
   "developer": "开发者",
   "company": "WordZoo Inc.",
-  "tagline": "学习英语，一起玩耍"
+  "tagline": "学英语，一起玩",
+  "selectEntityToViewDetails": "选择一个实体查看详情",
+  "errorWithMessage": "错误：{message}",
+  "englishLabel": "英文：{text}",
+  "chineseLabel": "中文：{text}"
 }

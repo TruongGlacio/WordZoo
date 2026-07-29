@@ -11,6 +11,7 @@ class AppColors {
   static const white = Color(0xFFFFFFFF);
   static const darkText = Color(0xFF37474F);
   static const softShadow = Color(0x1A000000);
+  static const brown = Color(0xFF5A3221);
 
   static const gradientSkyGrass = LinearGradient(
     begin: Alignment.topCenter,

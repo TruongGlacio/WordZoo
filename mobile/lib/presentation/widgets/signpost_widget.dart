@@ -23,7 +23,7 @@ class SignpostWidget extends StatelessWidget {
         height: 80,
         decoration: BoxDecoration(
           color: AppColors.earthBrown,
-          borderRadius: BorderRadius.circular(SizeManager.instance.borderRadiusSmall),
+          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall),
           border: Border.all(color: AppColors.earthBrown, width: 4),
           boxShadow: [
             BoxShadow(

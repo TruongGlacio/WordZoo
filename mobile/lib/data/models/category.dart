@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'subcategory.dart';
@@ -34,4 +36,17 @@ class Category extends Equatable {
 
   @override
   List<Object?> get props => [id, type, names, subcategories];
+}
+
+class CategoryLayout {
+  final Subcategory category;
+  final Offset position;
+   double? rotation;
+   double? scale;
+   CategoryLayout({
+    required this.category,
+    required this.position,
+    this.rotation = 0,
+    this.scale=1
+  });
 }

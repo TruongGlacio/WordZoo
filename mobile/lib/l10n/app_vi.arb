@@ -249,5 +249,9 @@
   "madeWithLove": "Được tạo với ❤️ cho trẻ em",
   "developer": "Nhà phát triển",
   "company": "WordZoo Inc.",
-  "tagline": "Học tiếng Anh, Chơi cùng nhau"
+  "tagline": "Học tiếng Anh, Chơi cùng nhau",
+  "selectEntityToViewDetails": "Chọn một thực thể để xem chi tiết",
+  "errorWithMessage": "Lỗi: {message}",
+  "englishLabel": "EN: {text}",
+  "chineseLabel": "ZH: {text}"
 }

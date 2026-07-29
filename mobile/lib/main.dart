@@ -59,7 +59,7 @@ Future<void> main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthBloc>(
-            create: (_) => AuthBloc(authRepo: supabaseRepo)..add(AuthStatusChanged()),
+            create: (_) => AuthBloc(authRepo: supabaseRepo)..add(const AuthStatusChanged()),
           ),
           BlocProvider<CategoryBloc>(
             create: (_) => CategoryBloc(dataSyncRepo: dataSyncRepo)..add(LoadCategories()),
@@ -122,7 +122,7 @@ class AuthGate extends StatelessWidget {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is Authenticated) {
-          return const HomeScreen();
+          return HomeScreen();
         } else if (state is AuthLoading) {
           return const SplashScreen();
         } else {

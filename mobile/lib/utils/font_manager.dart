@@ -9,44 +9,44 @@ class FontManager {
   factory FontManager() => instance;
 
   TextStyle get heading => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.headingFontSize,
+        fontSize: SizeManager().headingFontSize,
         fontWeight: FontWeight.bold,
-        color: SizeManager.instance.headingColor,
+        color: SizeManager().headingColor,
       );
 
   TextStyle get title => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.titleFontSize,
+        fontSize: SizeManager().titleFontSize,
         fontWeight: FontWeight.bold,
-        color: SizeManager.instance.titleColor,
+        color: SizeManager().titleColor,
       );
 
   TextStyle get body => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.bodyFontSize,
+        fontSize: SizeManager().bodyFontSize,
         fontWeight: FontWeight.normal,
-        color: SizeManager.instance.bodyColor,
+        color: SizeManager().bodyColor,
       );
 
   TextStyle get button => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.buttonFontSize,
+        fontSize: SizeManager().buttonFontSize,
         fontWeight: FontWeight.w600,
-        color: SizeManager.instance.buttonColor,
+        color: SizeManager().buttonColor,
       );
 
   TextStyle get signpost => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.signpostFontSize,
+        fontSize: SizeManager().signpostFontSize,
         fontWeight: FontWeight.bold,
-        color: SizeManager.instance.signpostColor,
+        color: SizeManager().signpostColor,
       );
 
   TextStyle get small => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.smallFontSize,
+        fontSize: SizeManager().smallFontSize,
         fontWeight: FontWeight.normal,
-        color: SizeManager.instance.smallColor,
+        color: SizeManager().smallColor,
       );
 
   TextStyle get caption => GoogleFonts.nunito(
-        fontSize: SizeManager.instance.captionFontSize,
+        fontSize: SizeManager().captionFontSize,
         fontWeight: FontWeight.normal,
-        color: SizeManager.instance.captionColor,
+        color: SizeManager().captionColor,
       );
 }

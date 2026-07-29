@@ -14,7 +14,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   bloc: ^9.2.1
   equatable: ^2.1.0
-
+  gap: ^3.0.1
   # Supabase
   supabase_flutter: ^2.16.0
 
@@ -73,3 +73,22 @@ flutter:
 
   assets:
     - .env
+    - assets/background/
+    - assets/category_card/
+    - assets/sub_category_avata/
+    - assets/sub_category_avata/plants/
+    - assets/sub_category_avata/animals/
+    - assets/sub_category_avata/human_relations/
+    - assets/sub_category_avata/vehicles/
+flutter_assets_generator:
+  output_dir: generated/
+  output_filename: assets
+  class_name: Assets
+  auto_detection: true
+  # Automatically add missing dependencies (rive, flutter_svg, lottie) default: true
+  auto_add_dependencies: true
+  # Options: robust (default), legacy (old style)
+  style: robust
+  package_parameter_enabled: false
+  named_with_parent: true
+  path_ignore: [ ]

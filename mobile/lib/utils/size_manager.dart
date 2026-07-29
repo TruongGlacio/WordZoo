@@ -14,6 +14,7 @@ class SizeManager {
   double get signpostFontSize => 20.0;
   double get smallFontSize => 14.0;
   double get captionFontSize => 12.0;
+  double get extraSmallFontSize => 11.0;
 
   // Colors for text
   Color get headingColor => const Color(0xFF333333);
@@ -27,7 +28,7 @@ class SizeManager {
   // Border radius
   double get borderRadiusSmall => 8.0;
   double get borderRadiusMedium => 12.0;
-  double get borderRadiusLarge => 20.0;
+  double get borderRadiusLarge => 16.0;
   double get borderRadiusXLarge => 24.0;
 
   // Padding sizes
@@ -54,9 +55,14 @@ class SizeManager {
   // Icon sizes
   double get iconSmall => 16.0;
   double get iconMedium => 24.0;
+  double get iconMediumX => 28.0;
+
   double get iconLarge => 32.0;
   double get iconXLarge => 48.0;
   double get iconXXLarge => 80.0;
+  double get iconXXXLarge => 120.0;
+  double get iconXXXXLarge => 160.0;
+  double get iconXXXXXLarge => 180.0;
 
   // Button sizes
   double get buttonHeightSmall => 40.0;
@@ -64,11 +70,29 @@ class SizeManager {
   double get buttonHeightLarge => 60.0;
 
   // Spacing sizes
-  double get spacingExtraSmall => 4.0;
-  double get spacingSmall => 8.0;
-  double get spacingMedium => 16.0;
-  double get spacingLarge => 24.0;
-  double get spacingExtraLarge => 32.0;
+  double get spacing2 => 2.0;
+  double get spacing4 => 4.0;
+  double get spacing8 => 8.0;
+  double get spacing12 => 12.0;
+  double get spacing16 => 16.0;
+  double get spacing20 => 20.0;
+  double get spacing24 => 24.0;
+  double get spacing32 => 32.0;
+  double get spacing40 => 40.0;
+  double get spacing48 => 48.0;
+  double get spacing64 => 64.0;
+
+  // Legacy spacing aliases (deprecated, use new names above)
+  @Deprecated('Use spacing4 instead')
+  double get spacingExtraSmall => spacing4;
+  @Deprecated('Use spacing8 instead')
+  double get spacingSmall => spacing8;
+  @Deprecated('Use spacing16 instead')
+  double get spacingMedium => spacing16;
+  @Deprecated('Use spacing24 instead')
+  double get spacingLarge => spacing24;
+  @Deprecated('Use spacing32 instead')
+  double get spacingExtraLarge => spacing32;
 
   // Image sizes
   double get imageSmall => 48.0;
