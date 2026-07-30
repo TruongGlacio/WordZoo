@@ -28,24 +28,20 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
   ) async {
     emit(const EntityLoading());
     try {
-      final data = await dataSyncRepo.getCachedData();
-      if (data != null) {
-        // Find category and subcategory
-        final category = data.categories.firstWhere(
-          (cat) => cat.id == event.categoryId,
-          orElse: () => throw Exception('Category not found'),
-        );
-        final Subcategory subcategory = category.subcategories.firstWhere(
-          (sub) => sub.id == event.subcategoryId,
-          orElse: () => throw Exception('Subcategory not found'),
-        );
-        emit(EntityLoaded(
-          entities: subcategory.entities,
-          selectedEntity: null,
-        ));
-      } else {
-        emit(const EntityError('Không có dữ liệu'));
-      }
+      final data = await dataSyncRepo.getData();
+      // Find category and subcategory
+      final category = data.categories.firstWhere(
+        (cat) => cat.id == event.categoryId,
+        orElse: () => throw Exception('Category not found'),
+      );
+      final Subcategory subcategory = category.subcategories.firstWhere(
+        (sub) => sub.id == event.subcategoryId,
+        orElse: () => throw Exception('Subcategory not found'),
+      );
+      emit(EntityLoaded(
+        entities: subcategory.entities,
+        selectedEntity: null,
+      ));
     } catch (e) {
       emit(EntityError(e.toString()));
     }

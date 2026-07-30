@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'subcategory.dart';
 import 'localized_names.dart';
+import 'package:wordzoo/utils/media_cache_service.dart';
 
 part 'category.g.dart';
 
@@ -33,6 +34,16 @@ class Category extends Equatable {
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
+
+  String getName(String lang) => names.getBy(lang);
+
+  Future<String?> getLocalIcon() async {
+    return MediaCacheService.instance.getLocalPathIfExists(icon, MediaType.image);
+  }
+
+  Future<String?> getLocalBackground() async {
+    return MediaCacheService.instance.getLocalPathIfExists(background, MediaType.image);
+  }
 
   @override
   List<Object?> get props => [id, type, names, subcategories];

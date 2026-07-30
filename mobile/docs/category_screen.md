@@ -13,7 +13,7 @@ class Category {
   final LocalizedNames names;
   final String icon;
   final String background;
-  final String signpostStyle;
+  final String signpost_style;
   final List<Subcategory> subcategories;
 }
 ```
@@ -24,6 +24,52 @@ App hỗ trợ 4 category chính:
 - `plants` - Thực vật
 - `vehicles` - Phương tiện
 - `humanRelations` - Quan hệ con người
+
+## Cấu trúc thư mục dữ liệu
+
+Dữ liệu được tổ chức theo cấu trúc phân cấp:
+
+```
+wordzoo/
+├── animals/
+│   ├── LocalizedNames/
+│   │   ├── name_vi/audio.wav
+│   │   ├── name_en/audio.wav
+│   │   └── name_zh/audio.wav
+│   ├── icon.png
+│   ├── background.png
+│   └── sub_categorys/
+│       ├── wild_animals/
+│       │   ├── LocalizedNames/
+│       │   ├── icon.png
+│       │   ├── background.png
+│       │   └── entitys/
+│       │       ├── lion/
+│       │       │   ├── icon.png
+│       │       │   ├── LocalizedNames/
+│       │       │   │   ├── name_vi/audio.wav
+│       │       │   │   ├── name_en/audio.wav
+│       │       │   │   └── name_zh/audio.wav
+│       │       │   └── sound_effect.wav
+│       │       └── elephant/
+│       │           └── ...
+│       └── farm_animals/
+│           └── ...
+├── plants/
+├── vehicles/
+└── human_relations/
+```
+
+### Quy tắc đặt tên
+
+- **Category**: folder `animals`, `plants`, `vehicles`, `human_relations`
+- **Subcategory**: folder `sub_categorys/{subcategory_id}/`
+- **Entity**: folder `entitys/{entity_id}/`
+- **LocalizedNames**: folder `LocalizedNames/name_{lang}/audio.wav`
+- **Audio**: `audio.wav` cho mỗi ngôn ngữ (vi/en/zh)
+- **Images**: `icon.png` cho icon, `background.png` cho background
+- **Animation**: `animation.json` (optional)
+- **Sound effect**: `sound_effect.wav` (optional)
 
 ## Các Category và Subcategory
 

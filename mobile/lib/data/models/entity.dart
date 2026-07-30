@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'localized_names.dart';
 import 'audio_paths.dart';
+import 'package:wordzoo/utils/media_cache_service.dart';
 
 part 'entity.g.dart';
 
@@ -36,6 +37,30 @@ class Entity extends Equatable {
 
   factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);
   Map<String, dynamic> toJson() => _$EntityToJson(this);
+
+  String getName(String lang) => names.getBy(lang);
+
+  Future<String?> getLocalRealImage() async {
+    return MediaCacheService.instance.getLocalPathIfExists(realImage, MediaType.image);
+  }
+
+  Future<String?> getLocalAnimationImage() async {
+    return MediaCacheService.instance.getLocalPathIfExists(animationImage, MediaType.image);
+  }
+
+  Future<String?> getLocalAudio(String lang) async {
+    final path = lang == 'vi'
+        ? audioNames.vi
+        : lang == 'en'
+            ? audioNames.en
+            : audioNames.zh;
+    return MediaCacheService.instance.getLocalPathIfExists(path, MediaType.audio);
+  }
+
+  Future<String?> getLocalSoundEffect() async {
+    if (soundEffect == null) return null;
+    return MediaCacheService.instance.getLocalPathIfExists(soundEffect!, MediaType.audio);
+  }
 
   @override
   List<Object?> get props => [

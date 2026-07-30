@@ -19,12 +19,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   ) async {
     emit(const CategoryLoading());
     try {
-      final data = await dataSyncRepo.getCachedData();
-      if (data != null) {
-        emit(CategoryLoaded(categories: data.categories));
-      } else {
-        emit(const CategoryError('Không có dữ liệu danh mục'));
-      }
+      final data = await dataSyncRepo.getData();
+      emit(CategoryLoaded(categories: data.categories));
     } catch (e) {
       emit(CategoryError(e.toString()));
     }
