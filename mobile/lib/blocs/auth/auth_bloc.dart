@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthLoading());
     try {
-      await authRepo.signIn(event.email, event.password);
+      await authRepo.signIn(event.email.trim(), event.password.trim());
       final profile = await authRepo.getCurrentUserProfile();
       if (profile != null) {
         emit(Authenticated(user: profile, isPremium: profile.isPremium));
@@ -42,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthLoading());
     try {
-      await authRepo.signUp(event.email, event.password, event.displayName);
+      await authRepo.signUp(event.email.trim(), event.password.trim(), event.displayName.trim());
       final profile = await authRepo.getCurrentUserProfile();
       if (profile != null) {
         emit(Authenticated(user: profile, isPremium: profile.isPremium));

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:wordzoo/data/datasources/dummy_data.dart';
 import '../../data/models/entity.dart';
 import '../../data/models/subcategory.dart';
 import '../../data/repositories/data_sync_repository.dart';
@@ -32,7 +33,10 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
       // Find category and subcategory
       final category = data.categories.firstWhere(
         (cat) => cat.id == event.categoryId,
-        orElse: () => throw Exception('Category not found'),
+        orElse: () {
+          return DummyData().getCategories().first;
+          //throw Exception('Category not found');
+        },
       );
       final Subcategory subcategory = category.subcategories.firstWhere(
         (sub) => sub.id == event.subcategoryId,
@@ -43,7 +47,15 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
         selectedEntity: null,
       ));
     } catch (e) {
-      emit(EntityError(e.toString()));
+      final Subcategory subcategory = DummyData().getCategories().first.subcategories.firstWhere(
+            (sub) => sub.id == event.subcategoryId,
+        orElse: () => throw Exception('Subcategory not found'),
+      );
+      emit(EntityLoaded(
+        entities: subcategory.entities,
+        selectedEntity: null,
+      ));
+      //emit(EntityError(e.toString()));
     }
   }
 

@@ -56,6 +56,7 @@ dependencies:
   google_fonts: ^8.2.0
 
   cupertino_icons: ^1.0.9
+  flutter_launcher_icons: ^0.14.4
 
 dependency_overrides:
   meta: ^1.19.0
@@ -81,6 +82,11 @@ flutter:
     - assets/sub_category_avata/animals/
     - assets/sub_category_avata/human_relations/
     - assets/sub_category_avata/vehicles/
+    - assets/audio/
+    - assets/icons/
+    - lib/presentation/screens/entity/
+    - assets/entity_animations_frame/
+
 flutter_assets_generator:
   output_dir: generated/
   output_filename: assets
@@ -93,3 +99,10 @@ flutter_assets_generator:
   package_parameter_enabled: false
   named_with_parent: true
   path_ignore: [ ]
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icons/AppIcon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21

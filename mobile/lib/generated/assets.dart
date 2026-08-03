@@ -5,9 +5,19 @@ import 'package:flutter/widgets.dart';
 class Assets {
   Assets._();
 
-  static const $AssetsBackgroundGen background = $AssetsBackgroundGen();
-  static const $AssetsCategoryCardGen categoryCard = $AssetsCategoryCardGen();
-  static const $AssetsSubCategoryAvataGen subCategoryAvata = $AssetsSubCategoryAvataGen();
+  static const $AssetsAssetsGen assets = $AssetsAssetsGen();
+  static const $AssetsLibGen lib = $AssetsLibGen();
+}
+
+class $AssetsAssetsGen {
+  const $AssetsAssetsGen();
+
+  final $AssetsAudioGen audio = const $AssetsAudioGen();
+  final $AssetsBackgroundGen background = const $AssetsBackgroundGen();
+  final $AssetsCategoryCardGen categoryCard = const $AssetsCategoryCardGen();
+  final $AssetsEntityAnimationsFrameGen entityAnimationsFrame = const $AssetsEntityAnimationsFrameGen();
+  final $AssetsIconsGen icons = const $AssetsIconsGen();
+  final $AssetsSubCategoryAvataGen subCategoryAvata = const $AssetsSubCategoryAvataGen();
 }
 
 class $AssetsBackgroundGen {
@@ -16,7 +26,7 @@ class $AssetsBackgroundGen {
   final AssetGenImage loginLandScape = const AssetGenImage('assets/background/Login_landScape.png');
   final AssetGenImage loginUp = const AssetGenImage('assets/background/Login_up.png');
   final AssetGenImage animalsCategoryMap2k = const AssetGenImage('assets/background/animals_category_map_2k.png');
-  final AssetGenImage home = const AssetGenImage('assets/background/home.png');
+  final AssetGenImage entityList = const AssetGenImage('assets/background/entity_list.png');
   final AssetGenImage home1 = const AssetGenImage('assets/background/home1.png');
   final AssetGenImage home2 = const AssetGenImage('assets/background/home2.png');
   final AssetGenImage home3 = const AssetGenImage('assets/background/home3.png');
@@ -135,6 +145,77 @@ class $AssetsVehiclesGen {
   final AssetGenImage trains = const AssetGenImage('assets/sub_category_avata/vehicles/Trains.png');
   final AssetGenImage trucks = const AssetGenImage('assets/sub_category_avata/vehicles/Trucks.png');
   final AssetGenImage water = const AssetGenImage('assets/sub_category_avata/vehicles/Water.png');
+}
+
+class $AssetsAudioGen {
+  const $AssetsAudioGen();
+
+  final String dragonStudioCowMoo390282 = 'assets/audio/dragon-studio-cow-moo-390282.mp3';
+}
+
+class $AssetsIconsGen {
+  const $AssetsIconsGen();
+
+  final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
+  final AssetGenImage chatGPTImage1027521Thg82026 = const AssetGenImage('assets/icons/ChatGPT Image 10_27_52 1 thg 8, 2026.png');
+  final AssetGenImage chatGPTImage1102381Thg82026 = const AssetGenImage('assets/icons/ChatGPT Image 11_02_38 1 thg 8, 2026.png');
+  final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
+  final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
+  final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
+}
+
+class $AssetsEntityAnimationsFrameGen {
+  const $AssetsEntityAnimationsFrameGen();
+
+  final AssetGenImage chatGPTImage2225192Thg82026 = const AssetGenImage('assets/entity_animations_frame/ChatGPT Image 22_25_19 2 thg 8, 2026.png');
+  final AssetGenImage chatGPTImage2227092Thg82026 = const AssetGenImage('assets/entity_animations_frame/ChatGPT Image 22_27_09 2 thg 8, 2026.png');
+  final AssetGenImage frame1 = const AssetGenImage('assets/entity_animations_frame/frame1.png');
+  final AssetGenImage frame10 = const AssetGenImage('assets/entity_animations_frame/frame10.png');
+  final AssetGenImage frame11 = const AssetGenImage('assets/entity_animations_frame/frame11.png');
+  final AssetGenImage frame12 = const AssetGenImage('assets/entity_animations_frame/frame12.png');
+  final AssetGenImage frame13 = const AssetGenImage('assets/entity_animations_frame/frame13.png');
+  final AssetGenImage frame14 = const AssetGenImage('assets/entity_animations_frame/frame14.png');
+  final AssetGenImage frame15 = const AssetGenImage('assets/entity_animations_frame/frame15.png');
+  final AssetGenImage frame16 = const AssetGenImage('assets/entity_animations_frame/frame16.png');
+  final AssetGenImage frame17 = const AssetGenImage('assets/entity_animations_frame/frame17.png');
+  final AssetGenImage frame2 = const AssetGenImage('assets/entity_animations_frame/frame2.png');
+  final AssetGenImage frame3 = const AssetGenImage('assets/entity_animations_frame/frame3.png');
+  final AssetGenImage frame4 = const AssetGenImage('assets/entity_animations_frame/frame4.png');
+  final AssetGenImage frame5 = const AssetGenImage('assets/entity_animations_frame/frame5.png');
+  final AssetGenImage frame6 = const AssetGenImage('assets/entity_animations_frame/frame6.png');
+  final AssetGenImage frame7 = const AssetGenImage('assets/entity_animations_frame/frame7.png');
+  final AssetGenImage frame8 = const AssetGenImage('assets/entity_animations_frame/frame8.png');
+  final AssetGenImage frame9 = const AssetGenImage('assets/entity_animations_frame/frame9.png');
+}
+
+class $AssetsLibGen {
+  const $AssetsLibGen();
+
+  final $AssetsPresentationGen presentation = const $AssetsPresentationGen();
+}
+
+class $AssetsPresentationGen {
+  const $AssetsPresentationGen();
+
+  final $AssetsScreensGen screens = const $AssetsScreensGen();
+}
+
+class $AssetsScreensGen {
+  const $AssetsScreensGen();
+
+  final $AssetsEntityGen entity = const $AssetsEntityGen();
+}
+
+class $AssetsEntityGen {
+  const $AssetsEntityGen();
+
+  final String burstWidget = 'lib/presentation/screens/entity/burst_widget.dart';
+  final String entityAnimation = 'lib/presentation/screens/entity/entity_animation.dart';
+  final String entityRevealWidget = 'lib/presentation/screens/entity/entity_reveal_widget.dart';
+  final String giftBoxWidget = 'lib/presentation/screens/entity/gift_box_widget.dart';
+  final String giftDropAnimation = 'lib/presentation/screens/entity/gift_drop_animation.dart';
+  final String giftDropController = 'lib/presentation/screens/entity/gift_drop_controller.dart';
+  final String planeWidget = 'lib/presentation/screens/entity/plane_widget.dart';
 }
 
 class AssetGenImage {

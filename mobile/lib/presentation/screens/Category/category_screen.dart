@@ -4,12 +4,13 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/presentation/screens/entity_list_screen.dart';
 import '../../../data/models/category.dart';
 import '../../theme/app_colors.dart';
 import '../../../utils/size_manager.dart';
 import 'category_map_layout.dart';
 
-double nodeSize = SizeManager().iconXXLarge;
+double nodeSize = SizeManager().iconXXXLarge;
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
@@ -65,6 +66,7 @@ class CategoryScreenState extends State<CategoryScreen> {
                             subcategory: layout.category,
                             onTap: () {
                               // Handle tap event for subcategory
+                              gotoEntityList(context, category: category, subcategory: layout.category);
                             },
                           ),
                         );
@@ -81,12 +83,20 @@ class CategoryScreenState extends State<CategoryScreen> {
               children: [
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.arrow_back_ios, color: AppColors.sunnyYellow, weight: 1, size: SizeManager().iconMedium),
+                  icon: Image.asset(Assets.assets.icons.backPage.path, width: SizeManager().iconXLarge, height: SizeManager().iconXLarge),
                 ),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+  void gotoEntityList(BuildContext context, {required Category category, required Subcategory subcategory}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute<void>(
+        builder: (_) =>  EntityListScreen(category: category,subcategory: subcategory,),
       ),
     );
   }
@@ -100,60 +110,56 @@ class _SubCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      color: Colors.transparent,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)),
-      child: InkWell(
-        onTap: onTap,
-        child: Container(
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            image: DecorationImage(
-              image: AssetImage(Assets.categoryCard.subCategoryCard.path),
-              fit: BoxFit.fill,
-              //colorFilter: const ColorFilter.mode(Colors.black12, BlendMode.dstOut)
-            ),
-            borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          image: DecorationImage(
+            image: AssetImage(Assets.assets.categoryCard.subCategoryCard.path),
+            fit: BoxFit.fill,
+            //colorFilter: const ColorFilter.mode(Colors.black12, BlendMode.dstOut)
           ),
-          child: SizedBox(
-            width: nodeSize,
-            height: nodeSize,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  height: SizeManager().iconMediumX,
-                  width: SizeManager().iconMediumX,
-                  margin: EdgeInsets.only(top: SizeManager().spacingExtraSmall),
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(subcategory.icon),fit:BoxFit.fill ),
-                    borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)
-                  ),
+          borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+        ),
+        child: SizedBox(
+          width: nodeSize,
+          height: nodeSize,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: SizeManager().iconMediumX,
+                width: SizeManager().iconMediumX,
+                margin: EdgeInsets.only(top: SizeManager().spacingExtraSmall),
+                decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(subcategory.icon),fit:BoxFit.fill ),
+                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                   // color: AppColors.brown,
-                    borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
-                  ),
-                  constraints: BoxConstraints(
-                    minHeight: SizeManager().spacing40
-                  ),
-                  margin: EdgeInsets.only(bottom: SizeManager().spacingSmall),
-                  padding: EdgeInsets.symmetric(horizontal: SizeManager().spacingExtraSmall, vertical: SizeManager().spacingExtraSmall),
-                  child: Text(
-                    subcategory.names.getBy('en'),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: SizeManager().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
-                  ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                 // color: AppColors.brown,
+                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
                 ),
-              ],
-            ),
+                constraints: BoxConstraints(
+                  minHeight: SizeManager().spacing40
+                ),
+                margin: EdgeInsets.only(bottom: SizeManager().spacingSmall),
+                padding: EdgeInsets.symmetric(horizontal: SizeManager().spacingExtraSmall, vertical: SizeManager().spacingExtraSmall),
+                child: Text(
+                  subcategory.names.getBy('en'),
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: SizeManager().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     ).animate().scale(duration: 200.ms);
   }
+
 }

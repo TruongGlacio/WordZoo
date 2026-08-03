@@ -23,7 +23,14 @@ class HorizontalEntityList extends StatelessWidget {
     final isPremium = context.watch<IapBloc>().state is PremiumActive;
 
     return Container(
-      color: Colors.white.withOpacity(0.8),
+      decoration: BoxDecoration(
+        color: AppColors.primaryColor.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+        border: Border.all(
+          color: AppColors.white,
+          width: 2,
+        ),),
+      margin: SizeManager().paddingHorizontalXXXXLarge,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -33,10 +40,11 @@ class HorizontalEntityList extends StatelessWidget {
           final isLocked = entity.isPremium && !isPremium;
           final isSelected = selectedId == entity.id;
 
-          return GestureDetector(
+          return InkWell(
             onTap: isLocked ? null : () => onSelect(entity),
             child: Container(
-              width: 100,
+              width:  SizeManager().imageMedium,
+              height: SizeManager().imageMedium,
               margin: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.leafGreen : Colors.white,

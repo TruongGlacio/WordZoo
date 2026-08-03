@@ -32,7 +32,7 @@ class _DetailPanelState extends State<DetailPanel> {
   @override
   Widget build(BuildContext context) {
     final isPremiumLocked = widget.entity.isPremium &&
-        !(context.watch<IapBloc>().state is PremiumActive);
+        context.watch<IapBloc>().state is! PremiumActive;
 
     return Padding(
       padding: SizeManager().paddingLarge,
@@ -40,92 +40,92 @@ class _DetailPanelState extends State<DetailPanel> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Real image
-          Container(
-            width: SizeManager().imageXLarge,
-            height: SizeManager().imageXLarge,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.softShadow,
-                  blurRadius: 20,
-                  spreadRadius: 5,
+          Expanded(
+            child: InkWell(
+              onTap: () async {
+                if (widget.entity.soundEffect != null)
+                  {
+                    await _audioPlayer.play(DeviceFileSource(widget.entity.soundEffect!));
+                  }
+
+              },
+              child: Container(
+                width: SizeManager().imageXLarge,
+                //height: SizeManager().imageXLarge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: AppColors.softShadow,
+                      blurRadius: 20,
+                      spreadRadius: 5,
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(
-                widget.entity.realImage,
-                fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) {
-                  return Container(
-                    color: Colors.grey[300],
-                    child: const Icon(Icons.image, size: 80),
-                  );
-                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.network(
+                    widget.entity.realImage,
+                    fit: BoxFit.cover,
+                    width: SizeManager().imageXLarge,
+                    //height: SizeManager().imageXLarge,
+                    errorBuilder: (context, error, stackTrace) {
+                      return Container(
+                        color: Colors.grey[300],
+                        child: const Icon(Icons.image, size: 80),
+                      );
+                    },
+                  ),
+                ),
               ),
             ),
           ),
           Gap(SizeManager().spacing24),
           // Names
-          Text(
-            widget.entity.names.getBy(_currentLang),
-            style: AppTextStyles.heading,
-          ),
-          Gap(SizeManager().spacing8),
-          Text(AppLocalizations.of(context)!.englishLabel(widget.entity.names.en), style: AppTextStyles.body),
-          Text(AppLocalizations.of(context)!.chineseLabel(widget.entity.names.zh), style: AppTextStyles.body),
-          Gap(SizeManager().spacing16),
-          // Language toggles
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _LangButton(
-                label: 'VI',
-                isSelected: _currentLang == 'vi',
-                onTap: () => setState(() => _currentLang = 'vi'),
-              ),
-              Gap(SizeManager().spacing12),
-              _LangButton(
-                label: 'EN',
-                isSelected: _currentLang == 'en',
-                onTap: () => setState(() => _currentLang = 'en'),
-              ),
-              Gap(SizeManager().spacing12),
-              _LangButton(
-                label: 'ZH',
-                isSelected: _currentLang == 'zh',
-                onTap: () => setState(() => _currentLang = 'zh'),
-              ),
-            ],
-          ),
-          Gap(SizeManager().spacing16),
-          // Audio buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              IconButton(
-                onPressed: () async {
+              InkWell(
+                onTap: () async {
                   final audioPath = _currentLang == 'vi'
                       ? widget.entity.audioNames.vi
                       : _currentLang == 'en'
-                          ? widget.entity.audioNames.en
-                          : widget.entity.audioNames.zh;
+                      ? widget.entity.audioNames.en
+                      : widget.entity.audioNames.zh;
                   await _audioPlayer.play(DeviceFileSource(audioPath));
                 },
-                icon: const Icon(Icons.volume_up, size: 32),
-              ),
-              if (widget.entity.soundEffect != null)
-                IconButton(
-                  onPressed: () async {
-                    await _audioPlayer.play(DeviceFileSource(widget.entity.soundEffect!));
-                  },
-                  icon: const Icon(Icons.music_note, size: 32),
+                child: Text(
+                  widget.entity.names.getBy(_currentLang),
+                  style: AppTextStyles.heading,
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _LangButton(
+                    label: 'VI',
+                    isSelected: _currentLang == 'vi',
+                    onTap: () => setState(() => _currentLang = 'vi'),
+                  ),
+                  Gap(SizeManager().spacing12),
+                  _LangButton(
+                    label: 'EN',
+                    isSelected: _currentLang == 'en',
+                    onTap: () => setState(() => _currentLang = 'en'),
+                  ),
+                  Gap(SizeManager().spacing12),
+                  _LangButton(
+                    label: 'ZH',
+                    isSelected: _currentLang == 'zh',
+                    onTap: () => setState(() => _currentLang = 'zh'),
+                  ),
+                ],
+              ),
             ],
           ),
+          // Language toggles
           Gap(SizeManager().spacing16),
+          // Audio buttons
           // Action buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -146,13 +146,6 @@ class _DetailPanelState extends State<DetailPanel> {
               ),
             ],
           ),
-          if (isPremiumLocked) ...[
-            Gap(SizeManager().spacing16),
-            Text(
-              AppLocalizations.of(context)!.premiumLocked,
-              style: const TextStyle(color: AppColors.coralRed),
-            ),
-          ],
         ],
       ),
     );

@@ -261,3 +261,9 @@ Kiểm tra:
 1. Bucket `assets` và `data` đã tạo chưa
 2. Service role key có quyền upload không
 3. Storage policies đã set chưa
+
+SUPABASE_URL=https://csvlyadhslkpanqfocre.supabase.co
+SUPABASE_ANON_KEY=sb_publishable_aweNe_u7DiW_5B-HYdnc8w_jT3wvegP
+
+
+python sync_wordzoo.py --wordzoo-dir "./wordzoo" --json-file "./data_version1_final.json" --version 1.0.0 --upload --supabase-url https://csvlyadhslkpanqfocre.supabase.co --supabase-key eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNzdmx5YWRoc2xrcGFucWZvY3JlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4NTA4ODI1NiwiZXhwIjoyMTAwNjY0MjU2fQ.zKKxspsquEamJIT-IOb_oV8SIaB-JSpqIKzhiCHuc4o

@@ -53,7 +53,7 @@ class HomeScreenState extends State<HomeScreen> {
       body: Container(
         decoration: BoxDecoration(
           gradient: AppColors.gradientSkyGrass,
-          image: DecorationImage(image: AssetImage(Assets.background.home1.path), fit: BoxFit.fill)
+          image: DecorationImage(image: AssetImage(Assets.assets.background.home1.path), fit: BoxFit.fill)
         ),
         child: SafeArea(
           child: Column(
@@ -102,7 +102,7 @@ class HomeScreenState extends State<HomeScreen> {
                         onPressed: () {
                           context.read<AuthBloc>().add(const LogoutRequested());
                         },
-                        icon:  Icon(Icons.logout, color: AppColors.white, size: SizeManager().iconLarge*2,),
+                        icon: Image.asset(Assets.assets.icons.logout.path, width: SizeManager().iconLarge*2, height: SizeManager().iconLarge*2,),
                       ),
                     ],
                   ),
@@ -151,24 +151,29 @@ class _CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
           ),
           child: SizedBox(
-            width: SizeManager().iconXXXXLarge,
-            height: SizeManager().iconXXXLarge,
+            width: SizeManager().iconXXXXXXLarge,
+            height: SizeManager().iconXXXXLarge,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Padding(
-                  padding:  EdgeInsets.only( bottom: SizeManager().spacing8, right: SizeManager().spacing4 ),
-                  child: SizedBox(
-                    width: SizeManager().iconXXXXLarge/2- SizeManager().iconSmall,
+                Container(
+                  width: SizeManager().iconXXXXXLarge/2- SizeManager().iconSmall,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(bottom: 12, right: SizeManager().spacing8, left: SizeManager().spacing4),
+                  padding: EdgeInsets.only(left: SizeManager().spacing4),
+
+                  //color: Colors.white,
+                  child: FittedBox(
+                    fit: BoxFit.fill,
                     child: Text(
                       title,
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: SizeManager().smallFontSize,
+                        fontSize: SizeManager().captionFontSize,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: AppColors.white,
                       ),
                     ),
                   ),

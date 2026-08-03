@@ -1,0 +1,89 @@
+{
+  "version": "1.0.0",
+  "last_updated": "2026-07-30T10:42:11.702285Z",
+  "categories": [
+    {
+      "id": "animals",
+      "type": "animals",
+      "names": {
+        "vi": "Animals",
+        "en": "Animals",
+        "zh": "Animals",
+        "Animals_en": "Animals_en",
+        "Animals_zh": "Animals_zh",
+        "DongVat_vi": "DongVat_vi"
+      },
+      "icon": "",
+      "background": "",
+      "signpost_style": "default",
+      "subcategories": [
+        {
+          "id": "wild_animals",
+          "names": {
+            "DongVatHoangDa_vi": "DongVatHoangDa_vi",
+            "WildAnimals_en": "WildAnimals_en",
+            "WildAnimals_zh": "WildAnimals_zh"
+          },
+          "icon": "",
+          "background": "",
+          "entities": [
+            {
+              "id": "elephant",
+              "isPremium": false,
+              "names": {
+                "vi": "Elephant",
+                "en": "Elephant",
+                "zh": "Elephant",
+                "Elephant_en": "Elephant",
+                "Elephant_zh": "Elephant",
+                "Voi_vi": "Voi"
+              },
+              "animation_image": "",
+              "real_image": "",
+              "audio_names": {
+                "vi": "",
+                "en": "",
+                "zh": ""
+              },
+              "sound_effect": null,
+              "type_tags": [],
+              "difficulty": 1
+            },
+            {
+              "id": "lion",
+              "isPremium": false,
+              "names": {
+                "vi": "Lion",
+                "en": "Lion",
+                "zh": "Lion",
+                "Lion_en": "Lion",
+                "Lion_zh": "Lion",
+                "Sutu_vi": "Sutu"
+              },
+              "animation_image": "",
+              "real_image": "",
+              "audio_names": {
+                "vi": "",
+                "en": "",
+                "zh": ""
+              },
+              "sound_effect": null,
+              "type_tags": [],
+              "difficulty": 1
+            }
+          ],
+          "localized_names_audio": {
+            "DongVatHoangDa_vi": "LocalizedNames\\DongVatHoangDa_vi\\DongVatHoangDa_vi.wav",
+            "WildAnimals_en": "LocalizedNames\\WildAnimals_en\\WildAnimals_en.wav",
+            "WildAnimals_zh": "LocalizedNames\\WildAnimals_zh\\WildAnimals_zh.wav"
+          }
+        }
+      ],
+      "localized_names_audio": {
+        "Animals_en": "LocalizedNames\\Animals_en\\Animals_en.wav",
+        "Animals_zh": "LocalizedNames\\Animals_zh\\Animals_zh.wav",
+        "DongVat_vi": "LocalizedNames\\DongVat_vi\\DongVat_vi.wav"
+      }
+    }
+  ]
+}

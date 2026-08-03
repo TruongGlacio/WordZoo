@@ -41,6 +41,7 @@ class SizeManager {
   EdgeInsets get paddingHorizontalSmall => const EdgeInsets.symmetric(horizontal: 8.0);
   EdgeInsets get paddingHorizontalMedium => const EdgeInsets.symmetric(horizontal: 16.0);
   EdgeInsets get paddingHorizontalLarge => const EdgeInsets.symmetric(horizontal: 24.0);
+  EdgeInsets get paddingHorizontalXXXXLarge => const EdgeInsets.symmetric(horizontal: 120.0);
 
   EdgeInsets get paddingVerticalSmall => const EdgeInsets.symmetric(vertical: 8.0);
   EdgeInsets get paddingVerticalMedium => const EdgeInsets.symmetric(vertical: 16.0);
@@ -58,11 +59,12 @@ class SizeManager {
   double get iconMediumX => 28.0;
 
   double get iconLarge => 32.0;
-  double get iconXLarge => 48.0;
-  double get iconXXLarge => 80.0;
-  double get iconXXXLarge => 120.0;
-  double get iconXXXXLarge => 160.0;
-  double get iconXXXXXLarge => 180.0;
+  double get iconXLarge => 36.0;
+  double get iconXXLarge => 48.0;
+  double get iconXXXLarge => 80.0;
+  double get iconXXXXLarge => 120.0;
+  double get iconXXXXXLarge => 160.0;
+  double get iconXXXXXXLarge => 180.0;
 
   // Button sizes
   double get buttonHeightSmall => 40.0;

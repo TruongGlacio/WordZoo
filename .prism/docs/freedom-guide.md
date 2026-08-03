@@ -146,7 +146,6 @@ Creating sprint-v2...
 Freedom mode uses sprints for organization, not freezing.
 
 ---
-
 ## When Freedom Mode Fits Best
 
 - You are iterating quickly and do not want approval prompts between phases.

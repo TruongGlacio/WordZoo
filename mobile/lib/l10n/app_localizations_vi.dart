@@ -24,7 +24,7 @@ class AppLocalizationsVi extends AppLocalizations {
   String get register => 'Đăng ký';
 
   @override
-  String get guestMode => 'Tiếp tục với tư cách khách';
+  String get guestMode => 'Chế độ khách';
 
   @override
   String get email => 'Email';

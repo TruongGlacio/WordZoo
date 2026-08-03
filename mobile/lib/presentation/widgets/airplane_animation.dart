@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../presentation/theme/app_colors.dart';
+import '../../utils/size_manager.dart';
 
 class AirplaneAnimation extends StatefulWidget {
   final Widget child;
