@@ -32,7 +32,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # Background sync
-  workmanager: ^0.9.0+3
+  workmanager: ^0.10.6
 
   # Payments
   in_app_purchase: ^3.3.0
@@ -45,22 +45,25 @@ dependencies:
 
   # Utils
   flutter_dotenv: ^6.0.1
-  path_provider: ^2.1.5
+  path_provider: ^2.1.6
 
-  # Localization
-  intl: ^0.20.2
+
   flutter_localizations:
     sdk: flutter
 
   # Google Fonts
-  google_fonts: ^8.2.0
+  google_fonts: ^8.2.1
 
   cupertino_icons: ^1.0.9
   flutter_launcher_icons: ^0.14.4
-
+  http: ^1.6.0
+  archive: ^4.0.9
+  percent_indicator: ^4.2.5
 dependency_overrides:
   meta: ^1.19.0
   jni: 1.0.0
+  # Localization
+  intl: ^0.20.3
 
 dev_dependencies:
   flutter_test:

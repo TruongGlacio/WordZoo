@@ -55,14 +55,14 @@ class GiftDropController extends ChangeNotifier {
   ValueNotifier(false);
 
   GiftAnimationState state = GiftAnimationState.flying;
-  ImageProvider? entityImage;
+  Widget? entityImage;
   //------------------------------------------------------------
   // Plane
   //------------------------------------------------------------
 
   double planeX = 1.0;
 
-  double planeY = 0.15;
+  double planeY = 0.10;
 
   //------------------------------------------------------------
   // Gift
@@ -117,7 +117,7 @@ class GiftDropController extends ChangeNotifier {
 
     _controller.forward(from: 0);
   }
-  void play(ImageProvider image) {
+  void play(Widget image) {
 
     entityImage = image;
 

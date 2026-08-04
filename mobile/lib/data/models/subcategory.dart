@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'audio_paths.dart';
+import 'category.dart';
 import 'entity.dart';
 import 'localized_names.dart';
 import 'package:wordzoo/utils/media_cache_service.dart';
@@ -11,19 +14,20 @@ part 'subcategory.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Subcategory extends Equatable {
   final String id;
-  final int order;
+  final int? order;
   final String icon;
   Offset? position;
   final LocalizedNames names;
   final List<Entity> entities;
-
+  AudioPaths? audio;
   Subcategory({
     required this.id,
-    required this.order,
+    this.order,
     required this.icon,
     required this.names,
     required this.entities,
-    this.position
+    this.position,
+    this.audio
   });
 
   factory Subcategory.fromJson(Map<String, dynamic> json) =>
@@ -32,8 +36,8 @@ class Subcategory extends Equatable {
 
   String getName(String lang) => names.getBy(lang);
 
-  Future<String?> getLocalIcon() async {
-    return MediaCacheService.instance.getLocalPathIfExists(icon, MediaType.image);
+  String getLocalIcon() {
+    return DataManager().getRootPath()+ icon;
   }
 
   @override

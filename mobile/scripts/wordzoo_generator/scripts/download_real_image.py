@@ -22,7 +22,10 @@ from image_provider import (
     get_provider,
     ImageProvider,
 )
-
+from flaticon_api import (
+    search_flaticon,
+    download_flaticon,
+)
 # ============================================================
 # Wikimedia Commons
 # ============================================================
@@ -348,27 +351,28 @@ async def search_best_image(
 
             if provider == ImageProvider.WIKIMEDIA:
 
-                url = await search_wikimedia(
+                url = await search_wikimedia(keyword)
 
-                    keyword
+            elif provider == ImageProvider.FLATICON:
 
-                )
+                icon = search_flaticon(keyword)
+
+                if icon:
+
+                    return {
+                        "provider": "flaticon",
+                        "id": icon["id"]
+                    }
+
+                url = None
 
             elif provider == ImageProvider.PEXELS:
 
-                url = await search_pexels(
-
-                    keyword
-
-                )
+                url = await search_pexels(keyword)
 
             elif provider == ImageProvider.PIXABAY:
 
-                url = await search_pixabay(
-
-                    keyword
-
-                )
+                url = await search_pixabay(keyword)
 
             else:
 
@@ -401,6 +405,24 @@ async def download_image(
 ):
 
     print(f"download_image url is: {url}, output_file is: {output_file}")
+    #
+    # Flaticon
+    #
+
+    if isinstance(url, dict):
+
+        if url["provider"] == "flaticon":
+
+            download_flaticon(
+
+                url["id"],
+
+                output_file,
+
+            )
+
+            return
+        
     response = requests.get(
 
         url,

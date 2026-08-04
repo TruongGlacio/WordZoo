@@ -27,6 +27,8 @@ class SizeManager {
 
   // Border radius
   double get borderRadiusSmall => 8.0;
+  double get borderRadiusXSmall => 4.0;
+
   double get borderRadiusMedium => 12.0;
   double get borderRadiusLarge => 16.0;
   double get borderRadiusXLarge => 24.0;
@@ -83,6 +85,7 @@ class SizeManager {
   double get spacing40 => 40.0;
   double get spacing48 => 48.0;
   double get spacing64 => 64.0;
+  double get spacing128 => 128.0;
 
   // Legacy spacing aliases (deprecated, use new names above)
   @Deprecated('Use spacing4 instead')
@@ -100,5 +103,6 @@ class SizeManager {
   double get imageSmall => 48.0;
   double get imageMedium => 80.0;
   double get imageLarge => 120.0;
-  double get imageXLarge => 200.0;
+  double get imageXLarge => 180.0;
+  double get imageXXLarge => 200.0;
 }

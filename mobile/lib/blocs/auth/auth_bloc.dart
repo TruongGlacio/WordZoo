@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wordzoo/data/repositories/data_sync_repository.dart';
+import 'package:wordzoo/data/service/zip_asset_service.dart';
 import '../../data/models/user_profile.dart';
 import '../../data/repositories/supabase_repository.dart';
 
@@ -11,6 +13,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final SupabaseRepository authRepo;
 
   AuthBloc({required this.authRepo}) : super(const AuthInitial()) {
+    on<LoadingDataProcess>((event, emit) async {
+
+      emit(const AuthLoading());
+      await ZipAssetService.instance.getRootDir();
+      final data = await DataSyncRepositoryImpl.instance.getData();
+      add(const AuthStatusChanged());
+    },);
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
     on<GuestModeRequested>(_onGuestModeRequested);
@@ -60,8 +69,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(const AuthLoading());
     try {
-      final profile = await authRepo.createGuestProfile();
-      emit(Authenticated(user: profile, isPremium: false));
+      await authRepo.signIn("WordZooDemo@gmail.com", '123456');
+      final profile = await authRepo.getCurrentUserProfile();
+      if(profile!=null) {
+        emit(Authenticated(user: profile, isPremium: false));
+      }
+      else
+        {
+          emit(const AuthError('Không thể tải thông tin người dùng'));
+        }
     } catch (e) {
       emit(AuthError(e.toString()));
     }

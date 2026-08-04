@@ -13,7 +13,9 @@ class AuthInitial extends AuthState {
 class AuthLoading extends AuthState {
   const AuthLoading();
 }
-
+class DataLoading extends AuthState {
+  const DataLoading();
+}
 class Authenticated extends AuthState {
   final UserProfile user;
   final bool isPremium;

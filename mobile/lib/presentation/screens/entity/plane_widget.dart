@@ -32,34 +32,17 @@ class PlaneWidget extends StatelessWidget {
 
           return Stack(
             children: [
-
-              //----------------------------------------------------
-              // Rope
-              //----------------------------------------------------
-
-              if (controller.giftVisible)
-                Positioned(
-                  left: x + planeWidth * 0.72,
-                  top: y + planeHeight * 0.60,
-                  child: Container(
-                    width: 2,
-                    height: controller.giftY * h -   (y + planeHeight * 0.60),
-                    color: Colors.brown.shade600,
-                  ),
-                ),
-
               //----------------------------------------------------
               // Plane
               //----------------------------------------------------
-
               Positioned(
                 left: x,
                 top: y,
-                child: Transform.rotate(
-                  angle: controller.planeRotation,
+                child: SizedBox(
                   child: Image.asset(
                     Assets.assets.icons.flight.path,
-                    width: planeWidth,
+                    width: 180,
+                    height:  180,
                     fit: BoxFit.contain,
                   ),
                 )

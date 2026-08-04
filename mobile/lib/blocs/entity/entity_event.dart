@@ -16,9 +16,10 @@ class LoadEntities extends EntityEvent {
 
 class SelectEntity extends EntityEvent {
   final String entityId;
-  const SelectEntity(this.entityId);
+  final bool? isVisibleDetailPanel;
+  const SelectEntity(this.entityId, this.isVisibleDetailPanel);
   @override
-  List<Object?> get props => [entityId];
+  List<Object?> get props => [entityId, isVisibleDetailPanel];
 }
 
 class ToggleFavorite extends EntityEvent {

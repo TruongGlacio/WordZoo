@@ -30,7 +30,7 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
           .select()
           .eq('id', user.id)
           .single();
-      AppLogger.e('response',response);
+      //AppLogger.e('response',response);
 
       return UserProfile.fromJson(response);
     } catch (e, st) {

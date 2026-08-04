@@ -1,5 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'category.dart';
 import 'localized_names.dart';
 import 'audio_paths.dart';
 import 'package:wordzoo/utils/media_cache_service.dart';
@@ -9,30 +11,28 @@ part 'entity.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Entity extends Equatable {
   final String id;
-  final bool isPremium;
+  final bool ?isPremium;
   final LocalizedNames names;
   @JsonKey(name: 'animation_image')
-  final String animationImage;
+  final String ?animationImage;
   @JsonKey(name: 'real_image')
-  final String realImage;
-  @JsonKey(name: 'audio_names')
-  final AudioPaths audioNames;
+  final String ?realImage;
   @JsonKey(name: 'sound_effect')
   final String? soundEffect;
   @JsonKey(name: 'type_tags')
-  final List<String> typeTags;
-  final int difficulty;
-
-  const Entity({
+  final List<String> ?typeTags;
+  final int ?difficulty;
+  AudioPaths? audio;
+  Entity({
     required this.id,
     required this.isPremium,
     required this.names,
     required this.animationImage,
     required this.realImage,
-    required this.audioNames,
     this.soundEffect,
     required this.typeTags,
     required this.difficulty,
+    this.audio,
   });
 
   factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);
@@ -41,25 +41,32 @@ class Entity extends Equatable {
   String getName(String lang) => names.getBy(lang);
 
   Future<String?> getLocalRealImage() async {
-    return MediaCacheService.instance.getLocalPathIfExists(realImage, MediaType.image);
+    return MediaCacheService.instance.getLocalPathIfExists(realImage??"", MediaType.image);
   }
 
   Future<String?> getLocalAnimationImage() async {
-    return MediaCacheService.instance.getLocalPathIfExists(animationImage, MediaType.image);
+    return MediaCacheService.instance.getLocalPathIfExists(animationImage??"", MediaType.image);
   }
-
-  Future<String?> getLocalAudio(String lang) async {
+  String getLocalIcon() {
+      return DataManager().getRootPath()+ (realImage??'');
+  }
+  String? getLocalAudio(String lang) {
     final path = lang == 'vi'
-        ? audioNames.vi
+        ? audio?.vi
         : lang == 'en'
-            ? audioNames.en
-            : audioNames.zh;
-    return MediaCacheService.instance.getLocalPathIfExists(path, MediaType.audio);
+            ? audio?.en
+            : audio?.zh;
+    if((path??'').isNotEmpty) {
+      return DataManager().getRootPath()+ (path??'');
+    }
+    return null;
   }
 
-  Future<String?> getLocalSoundEffect() async {
-    if (soundEffect == null) return null;
-    return MediaCacheService.instance.getLocalPathIfExists(soundEffect!, MediaType.audio);
+  String? getLocalSoundEffect() {
+    if (soundEffect == null) {
+      return null;
+    }
+    return DataManager().getRootPath()+ soundEffect!;
   }
 
   @override
@@ -69,7 +76,7 @@ class Entity extends Equatable {
     names,
     animationImage,
     realImage,
-    audioNames,
+    audio,
     soundEffect,
     typeTags,
     difficulty,

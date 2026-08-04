@@ -8,7 +8,7 @@ from json_utils import (
     save_json,
     statistics
 )
-
+from rename_audio_to_en import rename_all_audio
 
 from tts import (
     generate_all_audio
@@ -119,7 +119,7 @@ async def main():
         )
 
         resize_all_images()
-
+        data = rename_all_audio(data)
         # ==============================================
         # SAVE JSON
         # ==============================================

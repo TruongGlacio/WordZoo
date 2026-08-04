@@ -13,7 +13,7 @@ class GiftDropAnimation extends StatefulWidget {
   final List<ImageProvider> frames;
 
   /// ảnh entity cuối cùng
-  final ImageProvider entityImage;
+  final Widget entityImage;
 
   final double width;
   final double height;
@@ -50,7 +50,7 @@ class GiftDropAnimationState extends State<GiftDropAnimation> with TickerProvide
   void play() {
     controller.play(widget.entityImage);
   }
-  void playCustom(ImageProvider image) {
+  void playCustom(Widget image) {
 
     controller.play(image);
 
@@ -80,7 +80,7 @@ class GiftDropAnimationState extends State<GiftDropAnimation> with TickerProvide
               //--------------------------------------------------
               // Entity
               //--------------------------------------------------
-              EntityRevealWidget(controller: controller, image: widget.entityImage),
+             // EntityRevealWidget(controller: controller, image: widget.entityImage),
             ],
           );
         },

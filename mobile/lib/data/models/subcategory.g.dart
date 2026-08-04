@@ -8,19 +8,23 @@ part of 'subcategory.dart';
 
 Subcategory _$SubcategoryFromJson(Map<String, dynamic> json) =>
     $checkedCreate('Subcategory', json, ($checkedConvert) {
-      $checkKeys(json, allowedKeys: const ['id', 'order', 'names', 'entities']);
+      $checkKeys(json, allowedKeys: const ['id', 'order', 'names', 'entities','audio', 'real_image']);
       final val = Subcategory(
         id: $checkedConvert('id', (v) => v as String),
-        order: $checkedConvert('order', (v) => (v as num).toInt()),
-        icon: $checkedConvert('icon', (v) => (v as String)),
+        order: $checkedConvert('order', (v) => ((v??0) as num).toInt()),
+        icon: $checkedConvert('real_image', (v) => ((v??"") as String)),
         names: $checkedConvert(
           'names',
-          (v) => LocalizedNames.fromJson(v as Map<String, dynamic>),
+          (v) => LocalizedNames.fromJson((v??{}) as Map<String, dynamic>),
+        ),
+        audio: $checkedConvert(
+          'audio',
+              (v) => AudioPaths.fromJson((v??{}) as Map<String, dynamic>),
         ),
         entities: $checkedConvert(
           'entities',
           (v) => (v as List<dynamic>)
-              .map((e) => Entity.fromJson(e as Map<String, dynamic>))
+              .map((e) => Entity.fromJson((e??[]) as Map<String, dynamic>))
               .toList(),
         ),
       );
@@ -34,4 +38,5 @@ Map<String, dynamic> _$SubcategoryToJson(Subcategory instance) =>
       'icon':instance.icon,
       'names': instance.names.toJson(),
       'entities': instance.entities.map((e) => e.toJson()).toList(),
+      'audio': instance.audio?.toJson(),
     };

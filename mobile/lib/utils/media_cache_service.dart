@@ -5,7 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordzoo/utils/logger.dart';
 
-enum MediaType { image, audio }
+enum MediaType { image, audio, folder }
 
 class MediaCacheService {
   MediaCacheService._();
@@ -30,6 +30,7 @@ class MediaCacheService {
     return imageDir;
   }
 
+
   Future<Directory> get _audioDir async {
     final dir = await _localDir;
     final audioDir = Directory('${dir.path}/audio');
@@ -42,7 +43,7 @@ class MediaCacheService {
   Future<String> _getLocalPath(String remotePath, MediaType type) async {
     final fileName = remotePath.split('/').last;
     final safeName = remotePath.replaceAll('/', '_').replaceAll('\\', '_');
-    return '${type == MediaType.image ? (await _imageDir).path : (await _audioDir).path}/$safeName';
+    return type == MediaType.image ? (await _imageDir).path : (type == MediaType.folder ? (await _localDir).path : '${(await _audioDir).path}/$safeName');
   }
 
   Future<bool> exists(String remotePath, MediaType type) async {
@@ -69,32 +70,42 @@ class MediaCacheService {
     return File(localPath);
   }
 
-  Future<void> downloadAndCache(String remotePath, MediaType type) async {
-    try {
-      final localPath = await _getLocalPath(remotePath, type);
-      final file = File(localPath);
+  Future<void> downloadAndCache(
+      String remotePath,
+      MediaType type
+      ) async {
 
-      if (await file.exists()) {
-        AppLogger.i('MediaCache: already cached $remotePath');
-        return;
-      }
 
-      AppLogger.i('MediaCache: downloading $remotePath');
-      final bytes = await Supabase.instance.client.storage
-          .from('assets')
-          .download(remotePath);
+    final root =
+    await getApplicationDocumentsDirectory();
 
-      await file.writeAsBytes(bytes);
-      AppLogger.i('MediaCache: cached to $localPath');
-    } catch (e, st) {
-      AppLogger.e('MediaCache: failed to cache $remotePath', e, st);
-      rethrow;
+
+
+    final file =
+    File(
+        '${root.path}/wordzoo/$remotePath'
+    );
+
+
+    if(await file.exists()){
+
+      return;
+
     }
-  }
 
-  Future<void> downloadAndCacheBatch(List<String> remotePaths, MediaType type) async {
+
+    AppLogger.w(
+        'File not found $remotePath'
+    );
+
+
+  }
+  Future<void> downloadAndCacheBatch(List<String> remotePaths, MediaType type, {Function (int)?callbackIndexSuccess}) async {
+    int index =0;
     for (final path in remotePaths) {
       await downloadAndCache(path, type);
+      index++;
+      callbackIndexSuccess?.call(index);
     }
   }
 
@@ -121,8 +132,24 @@ class MediaCacheService {
     }
 
     AppLogger.i('MediaCache: caching ${imagePaths.length} images and ${audioPaths.length} audio files');
-    await downloadAndCacheBatch(imagePaths.toList(), MediaType.image);
-    await downloadAndCacheBatch(audioPaths.toList(), MediaType.audio);
+    int index = 0;
+    int total = imagePaths.length + audioPaths.length;
+    int percent = 0;
+    await downloadAndCacheBatch(imagePaths.toList(), MediaType.image, callbackIndexSuccess: (p0) {
+      index = p0;
+      if(index!=0)
+        {
+          percent = ((index/total)*100).toInt();
+
+        }
+    },);
+    await downloadAndCacheBatch(audioPaths.toList(), MediaType.audio, callbackIndexSuccess: (p0) {
+      index = index + p0;
+      if(index!=0)
+        {
+          percent = ((index/total)*100).toInt();
+        }
+    });
 
     final result = <String, String>{};
     for (final path in imagePaths) {

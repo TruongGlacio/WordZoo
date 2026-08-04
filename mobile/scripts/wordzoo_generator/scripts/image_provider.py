@@ -5,6 +5,7 @@ class ImageProvider(Enum):
     WIKIMEDIA = "wikimedia"
     PEXELS = "pexels"
     PIXABAY = "pixabay"
+    FLATICON = "flaticon"
     AI = "ai"
 
 
@@ -72,6 +73,34 @@ CATEGORY_PROVIDER = {
     "occupations": ImageProvider.PEXELS,
     "human_relations": ImageProvider.PEXELS,
     "family": ImageProvider.PEXELS,
+
+    # ===========================
+    # Basics
+    # ===========================
+
+    "basics": ImageProvider.FLATICON,
+
+    "numbers": ImageProvider.FLATICON,
+    "numbers_digits": ImageProvider.FLATICON,
+
+    "letters": ImageProvider.FLATICON,
+    "alphabet": ImageProvider.FLATICON,
+
+    "colors": ImageProvider.FLATICON,
+
+    "shapes": ImageProvider.FLATICON,
+
+    "directions": ImageProvider.FLATICON,
+
+    "time": ImageProvider.FLATICON,
+
+    "calendar": ImageProvider.FLATICON,
+
+    "currency": ImageProvider.FLATICON,
+
+    "symbols": ImageProvider.FLATICON,
+
+    "punctuation": ImageProvider.FLATICON,
 
     # ===========================
     # Abstract

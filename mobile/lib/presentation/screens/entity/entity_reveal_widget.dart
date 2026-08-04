@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wordzoo/utils/size_manager.dart';
 
 import 'gift_drop_controller.dart';
 
@@ -10,7 +11,7 @@ class EntityRevealWidget extends StatelessWidget {
   });
 
   final GiftDropController controller;
-  final ImageProvider image;
+  final Widget image;
 
   @override
   Widget build(BuildContext context) {
@@ -27,46 +28,45 @@ class EntityRevealWidget extends StatelessWidget {
 
         final size = w * 0.42;
 
-        final left =
-            controller.giftX * w - size / 2;
+        final left = controller.giftX * w - size / 2;
 
-        final top =
-            controller.giftY * h - size / 2;
+        final top = controller.giftY * h - size / 2;
 
-        return Stack(
-          children: [
-
-            Positioned(
-              left: left,
-              top: top,
-              child: Opacity(
-                opacity: controller.entityOpacity,
-                child: Transform.scale(
-                  scale: controller.entityScale,
-                  child: Container(
-                    width: size,
-                    height: size,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.yellow.withOpacity(0.25),
-                          blurRadius: 40,
-                          spreadRadius: 10,
+        return Visibility(
+          visible: controller.giftVisible,
+          child: Stack(
+            children: [
+              Align(
+                alignment: AlignmentGeometry.topCenter,
+                child: SafeArea(
+                  //padding: const EdgeInsets.only(top: 32),
+                  child: Opacity(
+                    opacity: controller.entityOpacity,
+                    child: Transform.scale(
+                      scale: controller.entityScale,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.21,
+                        height: MediaQuery.of(context).size.width * 0.16,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.yellow.withValues(alpha: 0.25),
+                              blurRadius: 40,
+                              spreadRadius: 10,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Image(
-                      image: image,
-                      fit: BoxFit.contain,
-                      filterQuality: FilterQuality.high,
+                        child: image,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
 
-          ],
+            ],
+          ),
         );
       },
     );

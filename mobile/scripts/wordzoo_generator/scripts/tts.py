@@ -80,19 +80,14 @@ async def process_node_audio(
 
     tasks = []
 
-
+    # luôn dùng tên tiếng Anh làm tên file
+    english_name = clean_filename(
+        node["names"]["en"]
+    )
     for language, text in iter_languages(node):
 
 
-        filename = (
-
-                clean_filename(text)
-
-                +
-
-                AUDIO_EXTENSION
-
-        )
+        filename = ( english_name +  AUDIO_EXTENSION  )
 
 
         folder = PathBuilder.localized_folder(

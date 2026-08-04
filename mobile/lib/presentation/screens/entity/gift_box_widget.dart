@@ -27,32 +27,31 @@ class GiftBoxWidget extends StatelessWidget {
 
         final giftSize = w * 0.22;
 
-        final left =
-            controller.giftX * w - giftSize / 2;
+        double left = controller.giftX * w - giftSize / 2;
+        if(left<w/2 -giftSize/2) {
+          left = w/2 - giftSize/2;
+        }
 
-        final top =
-            controller.giftY * h - giftSize / 2;
+        double top = controller.giftY * h - giftSize / 2;
+        // if(top<=0)
+        //   {top=0;}
 
         final image = controller.currentFrame < frames.length
             ? frames[controller.currentFrame]
             : frames.last;
 
+        print('left:$left, top:$top');
         return Stack(
+          fit: StackFit.expand,
           children: [
-
             Positioned(
               left: left,
               top: top,
-              child: SizedBox(
-                width: giftSize,
-                height: giftSize,
-                child: Transform.rotate(
-                  angle: controller.giftRotation,
-                  child: Image(
-                    image: image,
-                    fit: BoxFit.contain,
-                  ),
-                ),
+              child: Image(
+                image: image,
+                width: 120,
+                height: 120,
+                fit: BoxFit.contain,
               ),
             ),
 

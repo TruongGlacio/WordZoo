@@ -10,7 +10,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 
-INPUT_JSON = PROJECT_ROOT / "data_version1.json"
+INPUT_JSON = PROJECT_ROOT / "data_version1_final.json"
 
 OUTPUT_JSON = PROJECT_ROOT / "data_version1_final.json"
 
@@ -33,7 +33,7 @@ ENTITY_FOLDER = "entitys"
 # ==========================================================
 
 AUDIO_EXTENSION = ".mp3"
-
+FLATICON_API_KEY = "..."
 VOICE_MAP = {
 
     "vi": "vi-VN-HoaiMyNeural",

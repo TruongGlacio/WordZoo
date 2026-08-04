@@ -1,10 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'package:wordzoo/data/service/zip_asset_service.dart';
 import '../models/word_zoo_data.dart';
 import 'package:wordzoo/utils/constants.dart';
 import 'package:wordzoo/utils/logger.dart';
 import 'package:wordzoo/utils/media_cache_service.dart';
+import 'package:http/http.dart' as http;
 
 abstract class DataSyncRepository {
   Future<WordZooData?> getCachedData();
@@ -13,6 +18,7 @@ abstract class DataSyncRepository {
   Future<void> precacheAssets();
   Future<WordZooData> getData();
   Future<Map<String, String>> getLocalMediaPaths();
+  Future<void> syncCategoryZip(Map<String, dynamic> json);
 }
 
 class DataSyncRepositoryImpl implements DataSyncRepository {
@@ -21,10 +27,9 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
   static DataSyncRepositoryImpl get instance => _instance;
   factory DataSyncRepositoryImpl() => _instance;
 
-
   final SupabaseClient _client = Supabase.instance.client;
-  final String dataBucketName= 'data';
-  final String assetsBucketName= 'assets';
+  final String dataBucketName = 'data';
+  final String assetsBucketName = 'assets';
   @override
   Future<WordZooData?> getCachedData() async {
     try {
@@ -39,6 +44,7 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       AppLogger.i('getCachedData: loading cached data...');
       final json = jsonDecode(jsonStr) as Map<String, dynamic>;
       final data = WordZooData.fromJson(json);
+      DataManager().setCategories(wordZooData: data);
       AppLogger.i('getCachedData: loaded ${data.categories.length} categories, version ${data.version}');
       return data;
     } catch (e, st) {
@@ -72,11 +78,7 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       final localVersion = box.get(AppConstants.dataVersionKey);
       if (localVersion == null) return true;
 
-      final response = await _client
-          .from('data_versions')
-          .select()
-          .eq('is_active', true)
-          .single();
+      final response = await _client.from('data_versions').select().eq('is_active', true).single();
 
       final remoteVersion = response['version'] as String;
       return remoteVersion != localVersion;
@@ -91,20 +93,16 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     try {
       final box = Hive.box<String>('app_data');
 
-      final response = await _client
-          .from('data_versions')
-          .select()
-          .eq('is_active', true)
-          .single();
+      final response = await _client.from('data_versions').select().eq('is_active', true).single();
 
       final remoteVersion = response['version'] as String;
-
+      final fileName = 'data-v$remoteVersion.json';
       AppLogger.i('Downloading data.json version $remoteVersion');
-      final bytes = await _client.storage
-          .from(dataBucketName)
-          .download('data-v$remoteVersion.json');
-
-      final jsonStr = utf8.decode(bytes);
+      final list = await _client.storage.listBuckets();
+      final jsonUrl = await _client.storage.from(dataBucketName).getPublicUrl(fileName);
+      print(Supabase.instance.client.storage.url);
+      final response1 = await http.get(Uri.parse(jsonUrl));
+      final jsonStr = response1.body;
       final json = jsonDecode(jsonStr) as Map<String, dynamic>;
 
       if (json['version'] == null || json['categories'] == null) {
@@ -116,8 +114,9 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
 
       AppLogger.i('Data synced successfully: version $remoteVersion');
 
+      await syncCategoryZip(json);
       // Cache media files
-      await _cacheMediaFromJson(json);
+      //await _cacheMediaFromJson(json);
     } catch (e, st) {
       AppLogger.e('syncData failed', e, st);
       rethrow;
@@ -132,9 +131,11 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
 
       for (final category in categories) {
         // Category-level media
-        final icon = category['icon'] as String?;
-        final background = category['background'] as String?;
-        final localizedNamesAudio = category['localized_names_audio'] as Map<String, dynamic>?;
+        await MediaCacheService.instance.downloadAndCacheBatch([category['id'] as String], MediaType.folder);
+
+        final icon = category['real_image'] as String?;
+        final background = category['real_image'] as String?;
+        final localizedNamesAudio = category['audio'] as Map<String, dynamic>?;
 
         if (icon != null && icon.isNotEmpty) imagePaths.add(icon);
         if (background != null && background.isNotEmpty) imagePaths.add(background);
@@ -149,8 +150,8 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
         if (subcategories != null) {
           for (final sub in subcategories) {
             final subIcon = sub['icon'] as String?;
-            final subBackground = sub['background'] as String?;
-            final subLocalizedNamesAudio = sub['localized_names_audio'] as Map<String, dynamic>?;
+            final subBackground = sub['real_image'] as String?;
+            final subLocalizedNamesAudio = sub['audio'] as Map<String, dynamic>?;
 
             if (subIcon != null && subIcon.isNotEmpty) imagePaths.add(subIcon);
             if (subBackground != null && subBackground.isNotEmpty) imagePaths.add(subBackground);
@@ -167,8 +168,8 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
                 if (entity is Map<String, dynamic>) {
                   final realImage = entity['real_image'] as String?;
                   final animationImage = entity['animation_image'] as String?;
-                  final audioNames = entity['audio_names'] as Map<String, dynamic>?;
-                  final soundEffect = entity['sound_effect'] as String?;
+                  final audioNames = entity['audio'] as Map<String, dynamic>?;
+                  final soundEffect = entity['animal_sound'] as String?;
 
                   if (realImage != null && realImage.isNotEmpty) imagePaths.add(realImage);
                   if (animationImage != null && animationImage.isNotEmpty) imagePaths.add(animationImage);
@@ -229,16 +230,15 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
   }
 
   Future<String?> getLocalImagePath(String remotePath) async {
-    try {
-      final file = await MediaCacheService.instance.getLocalFile(remotePath, MediaType.image);
-      if (await file.exists()) {
-        return file.path;
-      }
-      return null;
-    } catch (e, st) {
-      AppLogger.e('getLocalImagePath failed', e, st);
-      return null;
+    final dir = await getApplicationDocumentsDirectory();
+
+    final file = File('${dir.path}/wordzoo/$remotePath');
+
+    if (await file.exists()) {
+      return file.path;
     }
+
+    return null;
   }
 
   Future<String?> getLocalAudioPath(String remotePath) async {
@@ -251,6 +251,30 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     } catch (e, st) {
       AppLogger.e('getLocalAudioPath failed', e, st);
       return null;
+    }
+  }
+
+  Future<void> syncCategoryZip(Map<String, dynamic> json) async {
+    final zipFiles = json['zip_files'] as Map<String, dynamic>?;
+
+    if (zipFiles == null) {
+      return;
+    }
+
+    int index = 0;
+    DataManager().downloadProgressModel.notiDownloadProgress((0).toInt(), true);
+    for (final item in zipFiles.entries) {
+      final categoryId = item.key;
+      final String zipName = item.value as String;
+      await ZipAssetService.instance.downloadAndExtractCategoryZip(categoryId, zipName);
+      index++;
+      DataManager().downloadProgressModel.notiDownloadProgress((index * 100 / zipFiles.length).toInt(), true);
+      if (index == zipFiles.length) {
+        DataManager().downloadProgressModel.notiDownloadProgress(100, true);
+        Future.delayed(const Duration(seconds: 1), () {
+          DataManager().downloadProgressModel.notiDownloadProgress(100, false);
+        });
+      }
     }
   }
 }

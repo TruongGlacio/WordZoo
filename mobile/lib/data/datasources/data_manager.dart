@@ -1,21 +1,32 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:wordzoo/data/models/audio_paths.dart';
 import 'package:wordzoo/data/models/category.dart';
 import 'package:wordzoo/data/models/entity.dart';
 import 'package:wordzoo/data/models/localized_names.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
+import 'package:wordzoo/data/models/word_zoo_data.dart';
 import 'package:wordzoo/generated/assets.dart';
 
-class DummyData {
-  static final DummyData _singletonDummyData = DummyData._internal();
-  static DummyData get getInstance => _singletonDummyData;
-  factory DummyData() {
+class DataManager {
+  static final DataManager _singletonDummyData = DataManager._internal();
+  static DataManager get getInstance => _singletonDummyData;
+  factory DataManager() {
     return _singletonDummyData;
   }
-  DummyData._internal();
-
+  DataManager._internal();
+  List<Category> _categories = [];
+  String _rootPath='';
+  void setRootPath(String? rootPath)
+  {
+    _rootPath = rootPath??'';
+  }
+  String getRootPath(){
+    return _rootPath;
+  }
   List<Category> getCategories() {
-    return [
+    if(_categories.isEmpty) {
+      _categories = [
        Category(
            id: CategoryType.animals.name,
            type: CategoryType.animals,
@@ -28,7 +39,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -37,7 +48,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -46,7 +57,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -55,7 +66,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -64,7 +75,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -73,7 +84,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -82,7 +93,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -91,7 +102,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -100,7 +111,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -109,7 +120,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -118,7 +129,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -127,7 +138,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -136,7 +147,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: false, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -145,7 +156,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -154,7 +165,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -163,7 +174,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -172,7 +183,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -181,7 +192,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -190,7 +201,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -199,7 +210,7 @@ class DummyData {
                  entities: [
                    Entity(id: "Dog", isPremium: true, names: LocalizedNames(vi: 'Chó', en: 'Dog', zh: '狗'), animationImage: "",
                        realImage: Assets.assets.subCategoryAvata.animals.wildAnimals.path,
-                       audioNames:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
+                       audio:AudioPaths(vi:  Assets.assets.audio.dragonStudioCowMoo390282, en:  Assets.assets.audio.dragonStudioCowMoo390282, zh:  Assets.assets.audio.dragonStudioCowMoo390282),
                        soundEffect:  Assets.assets.audio.dragonStudioCowMoo390282,
                        typeTags: [], difficulty: 1)
                  ]
@@ -242,8 +253,8 @@ class DummyData {
           ]
       ),
       Category(
-          id: CategoryType.humanRelations.name,
-          type: CategoryType.humanRelations,
+          id: CategoryType.humanrelations.name,
+          type: CategoryType.humanrelations,
           names: const LocalizedNames(vi: 'Con người', en: 'Humans', zh: '人类'),
           icon: Assets.assets.categoryCard.humanRelationsCard2.path,
           background: Assets.assets.background.peopleCategoryMap2k.path,
@@ -259,6 +270,25 @@ class DummyData {
           ]
       ),
     ];
+    }
+    return _categories;
+  }
+  final DownloadProgressModel downloadProgressModel = DownloadProgressModel();
 
+  void setCategories({required WordZooData wordZooData}){
+    _categories = wordZooData.categories;
+  }
+}
+
+class DownloadProgressModel extends ChangeNotifier {
+  int _downloadProgress = 0;
+  bool needDownloadFile = false;
+
+  // Getter to expose the private variable safely
+  int get downloadProgress => _downloadProgress;
+  void notiDownloadProgress(int downloadProgress,bool needDownload) {
+    _downloadProgress = downloadProgress;
+    needDownloadFile = needDownload;
+    notifyListeners();
   }
 }

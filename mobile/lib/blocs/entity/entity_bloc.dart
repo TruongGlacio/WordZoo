@@ -1,6 +1,8 @@
+import 'dart:math';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:wordzoo/data/datasources/dummy_data.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import '../../data/models/entity.dart';
 import '../../data/models/subcategory.dart';
 import '../../data/repositories/data_sync_repository.dart';
@@ -12,7 +14,8 @@ part 'entity_state.dart';
 class EntityBloc extends Bloc<EntityEvent, EntityState> {
   final DataSyncRepository dataSyncRepo;
   final ProgressRepository progressRepo;
-
+  Entity? selectedEntity;
+  bool? isVisibleDetailPanel = false;
   EntityBloc({
     required this.dataSyncRepo,
     required this.progressRepo,
@@ -28,34 +31,38 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
     Emitter<EntityState> emit,
   ) async {
     emit(const EntityLoading());
+
     try {
       final data = await dataSyncRepo.getData();
       // Find category and subcategory
+
       final category = data.categories.firstWhere(
         (cat) => cat.id == event.categoryId,
         orElse: () {
-          return DummyData().getCategories().first;
-          //throw Exception('Category not found');
+          //return DummyData().getCategories().first;
+          throw Exception('Category not found');
         },
       );
       final Subcategory subcategory = category.subcategories.firstWhere(
         (sub) => sub.id == event.subcategoryId,
         orElse: () => throw Exception('Subcategory not found'),
       );
+      selectedEntity = subcategory.entities.first;
+
       emit(EntityLoaded(
         entities: subcategory.entities,
-        selectedEntity: null,
+        selectedEntity: selectedEntity,
       ));
     } catch (e) {
-      final Subcategory subcategory = DummyData().getCategories().first.subcategories.firstWhere(
+/*      final Subcategory subcategory = DummyData().getCategories().first.subcategories.firstWhere(
             (sub) => sub.id == event.subcategoryId,
         orElse: () => throw Exception('Subcategory not found'),
       );
       emit(EntityLoaded(
         entities: subcategory.entities,
         selectedEntity: null,
-      ));
-      //emit(EntityError(e.toString()));
+      ));*/
+      emit(EntityError(e.toString()));
     }
   }
 
@@ -69,9 +76,12 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
         (e) => e.id == event.entityId,
         orElse: () => throw Exception('Entity not found'),
       );
+      selectedEntity = entity;
+      isVisibleDetailPanel = event.isVisibleDetailPanel;
       emit(EntityLoaded(
         entities: current.entities,
         selectedEntity: entity,
+        isVisibleDetailPanel: isVisibleDetailPanel,
       ));
     }
   }

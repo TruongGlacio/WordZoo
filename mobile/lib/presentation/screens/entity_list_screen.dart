@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -57,87 +59,106 @@ class _EntityListScreenState extends State<EntityListScreen> {
             color: Colors.transparent,
             image: DecorationImage(image: AssetImage(Assets.assets.background.entityList.path), fit: BoxFit.fill),
           ),
-          child: SafeArea(
-            right: false,
-            left: false,
-            child: BlocBuilder<EntityBloc, EntityState>(
-              builder: (context, state) {
-                if (state is EntityLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is EntityLoaded) {
-                  final selectedEntity = state.selectedEntity;
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Top detail panel (70%)
-                     Expanded(
-                        child: selectedEntity != null
-                            ? AirplaneAnimation(
+          child: BlocBuilder<EntityBloc, EntityState>(
+            builder: (context, state) {
+              if (state is EntityLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is EntityLoaded) {
+                final selectedEntity = state.selectedEntity;
+                return Stack(
+                  children: [
+                    SafeArea(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // Top detail panel (70%)
+                          Expanded(
+                            child: selectedEntity != null
+                                ? Visibility(
+                                visible: state.isVisibleDetailPanel ?? true,
                                 child: DetailPanel(entity: selectedEntity),
-                              )
-                            : Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.selectEntityToViewDetails,
-                                  style: AppTextStyles.body,
-                                ),
+                            )
+                                : Center(
+                              child: Text(
+                                AppLocalizations.of(context)!.selectEntityToViewDetails,
+                                style: AppTextStyles.body,
                               ),
+                            ),
+                          ),
+                          // Bottom horizontal list (30%)
+                          SizedBox(
+                            height: SizeManager().imageMedium,
+                            child: HorizontalEntityList(
+                              entities: state.entities,
+                              selectedId: selectedEntity?.id,
+                              onSelect: (entity) {
+                                giftKey.currentState?.playCustom(Image.file(
+                                  File(entity.getLocalIcon()),
+                                  fit: BoxFit.fill,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 40));
+                                  },
+                                ));
+                                context.read<EntityBloc>().add(SelectEntity(entity.id, false ),);
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-
-                      // Bottom horizontal list (30%)
-                      SizedBox(
-                        height: SizeManager().imageMedium,
-                        child: HorizontalEntityList(
-                          entities: state.entities,
-                          selectedId: selectedEntity?.id,
-                          onSelect: (entity) {
-                            giftKey.currentState?.playCustom(AssetImage(Assets.assets.icons.flight.path));
-                            context.read<EntityBloc>().add(SelectEntity(entity.id),);
-                          },
-                        ),
+                    ),
+                    Visibility(
+                      visible: state.isVisibleDetailPanel ?? false,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GiftDropAnimation(
+                            key: giftKey,
+                            entityImage: Image.file(
+                              File(selectedEntity!.getLocalIcon()),
+                              fit: BoxFit.contain,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 40));
+                              },
+                            ),
+                            frames: [
+                              /*AssetImage(Assets.assets.entityAnimationsFrame.frame1.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame2.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame3.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame4.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame5.path,),*/
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame6.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame7.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame8.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame9.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame10.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame11.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame12.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame13.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame14.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame15.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame16.path,),
+                              AssetImage(Assets.assets.entityAnimationsFrame.frame17.path,),
+                            ],
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height *0.7,
+                            onFinished: () {
+                              context.read<EntityBloc>().add(SelectEntity(selectedEntity.id, true ),);
+                            },
+                          ),
+                        ],
                       ),
-                    ],
-                  );
-                } else if (state is EntityError) {
-                  return Center(child: Text(AppLocalizations.of(context)!.errorWithMessage(state.message)));
-                }
-                return const SizedBox.shrink();
-              },
-            ),
-          ),
-          ),
-          Container(
-            color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GiftDropAnimation(
-                  key: giftKey,
-                  entityImage: AssetImage(
-                    Assets.assets.icons.flight.path,
-                  ),
-                  frames: [
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame1.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame2.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame3.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame4.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame5.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame6.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame7.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame8.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame9.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame10.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame11.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame12.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame13.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame14.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame15.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame16.path,),
-                    AssetImage(Assets.assets.entityAnimationsFrame.frame17.path,),
+                    ),
                   ],
-                ),
-              ],
-            ),
+                );
+              } else if (state is EntityError) {
+                return Center(child: Text(AppLocalizations.of(context)!.errorWithMessage(state.message)));
+              }
+              return const SizedBox.shrink();
+            },
           ),
+          ),
+
           SafeArea(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,

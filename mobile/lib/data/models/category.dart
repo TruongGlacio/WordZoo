@@ -2,13 +2,16 @@ import 'dart:ui';
 
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'audio_paths.dart';
 import 'subcategory.dart';
 import 'localized_names.dart';
 import 'package:wordzoo/utils/media_cache_service.dart';
+import 'package:wordzoo/generated/assets.dart';
 
 part 'category.g.dart';
 
-enum CategoryType { animals, plants, vehicles, humanRelations }
+enum CategoryType { animals, plants, vehicles, humanrelations,basics  }
 
 @JsonSerializable(explicitToJson: true)
 class Category extends Equatable {
@@ -18,17 +21,19 @@ class Category extends Equatable {
   final String icon;
   final String background;
   @JsonKey(name: 'signpost_style')
-  final String signpostStyle;
+  final String? signpostStyle;
   final List<Subcategory> subcategories;
+  AudioPaths? audio;
 
-  const Category({
+   Category({
     required this.id,
     required this.type,
     required this.names,
     required this.icon,
     required this.background,
-    required this.signpostStyle,
+     this.signpostStyle,
     required this.subcategories,
+     this.audio
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>
@@ -37,16 +42,16 @@ class Category extends Equatable {
 
   String getName(String lang) => names.getBy(lang);
 
-  Future<String?> getLocalIcon() async {
-    return MediaCacheService.instance.getLocalPathIfExists(icon, MediaType.image);
+  String getLocalIconPath()  {
+    return DataManager().getRootPath()+ icon;
   }
 
-  Future<String?> getLocalBackground() async {
-    return MediaCacheService.instance.getLocalPathIfExists(background, MediaType.image);
+  String getLocalBackground()  {
+    return DataManager().getRootPath()+ background;
   }
 
   @override
-  List<Object?> get props => [id, type, names, subcategories];
+  List<Object?> get props => [id, type, names, subcategories, audio];
 }
 
 class CategoryLayout {

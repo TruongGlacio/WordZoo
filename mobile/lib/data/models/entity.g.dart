@@ -18,31 +18,26 @@ Entity _$EntityFromJson(Map<String, dynamic> json) => $checkedCreate(
         'names',
         'animation_image',
         'real_image',
-        'audio_names',
         'sound_effect',
         'type_tags',
         'difficulty',
+        'audio',
+        'animal_sound'
       ],
     );
     final val = Entity(
       id: $checkedConvert('id', (v) => v as String),
-      isPremium: $checkedConvert('is_premium', (v) => v as bool),
+      isPremium: $checkedConvert('is_premium', (v) =>( v??false) as bool?),
       names: $checkedConvert(
         'names',
         (v) => LocalizedNames.fromJson(v as Map<String, dynamic>),
       ),
-      animationImage: $checkedConvert('animation_image', (v) => v as String),
-      realImage: $checkedConvert('real_image', (v) => v as String),
-      audioNames: $checkedConvert(
-        'audio_names',
-        (v) => AudioPaths.fromJson(v as Map<String, dynamic>),
-      ),
-      soundEffect: $checkedConvert('sound_effect', (v) => v as String?),
-      typeTags: $checkedConvert(
-        'type_tags',
-        (v) => (v as List<dynamic>).map((e) => e as String).toList(),
-      ),
-      difficulty: $checkedConvert('difficulty', (v) => (v as num).toInt()),
+      animationImage: $checkedConvert('animation_image', (v) => (v??"") as String),
+      realImage: $checkedConvert('real_image', (v) => (v??"") as String),
+      audio: $checkedConvert('audio', (v) => AudioPaths.fromJson((v??{}) as Map<String, dynamic>),),
+      soundEffect: $checkedConvert('animal_sound', (v) => (v??"") as String?),
+      typeTags: $checkedConvert('type_tags', (v) => ((v??[]) as List<dynamic>).map((e) => (e??"") as String).toList(),),
+      difficulty: $checkedConvert('difficulty', (v) => ((v??0) as num).toInt()),
     );
     return val;
   },
@@ -62,7 +57,7 @@ Map<String, dynamic> _$EntityToJson(Entity instance) => <String, dynamic>{
   'names': instance.names.toJson(),
   'animation_image': instance.animationImage,
   'real_image': instance.realImage,
-  'audio_names': instance.audioNames.toJson(),
+  'audio_names': instance.audio?.toJson(),
   'sound_effect': instance.soundEffect,
   'type_tags': instance.typeTags,
   'difficulty': instance.difficulty,

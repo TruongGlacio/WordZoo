@@ -157,8 +157,6 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
-  final AssetGenImage chatGPTImage1027521Thg82026 = const AssetGenImage('assets/icons/ChatGPT Image 10_27_52 1 thg 8, 2026.png');
-  final AssetGenImage chatGPTImage1102381Thg82026 = const AssetGenImage('assets/icons/ChatGPT Image 11_02_38 1 thg 8, 2026.png');
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');

@@ -26,7 +26,9 @@ class RegisterRequested extends AuthEvent {
 class GuestModeRequested extends AuthEvent {
   const GuestModeRequested();
 }
-
+class LoadingDataProcess extends AuthEvent {
+  const LoadingDataProcess();
+}
 class LogoutRequested extends AuthEvent {
   const LogoutRequested();
 }

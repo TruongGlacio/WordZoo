@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -135,9 +136,14 @@ class _SubCategoryItem extends StatelessWidget {
                 width: SizeManager().iconMediumX,
                 margin: EdgeInsets.only(top: SizeManager().spacingExtraSmall),
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(subcategory.icon),fit:BoxFit.fill ),
-                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)
+                  borderRadius: BorderRadius.circular(SizeManager().iconMediumX)
                 ),
+                clipBehavior: Clip.hardEdge,
+                //alignment: Alignment.center,
+                child: Image.file(
+                  File(subcategory.getLocalIcon()),
+                  fit: BoxFit.fill,
+                ) ,
               ),
               Container(
                 decoration: BoxDecoration(

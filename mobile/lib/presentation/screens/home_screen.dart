@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
-import 'package:wordzoo/data/datasources/dummy_data.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/category.dart';
 import 'package:wordzoo/data/models/localized_names.dart';
 import 'package:wordzoo/generated/assets.dart';
@@ -30,7 +30,7 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    for(Category category in DummyData().getCategories())
+    for(Category category in DataManager().getCategories())
       {
         categoryListWidget.add(
             _CategoryCard(
@@ -55,11 +55,12 @@ class HomeScreenState extends State<HomeScreen> {
           gradient: AppColors.gradientSkyGrass,
           image: DecorationImage(image: AssetImage(Assets.assets.background.home1.path), fit: BoxFit.fill)
         ),
-        child: SafeArea(
-          child: Column(
-            children: [
-              Expanded(
-                flex: 3,
+        child: Column(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Padding(
+                padding: EdgeInsets.only(top: SizeManager().spacing32),
                 child: ListView(
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
@@ -67,8 +68,10 @@ class HomeScreenState extends State<HomeScreen> {
                   children: categoryListWidget
                 ),
               ),
-              Gap(SizeManager().spacing32),
-              Column(
+            ),
+            Gap(SizeManager().spacing32),
+            SafeArea(
+              child: Column(
                 children: [
                   Row(
                     mainAxisSize: MainAxisSize.max,
@@ -108,8 +111,8 @@ class HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

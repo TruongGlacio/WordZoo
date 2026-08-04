@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -31,120 +33,118 @@ class _DetailPanelState extends State<DetailPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final isPremiumLocked = widget.entity.isPremium &&
-        context.watch<IapBloc>().state is! PremiumActive;
+    final isPremiumLocked = (widget.entity.isPremium ?? false) && context.watch<IapBloc>().state is! PremiumActive;
 
     return Padding(
-      padding: SizeManager().paddingLarge,
-      child: Column(
+      padding: EdgeInsetsGeometry.symmetric(horizontal: SizeManager().spacing128),
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Real image
           Expanded(
-            child: InkWell(
-              onTap: () async {
-                if (widget.entity.soundEffect != null)
-                  {
-                    await _audioPlayer.play(DeviceFileSource(widget.entity.soundEffect!));
-                  }
-
-              },
-              child: Container(
-                width: SizeManager().imageXLarge,
-                //height: SizeManager().imageXLarge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-                  boxShadow: const [
-                    BoxShadow(
-                      color: AppColors.softShadow,
-                      blurRadius: 20,
-                      spreadRadius: 5,
+            flex: 2,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  onTap: () async {
+                    if (widget.entity.soundEffect != null) {
+                      await _audioPlayer.play(DeviceFileSource(widget.entity.soundEffect!));
+                    }
+                  },
+                  child: Container(
+                    width: SizeManager().imageXXLarge,
+                    height: SizeManager().imageXXLarge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+                      boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+                      child: Image.file(
+                        File(widget.entity.getLocalIcon()),
+                        fit: BoxFit.contain,
+                        width: SizeManager().imageXXLarge,
+                        height: SizeManager().imageXXLarge,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Gap(SizeManager().spacing32),
+          // Names
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                StatefulBuilder(
+                  builder: (context, setState) {
+                    return Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            final audioPath = widget.entity.getLocalAudio(_currentLang);
+                            if (audioPath != null) {
+                              setState(() {
+                                _audioPlayer.play(DeviceFileSource(audioPath, mimeType: 'audio')).then((value) {
+                                  setState((){
+                                    _audioPlayer.stop();
+                                  });
+                                },);
+                              });
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              Text(widget.entity.names.getBy(_currentLang), style: AppTextStyles.heading),
+                              Gap(SizeManager().spacing8),
+                              Icon(_audioPlayer.state == PlayerState.playing ? Icons.volume_up : Icons.volume_down, color: AppColors.earthBrown, size: SizeManager().imageSmall),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                Gap(SizeManager().spacing8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    _LangButton(label: 'VI', isSelected: _currentLang == 'vi', onTap: () => setState(() => _currentLang = 'vi')),
+                    Gap(SizeManager().spacing12),
+                    _LangButton(label: 'EN', isSelected: _currentLang == 'en', onTap: () => setState(() => _currentLang = 'en')),
+                    Gap(SizeManager().spacing12),
+                    _LangButton(label: 'ZH', isSelected: _currentLang == 'zh', onTap: () => setState(() => _currentLang = 'zh')),
+                  ],
+                ),
+                Gap(SizeManager().spacing8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        context.read<EntityBloc>().add(MarkAsLearned(widget.entity.id));
+                      },
+                      icon: Icon(Icons.check_circle_outline, color: AppColors.grassGreen, size: SizeManager().imageSmall),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        context.read<EntityBloc>().add(ToggleFavorite(widget.entity.id));
+                      },
+                      icon: Icon(Icons.star_border, size: SizeManager().imageSmall),
                     ),
                   ],
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
-                  child: Image.network(
-                    widget.entity.realImage,
-                    fit: BoxFit.cover,
-                    width: SizeManager().imageXLarge,
-                    //height: SizeManager().imageXLarge,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Container(
-                        color: Colors.grey[300],
-                        child: const Icon(Icons.image, size: 80),
-                      );
-                    },
-                  ),
-                ),
-              ),
+              ],
             ),
-          ),
-          Gap(SizeManager().spacing24),
-          // Names
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: () async {
-                  final audioPath = _currentLang == 'vi'
-                      ? widget.entity.audioNames.vi
-                      : _currentLang == 'en'
-                      ? widget.entity.audioNames.en
-                      : widget.entity.audioNames.zh;
-                  await _audioPlayer.play(DeviceFileSource(audioPath));
-                },
-                child: Text(
-                  widget.entity.names.getBy(_currentLang),
-                  style: AppTextStyles.heading,
-                ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _LangButton(
-                    label: 'VI',
-                    isSelected: _currentLang == 'vi',
-                    onTap: () => setState(() => _currentLang = 'vi'),
-                  ),
-                  Gap(SizeManager().spacing12),
-                  _LangButton(
-                    label: 'EN',
-                    isSelected: _currentLang == 'en',
-                    onTap: () => setState(() => _currentLang = 'en'),
-                  ),
-                  Gap(SizeManager().spacing12),
-                  _LangButton(
-                    label: 'ZH',
-                    isSelected: _currentLang == 'zh',
-                    onTap: () => setState(() => _currentLang = 'zh'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          // Language toggles
-          Gap(SizeManager().spacing16),
-          // Audio buttons
-          // Action buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton.icon(
-                onPressed: () {
-                  context.read<EntityBloc>().add(MarkAsLearned(widget.entity.id));
-                },
-                icon: const Icon(Icons.check_circle),
-                label: Text(AppLocalizations.of(context)!.learned),
-              ),
-              Gap(SizeManager().spacing16),
-              IconButton(
-                onPressed: () {
-                  context.read<EntityBloc>().add(ToggleFavorite(widget.entity.id));
-                },
-                icon: const Icon(Icons.star_border),
-              ),
-            ],
           ),
         ],
       ),
@@ -157,20 +157,13 @@ class _LangButton extends StatelessWidget {
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _LangButton({
-    required this.label,
-    required this.isSelected,
-    required this.onTap,
-  });
+  const _LangButton({required this.label, required this.isSelected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onTap,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: isSelected ? AppColors.leafGreen : Colors.grey[300],
-        foregroundColor: isSelected ? Colors.white : AppColors.darkText,
-      ),
+      style: ElevatedButton.styleFrom(backgroundColor: isSelected ? AppColors.leafGreen : Colors.grey[300], foregroundColor: isSelected ? Colors.white : AppColors.darkText),
       child: Text(label),
     );
   }
