@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
@@ -92,9 +93,10 @@ class _DetailPanelState extends State<DetailPanel> {
                         InkWell(
                           onTap: () {
                             final audioPath = widget.entity.getLocalAudio(_currentLang);
+                            print('check exit audio file ${File(audioPath!).existsSync()}');
                             if (audioPath != null) {
                               setState(() {
-                                _audioPlayer.play(DeviceFileSource(audioPath, mimeType: 'audio')).then((value) {
+                                AudioService().play(audioPath,onEnd: () {
                                   setState((){
                                     _audioPlayer.stop();
                                   });

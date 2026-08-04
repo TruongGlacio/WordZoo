@@ -75,7 +75,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                           Expanded(
                             child: selectedEntity != null
                                 ? Visibility(
-                                visible: state.isVisibleDetailPanel ?? true,
+                                visible: state.isVisibleDetailPanel ?? false,
                                 child: DetailPanel(entity: selectedEntity),
                             )
                                 : Center(
@@ -107,7 +107,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                       ),
                     ),
                     Visibility(
-                      visible: state.isVisibleDetailPanel ?? false,
+                      visible: !(state.isVisibleDetailPanel ?? false),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.end,
