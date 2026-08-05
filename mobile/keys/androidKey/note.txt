@@ -1,0 +1,26 @@
+Enter keystore password:
+wordzoo123456aA@
+
+Re-enter new password:
+wordzoo123456aA@
+
+What is your first and last name?
+Bui Xuan Truong
+
+What is the name of your organizational unit?
+Mobile
+
+What is the name of your organization?
+Personal
+
+What is the name of your City or Locality?
+Ha Noi
+
+What is the name of your State or Province?
+Ha Noi
+
+What is the two-letter country code for this unit?
+VN
+
+Is CN=Bui Xuan Truong, OU=Mobile, O=Personal, L=Ha Noi, ST=Ha Noi, C=VN correct?
+yes

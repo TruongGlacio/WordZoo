@@ -62,6 +62,7 @@ class GiftDropAnimationState extends State<GiftDropAnimation> with TickerProvide
     controller.play(image);
 
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
@@ -69,6 +70,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                 return Stack(
                   children: [
                     SafeArea(
+                      left: false,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -93,6 +95,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                               entities: state.entities,
                               selectedId: selectedEntity?.id,
                               onSelect: (entity) {
+                                //giftKey.currentState?.
                                 giftKey.currentState?.playCustom(Image.file(
                                   File(entity.getLocalIcon()),
                                   fit: BoxFit.fill,
@@ -156,8 +159,9 @@ class _EntityListScreenState extends State<EntityListScreen> {
           ),
 
           SafeArea(
-            child: Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: const EdgeInsets.only(top: 36),
@@ -165,6 +169,31 @@ class _EntityListScreenState extends State<EntityListScreen> {
                     onPressed: () => Navigator.pop(context),
                     icon: Image.asset(Assets.assets.icons.backPage.path, width: SizeManager().iconXLarge, height: SizeManager().iconXLarge),
                   ),
+                ),
+                Container(
+                  width: 50,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+                  ),
+                  child: StatefulBuilder(builder: (context, setState) {
+                    return SfSlider.vertical(
+                      min: AudioService().playbackRateMin,
+                      max: AudioService().playbackRateMax,
+                      interval: 0.1,
+                      showTicks: true,
+                      showLabels: false,
+                      enableTooltip: true,
+                      minorTicksPerInterval: 0,
+                      onChanged: (value) {
+                        setState(() {
+                          AudioService().setPlaybackRateValue(double.parse(value.toString()));
+                        },);
+                      },
+                      value: AudioService().getPlaybackRateValue(),
+                    );
+                  },),
                 ),
               ],
             ),

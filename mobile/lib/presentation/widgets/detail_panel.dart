@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../blocs/iap/iap_bloc.dart';
@@ -24,7 +25,7 @@ class DetailPanel extends StatefulWidget {
 
 class _DetailPanelState extends State<DetailPanel> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  String _currentLang = 'vi';
+  String _currentLang = DataManager().getCurrentLocale().languageCode;
 
   @override
   void dispose() {
@@ -46,6 +47,7 @@ class _DetailPanelState extends State<DetailPanel> {
             flex: 2,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 InkWell(
                   onTap: () async {
@@ -54,19 +56,24 @@ class _DetailPanelState extends State<DetailPanel> {
                     }
                   },
                   child: Container(
-                    width: SizeManager().imageXXLarge,
+                    width: SizeManager().imageXXXLarge,
                     height: SizeManager().imageXXLarge,
+                    constraints: BoxConstraints(
+                      maxWidth: SizeManager().imageXXXLarge,
+                      maxHeight: SizeManager().imageXXLarge,
+                    ),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
                       //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
                     ),
                     clipBehavior: Clip.hardEdge,
+                    margin: EdgeInsets.only(left: SizeManager().spacing12),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
                       child: Image.file(
                         File(widget.entity.getLocalIcon()),
-                        fit: BoxFit.fitHeight,
-                        width: SizeManager().imageXXLarge,
+                        fit: BoxFit.fitWidth,
+                        width: SizeManager().imageXXXLarge,
                         height: SizeManager().imageXXLarge,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
@@ -78,7 +85,14 @@ class _DetailPanelState extends State<DetailPanel> {
               ],
             ),
           ),
-          Gap(SizeManager().spacing32),
+          Gap(SizeManager().spacing4),
+          VerticalDivider(
+            color: AppColors.earthBrown,
+            endIndent: SizeManager().spacing64,
+            indent: SizeManager().spacing64,
+          ),
+          Gap(SizeManager().spacing4),
+
           // Names
           Expanded(
             flex: 3,
@@ -88,82 +102,90 @@ class _DetailPanelState extends State<DetailPanel> {
               children: [
                 StatefulBuilder(
                   builder: (context, setState) {
-                    return Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            final audioPath = widget.entity.getLocalAudio(_currentLang);
-                            print('check exit audio file ${File(audioPath!).existsSync()}');
-                            if (audioPath != null) {
-                              setState(() {
-                                AudioService().playDeviceFileSource(
-                                  audioPath,
-                                  onEnd: () {
-                                    setState(() {
-                                      _audioPlayer.stop();
-                                    });
-                                  },
-                                );
-                              });
-                            }
-                          },
-                          child: Row(
-                            children: [
-                              Text(widget.entity.names.getBy(_currentLang), style: AppTextStyles.heading),
-                              Gap(SizeManager().spacing8),
-                              Icon(_audioPlayer.state == PlayerState.playing ? Icons.volume_up : Icons.volume_down, color: AppColors.earthBrown, size: SizeManager().imageSmall),
-                            ],
-                          ),
-                        ),
-                      ],
+                    return InkWell(
+                      onTap: () {
+                        final audioPath = widget.entity.getLocalAudio(_currentLang);
+                        print('check exit audio file ${File(audioPath!).existsSync()}');
+                        if (audioPath != null) {
+                          setState(() {
+                            AudioService().playDeviceFileSource(audioPath,);
+                          });
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          Icon(_audioPlayer.state == PlayerState.playing ? Icons.volume_up : Icons.volume_down, color: AppColors.earthBrown, size: SizeManager().imageSmall),
+                          Gap(SizeManager().spacing8),
+                          Expanded(child: Text(widget.entity.names.getBy(_currentLang), style: AppTextStyles.heading)),
+                        ],
+                      ),
                     );
                   },
                 ),
                 Gap(SizeManager().spacing8),
-                Row(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? '').isNotEmpty ?
-                        "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? ''}/ -" : '',
-                            style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
-                        Gap(SizeManager().spacing8),
-                        Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? '').isNotEmpty ?
-                        "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? ''}/" : '',
-                            style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
-                      ],
-                    ),
-                  ],
+                Visibility(
+                  visible: widget.entity.pronunciationInfo?.getBy(_currentLang) != null,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? '').isNotEmpty ?
+                      "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? ''}/ -" : '',
+                          style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
+                      Gap(SizeManager().spacing8),
+                      Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? '').isNotEmpty ?
+                      "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? ''}/" : '',
+                          style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
+                    ],
+                  ),
                 ),
                 Gap(SizeManager().spacing8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    _LangButton(label: 'VI', isSelected: _currentLang == 'vi', onTap: () => setState(() => _currentLang = 'vi')),
+                    _LangButton(label: 'VI', isSelected: _currentLang == 'vi', onTap:() {
+                      setState(() {
+                        _currentLang = 'vi';
+                      },);
+                      final audioPath = widget.entity.getLocalAudio(_currentLang);
+                      AudioService().playDeviceFileSource(audioPath!);
+                    },),
                     Gap(SizeManager().spacing12),
-                    _LangButton(label: 'EN', isSelected: _currentLang == 'en', onTap: () => setState(() => _currentLang = 'en')),
+                    _LangButton(label: 'EN', isSelected: _currentLang == 'en', onTap: () {
+
+                      setState(() {
+                        _currentLang = 'en';
+                      },);
+                      final audioPath = widget.entity.getLocalAudio(_currentLang);
+                      AudioService().playDeviceFileSource(audioPath!);
+                    },),
                     Gap(SizeManager().spacing12),
-                    _LangButton(label: 'ZH', isSelected: _currentLang == 'zh', onTap: () => setState(() => _currentLang = 'zh')),
+                    _LangButton(label: 'ZH', isSelected: _currentLang == 'zh', onTap: () {
+                      setState(() => _currentLang = 'zh');
+                      final audioPath = widget.entity.getLocalAudio(_currentLang);
+                      AudioService().playDeviceFileSource(audioPath!);
+                    },),
                   ],
                 ),
                 Gap(SizeManager().spacing8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    IconButton(
-                      onPressed: () {
-                        context.read<EntityBloc>().add(MarkAsLearned(widget.entity.id));
-                      },
-                      icon: Icon(Icons.check_circle_outline, color: AppColors.grassGreen, size: SizeManager().imageSmall),
-                    ),
-                    IconButton(
-                      onPressed: () {
-                        context.read<EntityBloc>().add(ToggleFavorite(widget.entity.id));
-                      },
-                      icon: Icon(Icons.star_border, size: SizeManager().imageSmall),
-                    ),
-                  ],
+                Visibility(
+                  visible: false,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          context.read<EntityBloc>().add(MarkAsLearned(widget.entity.id));
+                        },
+                        icon: Icon(Icons.check_circle_outline, color: AppColors.grassGreen, size: SizeManager().imageSmall),
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          context.read<EntityBloc>().add(ToggleFavorite(widget.entity.id));
+                        },
+                        icon: Icon(Icons.star_border, size: SizeManager().imageSmall),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

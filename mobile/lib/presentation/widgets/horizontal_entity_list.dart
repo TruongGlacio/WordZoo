@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
@@ -70,7 +71,7 @@ class HorizontalEntityList extends StatelessWidget {
                           ),
                           padding: EdgeInsets.symmetric(horizontal: SizeManager().spacing4),
                           child: Text(
-                            entity.names.vi,
+                            entity.names.getBy(DataManager().getCurrentLocale().languageCode),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),

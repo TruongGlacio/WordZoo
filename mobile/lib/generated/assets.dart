@@ -40,18 +40,10 @@ class $AssetsBackgroundGen {
 class $AssetsCategoryCardGen {
   const $AssetsCategoryCardGen();
 
-  final AssetGenImage animalCard = const AssetGenImage('assets/category_card/animal_card.png');
-  final AssetGenImage animalCard1 = const AssetGenImage('assets/category_card/animal_card1.png');
   final AssetGenImage animalCard2 = const AssetGenImage('assets/category_card/animal_card2.png');
-  final AssetGenImage humanRelationsCard = const AssetGenImage('assets/category_card/human_relations_card.png');
-  final AssetGenImage humanRelationsCard1 = const AssetGenImage('assets/category_card/human_relations_card1.png');
   final AssetGenImage humanRelationsCard2 = const AssetGenImage('assets/category_card/human_relations_card2.png');
-  final AssetGenImage plantCard = const AssetGenImage('assets/category_card/plant_card.png');
-  final AssetGenImage plantCard1 = const AssetGenImage('assets/category_card/plant_card1.png');
   final AssetGenImage plantCard2 = const AssetGenImage('assets/category_card/plant_card2.png');
   final AssetGenImage subCategoryCard = const AssetGenImage('assets/category_card/sub_category_card.png');
-  final AssetGenImage vehicleCard = const AssetGenImage('assets/category_card/vehicle_card.png');
-  final AssetGenImage vehicleCard1 = const AssetGenImage('assets/category_card/vehicle_card1.png');
   final AssetGenImage vehicleCard2 = const AssetGenImage('assets/category_card/vehicle_card2.png');
 }
 
@@ -82,7 +74,6 @@ class $AssetsPlantsGen {
   final AssetGenImage vegetables = const AssetGenImage('assets/sub_category_avata/plants/Vegetables.png');
   final AssetGenImage vines = const AssetGenImage('assets/sub_category_avata/plants/Vines.png');
   final AssetGenImage weeds = const AssetGenImage('assets/sub_category_avata/plants/Weeds.png');
-  final AssetGenImage f3299f9647464040Bf13Eebaf765da75 = const AssetGenImage('assets/sub_category_avata/plants/f3299f96-4746-4040-bf13-eebaf765da75.png');
 }
 
 class $AssetsAnimalsGen {
@@ -103,7 +94,6 @@ class $AssetsAnimalsGen {
   final AssetGenImage rodents = const AssetGenImage('assets/sub_category_avata/animals/Rodents.png');
   final AssetGenImage sea = const AssetGenImage('assets/sub_category_avata/animals/Sea.png');
   final AssetGenImage wildAnimals = const AssetGenImage('assets/sub_category_avata/animals/Wild_Animals.png');
-  final AssetGenImage fdd9f85600e2485dBab0B23780813f8d = const AssetGenImage('assets/sub_category_avata/animals/fdd9f856-00e2-485d-bab0-b23780813f8d.png');
 }
 
 class $AssetsHumanRelationsGen {
@@ -124,7 +114,6 @@ class $AssetsHumanRelationsGen {
   final AssetGenImage senses = const AssetGenImage('assets/sub_category_avata/human_relations/Senses.png');
   final AssetGenImage tools = const AssetGenImage('assets/sub_category_avata/human_relations/Tools.png');
   final AssetGenImage toys = const AssetGenImage('assets/sub_category_avata/human_relations/Toys.png');
-  final AssetGenImage b49096b4218544118ce92e8950e07fa8 = const AssetGenImage('assets/sub_category_avata/human_relations/b49096b4-2185-4411-8ce9-2e8950e07fa8.png');
 }
 
 class $AssetsVehiclesGen {
@@ -158,6 +147,7 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
+  final AssetGenImage appIconForLaunch = const AssetGenImage('assets/icons/AppIconForLaunch.png');
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
@@ -167,8 +157,6 @@ class $AssetsIconsGen {
 class $AssetsEntityAnimationsFrameGen {
   const $AssetsEntityAnimationsFrameGen();
 
-  final AssetGenImage chatGPTImage2225192Thg82026 = const AssetGenImage('assets/entity_animations_frame/ChatGPT Image 22_25_19 2 thg 8, 2026.png');
-  final AssetGenImage chatGPTImage2227092Thg82026 = const AssetGenImage('assets/entity_animations_frame/ChatGPT Image 22_27_09 2 thg 8, 2026.png');
   final AssetGenImage frame1 = const AssetGenImage('assets/entity_animations_frame/frame1.png');
   final AssetGenImage frame10 = const AssetGenImage('assets/entity_animations_frame/frame10.png');
   final AssetGenImage frame11 = const AssetGenImage('assets/entity_animations_frame/frame11.png');
@@ -244,7 +232,6 @@ class AssetGenImage {
 
   final String _assetName;
 
-
   final Size? size;
   final Set<String> flavors;
 
@@ -301,29 +288,15 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({
-    AssetBundle? bundle,
-    String? package,
-  }) {
-    return AssetImage(
-      _assetName,
-      bundle: bundle,
-      package: package,
-    );
+  ImageProvider provider({AssetBundle? bundle, String? package}) {
+    return AssetImage(_assetName, bundle: bundle, package: package);
   }
 
-  Widget custom({
-    Key? key,
-    required Widget Function(BuildContext context, String assetPath) builder,
-  }) {
-    return Builder(
-      key: key,
-      builder: (context) => builder(context, _assetName),
-    );
+  Widget custom({Key? key, required Widget Function(BuildContext context, String assetPath) builder}) {
+    return Builder(key: key, builder: (context) => builder(context, _assetName));
   }
 
   String get path => _assetName;
 
   String get keyName => _assetName;
 }
-

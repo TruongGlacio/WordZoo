@@ -20,7 +20,7 @@ class GiftDropController extends ChangeNotifier {
 
     _controller = AnimationController(
       vsync: vsync,
-      duration: const Duration(milliseconds: 4800),
+      duration: const Duration(milliseconds: 3500),
     );
 
     _controller.addListener(_update);
@@ -238,34 +238,34 @@ class GiftDropController extends ChangeNotifier {
 
     }
 
-    //--------------------------------------------------------
-    // Reveal
-    //--------------------------------------------------------
-
-    else {
-
-      state = GiftAnimationState.reveal;
-
-      giftVisible = false;
-
-      showEntity = true;
-
-      final p =
-          (t - openEnd) /
-              (1 - openEnd);
-
-      entityOpacity = Curves.easeOut.transform(
-        p,
-      );
-
-      entityScale = Tween<double>(
-        begin: 0.25,
-        end: 1,
-      ).transform(
-        Curves.easeOutBack.transform(p),
-      );
-
-    }
+    // //--------------------------------------------------------
+    // // Reveal
+    // //--------------------------------------------------------
+    //
+    // else {
+    //
+    //   state = GiftAnimationState.reveal;
+    //
+    //   giftVisible = false;
+    //
+    //   showEntity = true;
+    //
+    //   final p =
+    //       (t - openEnd) /
+    //           (1 - openEnd);
+    //
+    //   entityOpacity = Curves.easeOut.transform(
+    //     p,
+    //   );
+    //
+    //   entityScale = Tween<double>(
+    //     begin: 0.25,
+    //     end: 1,
+    //   ).transform(
+    //     Curves.easeOutBack.transform(p),
+    //   );
+    //
+    // }
 
     notifyListeners();
 

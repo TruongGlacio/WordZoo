@@ -59,6 +59,7 @@ dependencies:
   http: ^1.6.0
   archive: ^4.0.9
   percent_indicator: ^4.2.5
+  syncfusion_flutter_sliders: ^34.2.2
 dependency_overrides:
   meta: ^1.19.0
   jni: 1.0.0

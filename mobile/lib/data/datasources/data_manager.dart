@@ -24,6 +24,13 @@ class DataManager {
   String getRootPath(){
     return _rootPath;
   }
+  Locale _currentLocale = Locale('vi');
+  void setCurrentLocale(Locale locale){
+    _currentLocale = locale;
+  }
+  Locale getCurrentLocale(){
+    return _currentLocale;
+  }
   List<Category> getCategories() {
     if(_categories.isEmpty) {
       _categories = [

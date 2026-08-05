@@ -84,7 +84,7 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
       if(isVisibleDetailPanel==true)
         {
           try{
-            await AudioService().playDeviceFileSource(selectedEntity!.getLocalAudio('vi')!);
+            await AudioService().playDeviceFileSource(selectedEntity!.getLocalAudio(DataManager().getCurrentLocale().languageCode)!);
           }
           catch(e){
             AppLogger.e('Error playing audio for entity ${selectedEntity!.id}: $e');

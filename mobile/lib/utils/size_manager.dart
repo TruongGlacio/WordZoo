@@ -105,4 +105,6 @@ class SizeManager {
   double get imageLarge => 120.0;
   double get imageXLarge => 180.0;
   double get imageXXLarge => 200.0;
+  double get imageXXXLarge => 220.0;
+
 }

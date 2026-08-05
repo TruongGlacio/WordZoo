@@ -95,29 +95,35 @@ class WordZooApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBreakpoints(
-      breakpoints: const [
-        Breakpoint(start: 0, end: 840, name: 'PHONE'),
-        Breakpoint(start: 841, end: 1200, name: 'TABLET'),
-        Breakpoint(start: 1201, end: double.infinity, name: 'DESKTOP'),
-      ],
-      child: MaterialApp(
-        title: 'WordZoo',
-        theme: AppTheme.lightTheme,
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [
-          Locale('vi'),
-          Locale('en'),
-          Locale('zh'),
-        ],
-        home: const AuthGate(),
-      ),
+    return BlocBuilder<LanguageBloc, LanguageState>(
+      builder: (context, state) {
+        return ResponsiveBreakpoints(
+          breakpoints: const [
+            Breakpoint(start: 0, end: 840, name: 'PHONE'),
+            Breakpoint(start: 841, end: 1200, name: 'TABLET'),
+            Breakpoint(start: 1201, end: double.infinity, name: 'DESKTOP'),
+          ],
+          child: MaterialApp(
+            title: 'WordZoo',
+            theme: AppTheme.lightTheme,
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            locale: state.locale,
+            supportedLocales: const [
+              Locale('vi'),
+              Locale('en'),
+              Locale('zh'),
+            ],
+            home: const AuthGate(),
+          ),
+        );
+      },
     );
+
   }
 }
 

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/presentation/screens/entity_list_screen.dart';
@@ -158,7 +159,7 @@ class _SubCategoryItem extends StatelessWidget {
                 margin: EdgeInsets.only(bottom: SizeManager().spacingSmall),
                 padding: EdgeInsets.symmetric(horizontal: SizeManager().spacingExtraSmall, vertical: SizeManager().spacingExtraSmall),
                 child: Text(
-                  subcategory.names.getBy('en'),
+                  subcategory.names.getBy(DataManager().getCurrentLocale().languageCode),
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: SizeManager().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
