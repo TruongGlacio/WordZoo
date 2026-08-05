@@ -28,13 +28,13 @@ class GiftBoxWidget extends StatelessWidget {
         final giftSize = w * 0.22;
 
         double left = controller.giftX * w - giftSize / 2;
-        if(left<w/2 -giftSize/2) {
-          left = w/2 - giftSize/2;
+        if(left<w/2 -giftSize/4) {
+          left = w/2 - giftSize/4;
         }
 
         double top = controller.giftY * h - giftSize / 2;
-        // if(top<=0)
-        //   {top=0;}
+         if(top<=32)
+           {top=32;}
 
         final image = controller.currentFrame < frames.length
             ? frames[controller.currentFrame]

@@ -1,12 +1,15 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../data/models/entity.dart';
 import '../../data/models/subcategory.dart';
 import '../../data/repositories/data_sync_repository.dart';
 import '../../data/repositories/progress_repository.dart';
+import 'package:wordzoo/utils/logger.dart';
 
 part 'entity_event.dart';
 part 'entity_state.dart';
@@ -78,6 +81,15 @@ class EntityBloc extends Bloc<EntityEvent, EntityState> {
       );
       selectedEntity = entity;
       isVisibleDetailPanel = event.isVisibleDetailPanel;
+      if(isVisibleDetailPanel==true)
+        {
+          try{
+            await AudioService().playDeviceFileSource(selectedEntity!.getLocalAudio('vi')!);
+          }
+          catch(e){
+            AppLogger.e('Error playing audio for entity ${selectedEntity!.id}: $e');
+          }
+        }
       emit(EntityLoaded(
         entities: current.entities,
         selectedEntity: entity,

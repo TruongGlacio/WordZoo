@@ -22,10 +22,11 @@ import 'package:wordzoo/l10n/app_localizations.dart';
 import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
@@ -85,6 +86,8 @@ Future<void> main() async {
       ),
     ),
   );
+  FlutterNativeSplash.remove();
+
 }
 
 class WordZooApp extends StatelessWidget {

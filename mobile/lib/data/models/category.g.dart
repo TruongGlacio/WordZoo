@@ -7,7 +7,7 @@ part of 'category.dart';
 // **************************************************************************
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => $checkedCreate('Category', json, ($checkedConvert) {
-  $checkKeys(json, allowedKeys: const ['id', 'type', 'names', 'icon', 'audio', 'background', 'real_image', 'signpost_style', 'subcategories']);
+  $checkKeys(json, allowedKeys: const ['id', 'type', 'names', 'icon', 'audio', 'background', 'real_image', 'signpost_style', 'subcategories','pronunciation']);
   String icon = $checkedConvert('real_image', (v) => (v ?? "") as String);
   String background = $checkedConvert('real_image', (v) => (v ?? "") as String);
   CategoryType type = $checkedConvert('type', (v) => $enumDecode(_$CategoryTypeEnumMap, v));
@@ -44,6 +44,7 @@ Category _$CategoryFromJson(Map<String, dynamic> json) => $checkedCreate('Catego
     names: $checkedConvert('names', (v) => LocalizedNames.fromJson(v as Map<String, dynamic>)),
     audio: $checkedConvert('audio', (v) => AudioPaths.fromJson(v as Map<String, dynamic>)),
     icon: icon,
+    pronunciationInfo: $checkedConvert('pronunciation', (v) => v == null ? null : PronunciationInfo.fromJson(v as Map<String, dynamic>)),
     background: background,
     signpostStyle: $checkedConvert('signpost_style', (v) => v as String?),
     subcategories: $checkedConvert('subcategories', (v) => (v as List<dynamic>).map((e) => Subcategory.fromJson(e as Map<String, dynamic>)).toList()),
@@ -60,6 +61,7 @@ Map<String, dynamic> _$CategoryToJson(Category instance) => <String, dynamic>{
   'signpost_style': instance.signpostStyle,
   'subcategories': instance.subcategories.map((e) => e.toJson()).toList(),
   'audio': instance.audio?.toJson(),
+  'pronunciation':instance.pronunciationInfo?.toJson()
 };
 
 const _$CategoryTypeEnumMap =

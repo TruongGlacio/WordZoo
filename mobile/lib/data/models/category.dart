@@ -24,6 +24,7 @@ class Category extends Equatable {
   final String? signpostStyle;
   final List<Subcategory> subcategories;
   AudioPaths? audio;
+  PronunciationInfo? pronunciationInfo;
 
    Category({
     required this.id,
@@ -33,7 +34,8 @@ class Category extends Equatable {
     required this.background,
      this.signpostStyle,
     required this.subcategories,
-     this.audio
+     this.audio,
+     this.pronunciationInfo
   });
 
   factory Category.fromJson(Map<String, dynamic> json) =>
@@ -51,7 +53,7 @@ class Category extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, type, names, subcategories, audio];
+  List<Object?> get props => [id, type, names, subcategories, audio, pronunciationInfo];
 }
 
 class CategoryLayout {

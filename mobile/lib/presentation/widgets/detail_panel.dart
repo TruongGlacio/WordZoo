@@ -58,14 +58,14 @@ class _DetailPanelState extends State<DetailPanel> {
                     height: SizeManager().imageXXLarge,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-                      boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
+                      //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
                     ),
                     clipBehavior: Clip.hardEdge,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
                       child: Image.file(
                         File(widget.entity.getLocalIcon()),
-                        fit: BoxFit.contain,
+                        fit: BoxFit.fitHeight,
                         width: SizeManager().imageXXLarge,
                         height: SizeManager().imageXXLarge,
                         errorBuilder: (context, error, stackTrace) {
@@ -96,11 +96,14 @@ class _DetailPanelState extends State<DetailPanel> {
                             print('check exit audio file ${File(audioPath!).existsSync()}');
                             if (audioPath != null) {
                               setState(() {
-                                AudioService().play(audioPath,onEnd: () {
-                                  setState((){
-                                    _audioPlayer.stop();
-                                  });
-                                },);
+                                AudioService().playDeviceFileSource(
+                                  audioPath,
+                                  onEnd: () {
+                                    setState(() {
+                                      _audioPlayer.stop();
+                                    });
+                                  },
+                                );
                               });
                             }
                           },
@@ -115,6 +118,23 @@ class _DetailPanelState extends State<DetailPanel> {
                       ],
                     );
                   },
+                ),
+                Gap(SizeManager().spacing8),
+                Row(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? '').isNotEmpty ?
+                        "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? ''}/ -" : '',
+                            style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
+                        Gap(SizeManager().spacing8),
+                        Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? '').isNotEmpty ?
+                        "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? ''}/" : '',
+                            style: AppTextStyles.body.copyWith(color: AppColors.oceanBlue)),
+                      ],
+                    ),
+                  ],
                 ),
                 Gap(SizeManager().spacing8),
                 Row(

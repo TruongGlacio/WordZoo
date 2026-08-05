@@ -6,6 +6,7 @@ import 'package:gap/gap.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/presentation/screens/entity_list_screen.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../../data/models/category.dart';
 import '../../theme/app_colors.dart';
 import '../../../utils/size_manager.dart';
@@ -67,6 +68,7 @@ class CategoryScreenState extends State<CategoryScreen> {
                             subcategory: layout.category,
                             onTap: () {
                               // Handle tap event for subcategory
+                              AudioService().playAssetSource(Assets.assets.sounds.ui.click);
                               gotoEntityList(context, category: category, subcategory: layout.category);
                             },
                           ),

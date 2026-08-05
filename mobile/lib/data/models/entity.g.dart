@@ -22,7 +22,8 @@ Entity _$EntityFromJson(Map<String, dynamic> json) => $checkedCreate(
         'type_tags',
         'difficulty',
         'audio',
-        'animal_sound'
+        'animal_sound',
+        'pronunciation'
       ],
     );
     final val = Entity(
@@ -38,6 +39,7 @@ Entity _$EntityFromJson(Map<String, dynamic> json) => $checkedCreate(
       soundEffect: $checkedConvert('animal_sound', (v) => (v??"") as String?),
       typeTags: $checkedConvert('type_tags', (v) => ((v??[]) as List<dynamic>).map((e) => (e??"") as String).toList(),),
       difficulty: $checkedConvert('difficulty', (v) => ((v??0) as num).toInt()),
+      pronunciationInfo: $checkedConvert('pronunciation', (v) => v == null ? null : PronunciationInfo.fromJson(v as Map<String, dynamic>)),
     );
     return val;
   },
@@ -61,4 +63,5 @@ Map<String, dynamic> _$EntityToJson(Entity instance) => <String, dynamic>{
   'sound_effect': instance.soundEffect,
   'type_tags': instance.typeTags,
   'difficulty': instance.difficulty,
+  'pronunciation': instance.pronunciationInfo?.toJson()
 };

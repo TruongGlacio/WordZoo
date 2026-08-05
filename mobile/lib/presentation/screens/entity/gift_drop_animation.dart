@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 
 import 'entity_reveal_widget.dart';
 import 'gift_box_widget.dart';
@@ -34,12 +36,17 @@ class GiftDropAnimationState extends State<GiftDropAnimation> with TickerProvide
     controller = GiftDropController(vsync: this, frameCount: widget.frames.length);
 
     controller.start();
-
+    AudioService().playAssetSource(Assets.assets.sounds.animation.airplane, position: Duration(milliseconds: 2000));
+    Future.delayed(Duration(milliseconds: 3000), () {
+      AudioService().playAssetSource(Assets.assets.sounds.animation.openBox);
+    },);
     controller.completed.addListener(() {
       if (controller.completed.value) {
         widget.onFinished?.call();
+        AudioService().stop();
       }
     });
+
   }
 
   @override
@@ -75,7 +82,7 @@ class GiftDropAnimationState extends State<GiftDropAnimation> with TickerProvide
               // Gift Box
               //--------------------------------------------------
               GiftBoxWidget(controller: controller, frames: widget.frames),
-              BurstWidget(controller: controller),
+              //BurstWidget(controller: controller),
 
               //--------------------------------------------------
               // Entity

@@ -32,7 +32,7 @@ dependencies:
   hive_flutter: ^1.1.0
 
   # Background sync
-  workmanager: ^0.10.6
+  workmanager: ^0.10.7
 
   # Payments
   in_app_purchase: ^3.3.0
@@ -64,13 +64,13 @@ dependency_overrides:
   jni: 1.0.0
   # Localization
   intl: ^0.20.3
-
+  flutter_native_splash: ^2.4.8
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  build_runner: ^2.15.2
-  json_serializable: ^6.14.0
+  build_runner: ^2.16.0
+  json_serializable: ^6.14.1
 
 flutter:
   generate: true
@@ -89,6 +89,8 @@ flutter:
     - assets/icons/
     - lib/presentation/screens/entity/
     - assets/entity_animations_frame/
+    - assets/sounds/animation/
+    - assets/sounds/ui/
 
 flutter_assets_generator:
   output_dir: generated/

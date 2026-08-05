@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../data/models/category.dart';
 import '../../data/models/subcategory.dart';
@@ -122,11 +123,6 @@ class _EntityListScreenState extends State<EntityListScreen> {
                               },
                             ),
                             frames: [
-                              /*AssetImage(Assets.assets.entityAnimationsFrame.frame1.path,),
-                              AssetImage(Assets.assets.entityAnimationsFrame.frame2.path,),
-                              AssetImage(Assets.assets.entityAnimationsFrame.frame3.path,),
-                              AssetImage(Assets.assets.entityAnimationsFrame.frame4.path,),
-                              AssetImage(Assets.assets.entityAnimationsFrame.frame5.path,),*/
                               AssetImage(Assets.assets.entityAnimationsFrame.frame6.path,),
                               AssetImage(Assets.assets.entityAnimationsFrame.frame7.path,),
                               AssetImage(Assets.assets.entityAnimationsFrame.frame8.path,),

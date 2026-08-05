@@ -3,6 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordzoo/data/repositories/data_sync_repository.dart';
 import 'package:wordzoo/data/service/zip_asset_service.dart';
+import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../data/models/user_profile.dart';
 import '../../data/repositories/supabase_repository.dart';
 
@@ -14,7 +16,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc({required this.authRepo}) : super(const AuthInitial()) {
     on<LoadingDataProcess>((event, emit) async {
-
+      print(Assets.assets.sounds.ui.introTransition);
+      AudioService().playAssetSource(Assets.assets.sounds.ui.introTransition);
       emit(const AuthLoading());
       await ZipAssetService.instance.getRootDir();
       final data = await DataSyncRepositoryImpl.instance.getData();

@@ -24,7 +24,7 @@ from utils import (
     error
 )
 from download_real_image import generate_all_real_images
-
+from add_pronunciation import add_pronunciation
 
 # ============================================================
 # Print statistics
@@ -76,6 +76,10 @@ async def main():
             "Loading categories.json"
         )
         data = load_json()
+        add_pronunciation(data)
+        save_json(data)
+
+        data = load_json()
         print_statistics(
             data
         )
@@ -113,7 +117,7 @@ async def main():
         )
         #generator = ImageGenerator()
         #generator.generate_all( data )
-        await generate_all_real_images(data)
+        #await generate_all_real_images(data)
         success(
             "Image generation finished"
         )

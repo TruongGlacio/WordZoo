@@ -7,6 +7,7 @@ import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/category.dart';
 import 'package:wordzoo/data/models/localized_names.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
@@ -35,6 +36,7 @@ class HomeScreenState extends State<HomeScreen> {
         categoryListWidget.add(
             _CategoryCard(
               iconAsset: category.icon, title: category.names.vi, onTap: () {
+              AudioService().playAssetSource(Assets.assets.sounds.ui.click);
               gotoCategoryScreen(context, category: category);
             },
             )

@@ -20,6 +20,7 @@ class Subcategory extends Equatable {
   final LocalizedNames names;
   final List<Entity> entities;
   AudioPaths? audio;
+  PronunciationInfo? pronunciationInfo;
   Subcategory({
     required this.id,
     this.order,
@@ -27,7 +28,8 @@ class Subcategory extends Equatable {
     required this.names,
     required this.entities,
     this.position,
-    this.audio
+    this.audio,
+    this.pronunciationInfo
   });
 
   factory Subcategory.fromJson(Map<String, dynamic> json) =>
@@ -41,5 +43,5 @@ class Subcategory extends Equatable {
   }
 
   @override
-  List<Object?> get props => [id, order, names, entities];
+  List<Object?> get props => [id, order, names, entities, audio, pronunciationInfo];
 }

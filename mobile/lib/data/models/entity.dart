@@ -23,6 +23,8 @@ class Entity extends Equatable {
   final List<String> ?typeTags;
   final int ?difficulty;
   AudioPaths? audio;
+  PronunciationInfo? pronunciationInfo;
+
   Entity({
     required this.id,
     required this.isPremium,
@@ -33,6 +35,7 @@ class Entity extends Equatable {
     required this.typeTags,
     required this.difficulty,
     this.audio,
+    this.pronunciationInfo
   });
 
   factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);

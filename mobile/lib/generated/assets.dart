@@ -17,6 +17,7 @@ class $AssetsAssetsGen {
   final $AssetsCategoryCardGen categoryCard = const $AssetsCategoryCardGen();
   final $AssetsEntityAnimationsFrameGen entityAnimationsFrame = const $AssetsEntityAnimationsFrameGen();
   final $AssetsIconsGen icons = const $AssetsIconsGen();
+  final $AssetsSoundsGen sounds = const $AssetsSoundsGen();
   final $AssetsSubCategoryAvataGen subCategoryAvata = const $AssetsSubCategoryAvataGen();
 }
 
@@ -160,6 +161,7 @@ class $AssetsIconsGen {
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
+  final AssetGenImage volumeOn = const AssetGenImage('assets/icons/volume_on.png');
 }
 
 class $AssetsEntityAnimationsFrameGen {
@@ -184,6 +186,27 @@ class $AssetsEntityAnimationsFrameGen {
   final AssetGenImage frame7 = const AssetGenImage('assets/entity_animations_frame/frame7.png');
   final AssetGenImage frame8 = const AssetGenImage('assets/entity_animations_frame/frame8.png');
   final AssetGenImage frame9 = const AssetGenImage('assets/entity_animations_frame/frame9.png');
+}
+
+class $AssetsSoundsGen {
+  const $AssetsSoundsGen();
+
+  final $AssetsAnimationGen animation = const $AssetsAnimationGen();
+  final $AssetsUiGen ui = const $AssetsUiGen();
+}
+
+class $AssetsAnimationGen {
+  const $AssetsAnimationGen();
+
+  final String airplane = 'assets/sounds/animation/airplane.wav';
+  final String openBox = 'assets/sounds/animation/open_box.wav';
+}
+
+class $AssetsUiGen {
+  const $AssetsUiGen();
+
+  final String introTransition = 'assets/sounds/ui/Intro_transition.wav';
+  final String click = 'assets/sounds/ui/click.wav';
 }
 
 class $AssetsLibGen {
@@ -220,6 +243,7 @@ class AssetGenImage {
   const AssetGenImage(this._assetName, {this.size, this.flavors = const {}});
 
   final String _assetName;
+
 
   final Size? size;
   final Set<String> flavors;
@@ -277,15 +301,29 @@ class AssetGenImage {
     );
   }
 
-  ImageProvider provider({AssetBundle? bundle, String? package}) {
-    return AssetImage(_assetName, bundle: bundle, package: package);
+  ImageProvider provider({
+    AssetBundle? bundle,
+    String? package,
+  }) {
+    return AssetImage(
+      _assetName,
+      bundle: bundle,
+      package: package,
+    );
   }
 
-  Widget custom({Key? key, required Widget Function(BuildContext context, String assetPath) builder}) {
-    return Builder(key: key, builder: (context) => builder(context, _assetName));
+  Widget custom({
+    Key? key,
+    required Widget Function(BuildContext context, String assetPath) builder,
+  }) {
+    return Builder(
+      key: key,
+      builder: (context) => builder(context, _assetName),
+    );
   }
 
   String get path => _assetName;
 
   String get keyName => _assetName;
 }
+

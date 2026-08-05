@@ -34,3 +34,6 @@ tqdm>=4.67.0
 python-dotenv>=1.0.1
 
 Pillow
+pypinyin
+pyphen
+eng-to-ipa
