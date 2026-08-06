@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1",
   "zip_files": {
     "animals": "animals.zip",
     "plants": "plants.zip",
@@ -7,10 +7,10 @@
     "human_relations": "human_relations.zip"
   },
   "zip_files_version": {
-    "animals": "v1.0.0",
-    "plants": "v1.0.0",
-    "vehicles": "v1.0.0",
-    "human_relations": "v1.0.0"
+    "animals": "v1.0.1",
+    "plants": "v1.0.1",
+    "vehicles": "v1.0.1",
+    "human_relations": "v1.0.1"
   },
   "categories": [
     {
@@ -33,7 +33,7 @@
             {
               "id": "lion",
               "names": {
-                "vi": "con Sư tử",
+                "vi": "Con Sư tử",
                 "en": "Lion",
                 "zh": "狮子"
               },
@@ -58,7 +58,7 @@
             {
               "id": "tiger",
               "names": {
-                "vi": "con Hổ",
+                "vi": "Con Hổ",
                 "en": "Tiger",
                 "zh": "老虎"
               },
@@ -83,7 +83,7 @@
             {
               "id": "elephant",
               "names": {
-                "vi": "con Voi",
+                "vi": "Con Voi",
                 "en": "Elephant",
                 "zh": "大象"
               },
@@ -108,7 +108,7 @@
             {
               "id": "giraffe",
               "names": {
-                "vi": "con Hươu cao cổ",
+                "vi": "Con Hươu cao cổ",
                 "en": "Giraffe",
                 "zh": "长颈鹿"
               },
@@ -133,7 +133,7 @@
             {
               "id": "zebra",
               "names": {
-                "vi": "con Ngựa vằn",
+                "vi": "Con Ngựa vằn",
                 "en": "Zebra",
                 "zh": "斑马"
               },
@@ -158,7 +158,7 @@
             {
               "id": "rhinoceros",
               "names": {
-                "vi": "con Tê giác",
+                "vi": "Con Tê giác",
                 "en": "Rhinoceros",
                 "zh": "犀牛"
               },
@@ -183,7 +183,7 @@
             {
               "id": "hippopotamus",
               "names": {
-                "vi": "con Hà mã",
+                "vi": "Con Hà mã",
                 "en": "Hippopotamus",
                 "zh": "河马"
               },
@@ -208,7 +208,7 @@
             {
               "id": "cheetah",
               "names": {
-                "vi": "con Báo gê-pa",
+                "vi": "Con Báo gê-pa",
                 "en": "Cheetah",
                 "zh": "猎豹"
               },
@@ -233,7 +233,7 @@
             {
               "id": "leopard",
               "names": {
-                "vi": "con Báo hoa mai",
+                "vi": "Con Báo hoa mai",
                 "en": "Leopard",
                 "zh": "豹子"
               },
@@ -258,7 +258,7 @@
             {
               "id": "hyena",
               "names": {
-                "vi": "con Linh cẩu",
+                "vi": "Con Linh cẩu",
                 "en": "Hyena",
                 "zh": "鬣狗"
               },
@@ -283,7 +283,7 @@
             {
               "id": "wolf",
               "names": {
-                "vi": "con Sói",
+                "vi": "Con Sói",
                 "en": "Wolf",
                 "zh": "狼"
               },
@@ -308,7 +308,7 @@
             {
               "id": "fox",
               "names": {
-                "vi": "con Cáo",
+                "vi": "Con Cáo",
                 "en": "Fox",
                 "zh": "狐狸"
               },
@@ -333,7 +333,7 @@
             {
               "id": "brown_bear",
               "names": {
-                "vi": "con Gấu nâu",
+                "vi": "Con Gấu nâu",
                 "en": "Brown Bear",
                 "zh": "棕熊"
               },
@@ -358,7 +358,7 @@
             {
               "id": "giant_panda",
               "names": {
-                "vi": "con Gấu trúc lớn",
+                "vi": "Con Gấu trúc lớn",
                 "en": "Giant Panda",
                 "zh": "大熊猫"
               },
@@ -383,7 +383,7 @@
             {
               "id": "kangaroo",
               "names": {
-                "vi": "con Chuột túi",
+                "vi": "Con Chuột túi",
                 "en": "Kangaroo",
                 "zh": "袋鼠"
               },
@@ -408,7 +408,7 @@
             {
               "id": "koala",
               "names": {
-                "vi": "con Gấu túi",
+                "vi": "Con Gấu túi",
                 "en": "Koala",
                 "zh": "考拉"
               },
@@ -433,7 +433,7 @@
             {
               "id": "gorilla",
               "names": {
-                "vi": "con Khỉ đột",
+                "vi": "Con Khỉ đột",
                 "en": "Gorilla",
                 "zh": "大猩猩"
               },
@@ -458,7 +458,7 @@
             {
               "id": "chimpanzee",
               "names": {
-                "vi": "con Tinh tinh",
+                "vi": "Con Tinh tinh",
                 "en": "Chimpanzee",
                 "zh": "黑猩猩"
               },
@@ -483,7 +483,7 @@
             {
               "id": "camel",
               "names": {
-                "vi": "con Lạc đà",
+                "vi": "Con Lạc đà",
                 "en": "Camel",
                 "zh": "骆驼"
               },
@@ -508,7 +508,7 @@
             {
               "id": "deer",
               "names": {
-                "vi": "con Hươu",
+                "vi": "Con Hươu",
                 "en": "Deer",
                 "zh": "鹿"
               },
@@ -559,7 +559,7 @@
             {
               "id": "cow",
               "names": {
-                "vi": "con Bò",
+                "vi": "Con Bò",
                 "en": "Cow",
                 "zh": "奶牛"
               },
@@ -584,7 +584,7 @@
             {
               "id": "bull",
               "names": {
-                "vi": "con Bò đực",
+                "vi": "Con Bò đực",
                 "en": "Bull",
                 "zh": "公牛"
               },
@@ -609,7 +609,7 @@
             {
               "id": "calf",
               "names": {
-                "vi": "con Bê",
+                "vi": "Con Bê",
                 "en": "Calf",
                 "zh": "小牛"
               },
@@ -634,7 +634,7 @@
             {
               "id": "pig",
               "names": {
-                "vi": "con Lợn",
+                "vi": "Con Lợn",
                 "en": "Pig",
                 "zh": "猪"
               },
@@ -659,7 +659,7 @@
             {
               "id": "boar",
               "names": {
-                "vi": "con Lợn đực",
+                "vi": "Con Lợn đực",
                 "en": "Boar",
                 "zh": "公猪"
               },
@@ -684,7 +684,7 @@
             {
               "id": "sheep",
               "names": {
-                "vi": "con Cừu",
+                "vi": "Con Cừu",
                 "en": "Sheep",
                 "zh": "绵羊"
               },
@@ -709,7 +709,7 @@
             {
               "id": "lamb",
               "names": {
-                "vi": "con Cừu con",
+                "vi": "Con Cừu con",
                 "en": "Lamb",
                 "zh": "羊羔"
               },
@@ -734,7 +734,7 @@
             {
               "id": "goat",
               "names": {
-                "vi": "con Dê",
+                "vi": "Con Dê",
                 "en": "Goat",
                 "zh": "山羊"
               },
@@ -759,7 +759,7 @@
             {
               "id": "horse",
               "names": {
-                "vi": "con Ngựa",
+                "vi": "Con Ngựa",
                 "en": "Horse",
                 "zh": "马"
               },
@@ -784,7 +784,7 @@
             {
               "id": "donkey",
               "names": {
-                "vi": "con Lừa",
+                "vi": "Con Lừa",
                 "en": "Donkey",
                 "zh": "驴"
               },
@@ -809,7 +809,7 @@
             {
               "id": "chicken",
               "names": {
-                "vi": "con Gà",
+                "vi": "Con Gà",
                 "en": "Chicken",
                 "zh": "鸡"
               },
@@ -834,7 +834,7 @@
             {
               "id": "rooster",
               "names": {
-                "vi": "con Gà trống",
+                "vi": "Con Gà trống",
                 "en": "Rooster",
                 "zh": "公鸡"
               },
@@ -859,7 +859,7 @@
             {
               "id": "hen",
               "names": {
-                "vi": "con Gà mái",
+                "vi": "Con Gà mái",
                 "en": "Hen",
                 "zh": "母鸡"
               },
@@ -884,7 +884,7 @@
             {
               "id": "duck",
               "names": {
-                "vi": "con Vịt",
+                "vi": "Con Vịt",
                 "en": "Duck",
                 "zh": "鸭子"
               },
@@ -909,7 +909,7 @@
             {
               "id": "goose",
               "names": {
-                "vi": "con Ngỗng",
+                "vi": "Con Ngỗng",
                 "en": "Goose",
                 "zh": "鹅"
               },
@@ -934,7 +934,7 @@
             {
               "id": "turkey",
               "names": {
-                "vi": "con Gà tây",
+                "vi": "Con Gà tây",
                 "en": "Turkey",
                 "zh": "火鸡"
               },
@@ -959,7 +959,7 @@
             {
               "id": "rabbit",
               "names": {
-                "vi": "con Thỏ",
+                "vi": "Con Thỏ",
                 "en": "Rabbit",
                 "zh": "兔子"
               },
@@ -984,7 +984,7 @@
             {
               "id": "water_buffalo",
               "names": {
-                "vi": "con Trâu",
+                "vi": "Con Trâu",
                 "en": "Water Buffalo",
                 "zh": "水牛"
               },
@@ -1009,7 +1009,7 @@
             {
               "id": "alpaca",
               "names": {
-                "vi": "con Lạc đà Alpaca",
+                "vi": "Con Lạc đà Alpaca",
                 "en": "Alpaca",
                 "zh": "羊驼"
               },
@@ -1034,7 +1034,7 @@
             {
               "id": "llama",
               "names": {
-                "vi": "con Lạc đà không bướu",
+                "vi": "Con Lạc đà không bướu",
                 "en": "Llama",
                 "zh": "美洲驼"
               },
@@ -1085,7 +1085,7 @@
             {
               "id": "eagle",
               "names": {
-                "vi": "con Đại bàng",
+                "vi": "Con Đại bàng",
                 "en": "Eagle",
                 "zh": "鹰"
               },
@@ -1110,7 +1110,7 @@
             {
               "id": "parrot",
               "names": {
-                "vi": "con Vẹt",
+                "vi": "Con Vẹt",
                 "en": "Parrot",
                 "zh": "鹦鹉"
               },
@@ -1135,7 +1135,7 @@
             {
               "id": "owl",
               "names": {
-                "vi": "con Cú mèo",
+                "vi": "Con Cú mèo",
                 "en": "Owl",
                 "zh": "猫头鹰"
               },
@@ -1160,7 +1160,7 @@
             {
               "id": "penguin",
               "names": {
-                "vi": "con Chim cánh cụt",
+                "vi": "Con Chim cánh cụt",
                 "en": "Penguin",
                 "zh": "企鹅"
               },
@@ -1185,7 +1185,7 @@
             {
               "id": "sparrow",
               "names": {
-                "vi": "con Chim sẻ",
+                "vi": "Con Chim sẻ",
                 "en": "Sparrow",
                 "zh": "麻雀"
               },
@@ -1210,7 +1210,7 @@
             {
               "id": "pigeon",
               "names": {
-                "vi": "con Bồ câu",
+                "vi": "Con Bồ câu",
                 "en": "Pigeon",
                 "zh": "鸽子"
               },
@@ -1235,7 +1235,7 @@
             {
               "id": "crow",
               "names": {
-                "vi": "con Quạ",
+                "vi": "Con Quạ",
                 "en": "Crow",
                 "zh": "乌鸦"
               },
@@ -1260,7 +1260,7 @@
             {
               "id": "swan",
               "names": {
-                "vi": "con Thiên nga",
+                "vi": "Con Thiên nga",
                 "en": "Swan",
                 "zh": "天鹅"
               },
@@ -1285,7 +1285,7 @@
             {
               "id": "flamingo",
               "names": {
-                "vi": "con Hồng hạc",
+                "vi": "Con Hồng hạc",
                 "en": "Flamingo",
                 "zh": "火烈鸟"
               },
@@ -1310,7 +1310,7 @@
             {
               "id": "peacock",
               "names": {
-                "vi": "con Công",
+                "vi": "Con Công",
                 "en": "Peacock",
                 "zh": "孔雀"
               },
@@ -1335,7 +1335,7 @@
             {
               "id": "woodpecker",
               "names": {
-                "vi": "con Chim gõ kiến",
+                "vi": "Con Chim gõ kiến",
                 "en": "Woodpecker",
                 "zh": "啄木鸟"
               },
@@ -1360,7 +1360,7 @@
             {
               "id": "falcon",
               "names": {
-                "vi": "con Chim ưng",
+                "vi": "Con Chim ưng",
                 "en": "Falcon",
                 "zh": "猎鹰"
               },
@@ -1385,7 +1385,7 @@
             {
               "id": "hawk",
               "names": {
-                "vi": "con Diều hâu",
+                "vi": "Con Diều hâu",
                 "en": "Hawk",
                 "zh": "鹰隼"
               },
@@ -1410,7 +1410,7 @@
             {
               "id": "pelican",
               "names": {
-                "vi": "con Bồ nông",
+                "vi": "Con Bồ nông",
                 "en": "Pelican",
                 "zh": "鹈鹕"
               },
@@ -1435,7 +1435,7 @@
             {
               "id": "seagull",
               "names": {
-                "vi": "con Mòng biển",
+                "vi": "Con Mòng biển",
                 "en": "Seagull",
                 "zh": "海鸥"
               },
@@ -1460,7 +1460,7 @@
             {
               "id": "ostrich",
               "names": {
-                "vi": "con Đà điểu",
+                "vi": "Con Đà điểu",
                 "en": "Ostrich",
                 "zh": "鸵鸟"
               },
@@ -1485,7 +1485,7 @@
             {
               "id": "canary",
               "names": {
-                "vi": "con Chim hoàng yến",
+                "vi": "Con Chim hoàng yến",
                 "en": "Canary",
                 "zh": "金丝雀"
               },
@@ -1510,7 +1510,7 @@
             {
               "id": "robin",
               "names": {
-                "vi": "con Chim cổ đỏ",
+                "vi": "Con Chim cổ đỏ",
                 "en": "Robin",
                 "zh": "知更鸟"
               },
@@ -1535,7 +1535,7 @@
             {
               "id": "hummingbird",
               "names": {
-                "vi": "con Chim ruồi",
+                "vi": "Con Chim ruồi",
                 "en": "Hummingbird",
                 "zh": "蜂鸟"
               },
@@ -1560,7 +1560,7 @@
             {
               "id": "stork",
               "names": {
-                "vi": "con Cò trắng",
+                "vi": "Con Cò trắng",
                 "en": "Stork",
                 "zh": "鹳"
               },
@@ -1611,7 +1611,7 @@
             {
               "id": "dolphin",
               "names": {
-                "vi": "con Cá heo",
+                "vi": "Con Cá heo",
                 "en": "Dolphin",
                 "zh": "海豚"
               },
@@ -1636,7 +1636,7 @@
             {
               "id": "whale",
               "names": {
-                "vi": "con Cá voi",
+                "vi": "Con Cá voi",
                 "en": "Whale",
                 "zh": "鲸鱼"
               },
@@ -1661,7 +1661,7 @@
             {
               "id": "shark",
               "names": {
-                "vi": "con Cá mập",
+                "vi": "Con Cá mập",
                 "en": "Shark",
                 "zh": "鲨鱼"
               },
@@ -1686,7 +1686,7 @@
             {
               "id": "octopus",
               "names": {
-                "vi": "con Bạch tuộc",
+                "vi": "Con Bạch tuộc",
                 "en": "Octopus",
                 "zh": "章鱼"
               },
@@ -1711,7 +1711,7 @@
             {
               "id": "squid",
               "names": {
-                "vi": "con Mực",
+                "vi": "Con Mực",
                 "en": "Squid",
                 "zh": "鱿鱼"
               },
@@ -1736,7 +1736,7 @@
             {
               "id": "jellyfish",
               "names": {
-                "vi": "con Sứa",
+                "vi": "Con Sứa",
                 "en": "Jellyfish",
                 "zh": "水母"
               },
@@ -1761,7 +1761,7 @@
             {
               "id": "starfish",
               "names": {
-                "vi": "con Sao biển",
+                "vi": "Con Sao biển",
                 "en": "Starfish",
                 "zh": "海星"
               },
@@ -1786,7 +1786,7 @@
             {
               "id": "seahorse",
               "names": {
-                "vi": "con Cá ngựa",
+                "vi": "Con Cá ngựa",
                 "en": "Seahorse",
                 "zh": "海马"
               },
@@ -1811,7 +1811,7 @@
             {
               "id": "seal",
               "names": {
-                "vi": "con Hải cẩu",
+                "vi": "Con Hải cẩu",
                 "en": "Seal",
                 "zh": "海豹"
               },
@@ -1836,7 +1836,7 @@
             {
               "id": "sea_lion",
               "names": {
-                "vi": "con Sư tử biển",
+                "vi": "Con Sư tử biển",
                 "en": "Sea Lion",
                 "zh": "海狮"
               },
@@ -1861,7 +1861,7 @@
             {
               "id": "walrus",
               "names": {
-                "vi": "con Hải mã",
+                "vi": "Con Hải mã",
                 "en": "Walrus",
                 "zh": "海象"
               },
@@ -1886,7 +1886,7 @@
             {
               "id": "crab",
               "names": {
-                "vi": "con Cua",
+                "vi": "Con Cua",
                 "en": "Crab",
                 "zh": "螃蟹"
               },
@@ -1911,7 +1911,7 @@
             {
               "id": "lobster",
               "names": {
-                "vi": "con Tôm hùm",
+                "vi": "Con Tôm hùm",
                 "en": "Lobster",
                 "zh": "龙虾"
               },
@@ -1936,7 +1936,7 @@
             {
               "id": "shrimp",
               "names": {
-                "vi": "con Tôm",
+                "vi": "Con Tôm",
                 "en": "Shrimp",
                 "zh": "虾"
               },
@@ -1961,7 +1961,7 @@
             {
               "id": "clam",
               "names": {
-                "vi": "con Nghêu",
+                "vi": "Con Nghêu",
                 "en": "Clam",
                 "zh": "蛤蜊"
               },
@@ -1986,7 +1986,7 @@
             {
               "id": "oyster",
               "names": {
-                "vi": "con Hàu",
+                "vi": "Con Hàu",
                 "en": "Oyster",
                 "zh": "牡蛎"
               },
@@ -2011,7 +2011,7 @@
             {
               "id": "coral",
               "names": {
-                "vi": "con San hô",
+                "vi": "Con San hô",
                 "en": "Coral",
                 "zh": "珊瑚"
               },
@@ -2036,7 +2036,7 @@
             {
               "id": "sea_urchin",
               "names": {
-                "vi": "con Nhím biển",
+                "vi": "Con Nhím biển",
                 "en": "Sea Urchin",
                 "zh": "海胆"
               },
@@ -2061,7 +2061,7 @@
             {
               "id": "eel",
               "names": {
-                "vi": "con Lươn biển",
+                "vi": "Con Lươn biển",
                 "en": "Eel",
                 "zh": "鳗鱼"
               },
@@ -2086,7 +2086,7 @@
             {
               "id": "stingray",
               "names": {
-                "vi": "con Cá đuối",
+                "vi": "Con Cá đuối",
                 "en": "Stingray",
                 "zh": "黄貂鱼"
               },
@@ -2137,7 +2137,7 @@
             {
               "id": "butterfly",
               "names": {
-                "vi": "con Bướm",
+                "vi": "Con Bướm",
                 "en": "Butterfly",
                 "zh": "蝴蝶"
               },
@@ -2162,7 +2162,7 @@
             {
               "id": "bee",
               "names": {
-                "vi": "con Ong",
+                "vi": "Con Ong",
                 "en": "Bee",
                 "zh": "蜜蜂"
               },
@@ -2187,7 +2187,7 @@
             {
               "id": "ant",
               "names": {
-                "vi": "con Kiến",
+                "vi": "Con Kiến",
                 "en": "Ant",
                 "zh": "蚂蚁"
               },
@@ -2212,7 +2212,7 @@
             {
               "id": "ladybug",
               "names": {
-                "vi": "con Bọ rùa",
+                "vi": "Con Bọ rùa",
                 "en": "Ladybug",
                 "zh": "瓢虫"
               },
@@ -2237,7 +2237,7 @@
             {
               "id": "dragonfly",
               "names": {
-                "vi": "con Chuồn chuồn",
+                "vi": "Con Chuồn chuồn",
                 "en": "Dragonfly",
                 "zh": "蜻蜓"
               },
@@ -2262,7 +2262,7 @@
             {
               "id": "grasshopper",
               "names": {
-                "vi": "con Châu chấu",
+                "vi": "Con Châu chấu",
                 "en": "Grasshopper",
                 "zh": "蚱蜢"
               },
@@ -2287,7 +2287,7 @@
             {
               "id": "cricket",
               "names": {
-                "vi": "con Dế",
+                "vi": "Con Dế",
                 "en": "Cricket",
                 "zh": "蟋蟀"
               },
@@ -2312,7 +2312,7 @@
             {
               "id": "beetle",
               "names": {
-                "vi": "con Bọ cánh cứng",
+                "vi": "Con Bọ cánh cứng",
                 "en": "Beetle",
                 "zh": "甲虫"
               },
@@ -2337,7 +2337,7 @@
             {
               "id": "mosquito",
               "names": {
-                "vi": "con Muỗi",
+                "vi": "Con Muỗi",
                 "en": "Mosquito",
                 "zh": "蚊子"
               },
@@ -2362,7 +2362,7 @@
             {
               "id": "fly",
               "names": {
-                "vi": "con Ruồi",
+                "vi": "Con Ruồi",
                 "en": "Fly",
                 "zh": "苍蝇"
               },
@@ -2387,7 +2387,7 @@
             {
               "id": "cockroach",
               "names": {
-                "vi": "con Gián",
+                "vi": "Con Gián",
                 "en": "Cockroach",
                 "zh": "蟑螂"
               },
@@ -2412,7 +2412,7 @@
             {
               "id": "termite",
               "names": {
-                "vi": "con Mối",
+                "vi": "Con Mối",
                 "en": "Termite",
                 "zh": "白蚁"
               },
@@ -2437,7 +2437,7 @@
             {
               "id": "moth",
               "names": {
-                "vi": "con Bướm đêm",
+                "vi": "Con Bướm đêm",
                 "en": "Moth",
                 "zh": "飞蛾"
               },
@@ -2462,7 +2462,7 @@
             {
               "id": "wasp",
               "names": {
-                "vi": "con Ong bắp cày",
+                "vi": "Con Ong bắp cày",
                 "en": "Wasp",
                 "zh": "黄蜂"
               },
@@ -2487,7 +2487,7 @@
             {
               "id": "cicada",
               "names": {
-                "vi": "con Ve sầu",
+                "vi": "Con Ve sầu",
                 "en": "Cicada",
                 "zh": "蝉"
               },
@@ -2512,7 +2512,7 @@
             {
               "id": "mantis",
               "names": {
-                "vi": "con Bọ ngựa",
+                "vi": "Con Bọ ngựa",
                 "en": "Praying Mantis",
                 "zh": "螳螂"
               },
@@ -2537,7 +2537,7 @@
             {
               "id": "firefly",
               "names": {
-                "vi": "con Đom đóm",
+                "vi": "Con Đom đóm",
                 "en": "Firefly",
                 "zh": "萤火虫"
               },
@@ -2562,7 +2562,7 @@
             {
               "id": "stick_insect",
               "names": {
-                "vi": "con Bọ que",
+                "vi": "Con Bọ que",
                 "en": "Stick Insect",
                 "zh": "竹节虫"
               },
@@ -2587,7 +2587,7 @@
             {
               "id": "leaf_insect",
               "names": {
-                "vi": "con Bọ lá",
+                "vi": "Con Bọ lá",
                 "en": "Leaf Insect",
                 "zh": "叶虫"
               },
@@ -2612,7 +2612,7 @@
             {
               "id": "flea",
               "names": {
-                "vi": "con Bọ chét",
+                "vi": "Con Bọ chét",
                 "en": "Flea",
                 "zh": "跳蚤"
               },
@@ -2663,7 +2663,7 @@
             {
               "id": "snake",
               "names": {
-                "vi": "con Rắn",
+                "vi": "Con Rắn",
                 "en": "Snake",
                 "zh": "蛇"
               },
@@ -2688,7 +2688,7 @@
             {
               "id": "cobra",
               "names": {
-                "vi": "con Rắn hổ mang",
+                "vi": "Con Rắn hổ mang",
                 "en": "Cobra",
                 "zh": "眼镜蛇"
               },
@@ -2713,7 +2713,7 @@
             {
               "id": "python",
               "names": {
-                "vi": "con Trăn",
+                "vi": "Con Trăn",
                 "en": "Python",
                 "zh": "蟒蛇"
               },
@@ -2738,7 +2738,7 @@
             {
               "id": "viper",
               "names": {
-                "vi": "con Rắn lục",
+                "vi": "Con Rắn lục",
                 "en": "Viper",
                 "zh": "蝰蛇"
               },
@@ -2763,7 +2763,7 @@
             {
               "id": "lizard",
               "names": {
-                "vi": "con Thằn lằn",
+                "vi": "Con Thằn lằn",
                 "en": "Lizard",
                 "zh": "蜥蜴"
               },
@@ -2788,7 +2788,7 @@
             {
               "id": "gecko",
               "names": {
-                "vi": "con Thạch sùng",
+                "vi": "Con Thạch sùng",
                 "en": "Gecko",
                 "zh": "壁虎"
               },
@@ -2813,7 +2813,7 @@
             {
               "id": "iguana",
               "names": {
-                "vi": "con Cự đà",
+                "vi": "Con Cự đà",
                 "en": "Iguana",
                 "zh": "鬣蜥"
               },
@@ -2838,7 +2838,7 @@
             {
               "id": "chameleon",
               "names": {
-                "vi": "con Tắc kè hoa",
+                "vi": "Con Tắc kè hoa",
                 "en": "Chameleon",
                 "zh": "变色龙"
               },
@@ -2863,7 +2863,7 @@
             {
               "id": "komodo_dragon",
               "names": {
-                "vi": "con Rồng Komodo",
+                "vi": "Con Rồng Komodo",
                 "en": "Komodo Dragon",
                 "zh": "科莫多巨蜥"
               },
@@ -2888,7 +2888,7 @@
             {
               "id": "crocodile",
               "names": {
-                "vi": "con Cá sấu",
+                "vi": "Con Cá sấu",
                 "en": "Crocodile",
                 "zh": "鳄鱼"
               },
@@ -2913,7 +2913,7 @@
             {
               "id": "alligator",
               "names": {
-                "vi": "con Cá sấu Mỹ",
+                "vi": "Con Cá sấu Mỹ",
                 "en": "Alligator",
                 "zh": "短吻鳄"
               },
@@ -2938,7 +2938,7 @@
             {
               "id": "turtle",
               "names": {
-                "vi": "con Rùa",
+                "vi": "Con Rùa",
                 "en": "Turtle",
                 "zh": "乌龟"
               },
@@ -2963,7 +2963,7 @@
             {
               "id": "tortoise",
               "names": {
-                "vi": "con Rùa cạn",
+                "vi": "Con Rùa cạn",
                 "en": "Tortoise",
                 "zh": "陆龟"
               },
@@ -2988,7 +2988,7 @@
             {
               "id": "sea_turtle",
               "names": {
-                "vi": "con Rùa biển",
+                "vi": "Con Rùa biển",
                 "en": "Sea Turtle",
                 "zh": "海龟"
               },
@@ -3013,7 +3013,7 @@
             {
               "id": "skink",
               "names": {
-                "vi": "con Thằn lằn bóng",
+                "vi": "Con Thằn lằn bóng",
                 "en": "Skink",
                 "zh": "石龙子"
               },
@@ -3038,7 +3038,7 @@
             {
               "id": "anole",
               "names": {
-                "vi": "con Thằn lằn Anole",
+                "vi": "Con Thằn lằn Anole",
                 "en": "Anole",
                 "zh": "变色蜥"
               },
@@ -3063,7 +3063,7 @@
             {
               "id": "gila_monster",
               "names": {
-                "vi": "con Quái vật Gila",
+                "vi": "Con Quái vật Gila",
                 "en": "Gila Monster",
                 "zh": "吉拉毒蜥"
               },
@@ -3088,7 +3088,7 @@
             {
               "id": "marine_iguana",
               "names": {
-                "vi": "con Cự đà biển",
+                "vi": "Con Cự đà biển",
                 "en": "Marine Iguana",
                 "zh": "海鬣蜥"
               },
@@ -3113,7 +3113,7 @@
             {
               "id": "frilled_lizard",
               "names": {
-                "vi": "con Thằn lằn cổ diềm",
+                "vi": "Con Thằn lằn cổ diềm",
                 "en": "Frilled Lizard",
                 "zh": "伞蜥"
               },
@@ -3138,7 +3138,7 @@
             {
               "id": "tuatara",
               "names": {
-                "vi": "con Thú mỏ răng",
+                "vi": "Con Thú mỏ răng",
                 "en": "Tuatara",
                 "zh": "喙头蜥"
               },
@@ -3189,7 +3189,7 @@
             {
               "id": "frog",
               "names": {
-                "vi": "con Ếch",
+                "vi": "Con Ếch",
                 "en": "Frog",
                 "zh": "青蛙"
               },
@@ -3214,7 +3214,7 @@
             {
               "id": "toad",
               "names": {
-                "vi": "con Cóc",
+                "vi": "Con Cóc",
                 "en": "Toad",
                 "zh": "蟾蜍"
               },
@@ -3239,7 +3239,7 @@
             {
               "id": "salamander",
               "names": {
-                "vi": "con Kỳ giông",
+                "vi": "Con Kỳ giông",
                 "en": "Salamander",
                 "zh": "蝾螈"
               },
@@ -3264,7 +3264,7 @@
             {
               "id": "newt",
               "names": {
-                "vi": "con Sa giông",
+                "vi": "Con Sa giông",
                 "en": "Newt",
                 "zh": "蝾螈（蝾螈属）"
               },
@@ -3289,7 +3289,7 @@
             {
               "id": "axolotl",
               "names": {
-                "vi": "con Kỳ giông Mexico",
+                "vi": "Con Kỳ giông Mexico",
                 "en": "Axolotl",
                 "zh": "美西螈"
               },
@@ -3314,7 +3314,7 @@
             {
               "id": "tree_frog",
               "names": {
-                "vi": "con Ếch cây",
+                "vi": "Con Ếch cây",
                 "en": "Tree Frog",
                 "zh": "树蛙"
               },
@@ -3339,7 +3339,7 @@
             {
               "id": "bullfrog",
               "names": {
-                "vi": "con Ếch bò",
+                "vi": "Con Ếch bò",
                 "en": "Bullfrog",
                 "zh": "牛蛙"
               },
@@ -3364,7 +3364,7 @@
             {
               "id": "poison_dart_frog",
               "names": {
-                "vi": "con Ếch phi tiêu độc",
+                "vi": "Con Ếch phi tiêu độc",
                 "en": "Poison Dart Frog",
                 "zh": "箭毒蛙"
               },
@@ -3389,7 +3389,7 @@
             {
               "id": "glass_frog",
               "names": {
-                "vi": "con Ếch thủy tinh",
+                "vi": "Con Ếch thủy tinh",
                 "en": "Glass Frog",
                 "zh": "玻璃蛙"
               },
@@ -3414,7 +3414,7 @@
             {
               "id": "caecilian",
               "names": {
-                "vi": "con Lưỡng cư không chân",
+                "vi": "Con Lưỡng cư không chân",
                 "en": "Caecilian",
                 "zh": "蚓螈"
               },
@@ -3439,7 +3439,7 @@
             {
               "id": "fire_salamander",
               "names": {
-                "vi": "con Kỳ giông lửa",
+                "vi": "Con Kỳ giông lửa",
                 "en": "Fire Salamander",
                 "zh": "火蝾螈"
               },
@@ -3464,7 +3464,7 @@
             {
               "id": "tiger_salamander",
               "names": {
-                "vi": "con Kỳ giông hổ",
+                "vi": "Con Kỳ giông hổ",
                 "en": "Tiger Salamander",
                 "zh": "虎纹蝾螈"
               },
@@ -3489,7 +3489,7 @@
             {
               "id": "alpine_newt",
               "names": {
-                "vi": "con Sa giông Alpine",
+                "vi": "Con Sa giông Alpine",
                 "en": "Alpine Newt",
                 "zh": "高山蝾螈"
               },
@@ -3514,7 +3514,7 @@
             {
               "id": "spotted_newt",
               "names": {
-                "vi": "con Sa giông đốm",
+                "vi": "Con Sa giông đốm",
                 "en": "Spotted Newt",
                 "zh": "斑点蝾螈"
               },
@@ -3539,7 +3539,7 @@
             {
               "id": "reed_frog",
               "names": {
-                "vi": "con Ếch sậy",
+                "vi": "Con Ếch sậy",
                 "en": "Reed Frog",
                 "zh": "芦苇蛙"
               },
@@ -3564,7 +3564,7 @@
             {
               "id": "wood_frog",
               "names": {
-                "vi": "con Ếch gỗ",
+                "vi": "Con Ếch gỗ",
                 "en": "Wood Frog",
                 "zh": "林蛙"
               },
@@ -3589,7 +3589,7 @@
             {
               "id": "marbled_salamander",
               "names": {
-                "vi": "con Kỳ giông cẩm thạch",
+                "vi": "Con Kỳ giông cẩm thạch",
                 "en": "Marbled Salamander",
                 "zh": "大理石蝾螈"
               },
@@ -3614,7 +3614,7 @@
             {
               "id": "mudpuppy",
               "names": {
-                "vi": "con Kỳ giông nước",
+                "vi": "Con Kỳ giông nước",
                 "en": "Mudpuppy",
                 "zh": "泥狗鲵"
               },
@@ -3639,7 +3639,7 @@
             {
               "id": "olm",
               "names": {
-                "vi": "con Kỳ giông hang động",
+                "vi": "Con Kỳ giông hang động",
                 "en": "Olm",
                 "zh": "洞螈"
               },
@@ -3664,7 +3664,7 @@
             {
               "id": "hellbender",
               "names": {
-                "vi": "con Kỳ giông khổng lồ Mỹ",
+                "vi": "Con Kỳ giông khổng lồ Mỹ",
                 "en": "Hellbender",
                 "zh": "美洲大鲵"
               },
@@ -3715,7 +3715,7 @@
             {
               "id": "dog",
               "names": {
-                "vi": "con Chó",
+                "vi": "Con Chó",
                 "en": "Dog",
                 "zh": "狗"
               },
@@ -3740,7 +3740,7 @@
             {
               "id": "cat",
               "names": {
-                "vi": "con Mèo",
+                "vi": "Con Mèo",
                 "en": "Cat",
                 "zh": "猫"
               },
@@ -3765,7 +3765,7 @@
             {
               "id": "horse",
               "names": {
-                "vi": "con Ngựa",
+                "vi": "Con Ngựa",
                 "en": "Horse",
                 "zh": "马"
               },
@@ -3790,7 +3790,7 @@
             {
               "id": "rabbit",
               "names": {
-                "vi": "con Thỏ",
+                "vi": "Con Thỏ",
                 "en": "Rabbit",
                 "zh": "兔子"
               },
@@ -3815,7 +3815,7 @@
             {
               "id": "monkey",
               "names": {
-                "vi": "con Khỉ",
+                "vi": "Con Khỉ",
                 "en": "Monkey",
                 "zh": "猴子"
               },
@@ -3840,7 +3840,7 @@
             {
               "id": "bat",
               "names": {
-                "vi": "con Dơi",
+                "vi": "Con Dơi",
                 "en": "Bat",
                 "zh": "蝙蝠"
               },
@@ -3865,7 +3865,7 @@
             {
               "id": "bear",
               "names": {
-                "vi": "con Gấu",
+                "vi": "Con Gấu",
                 "en": "Bear",
                 "zh": "熊"
               },
@@ -3890,7 +3890,7 @@
             {
               "id": "panda",
               "names": {
-                "vi": "con Gấu trúc",
+                "vi": "Con Gấu trúc",
                 "en": "Panda",
                 "zh": "熊猫"
               },
@@ -3915,7 +3915,7 @@
             {
               "id": "koala",
               "names": {
-                "vi": "con Gấu túi",
+                "vi": "Con Gấu túi",
                 "en": "Koala",
                 "zh": "考拉"
               },
@@ -3940,7 +3940,7 @@
             {
               "id": "kangaroo",
               "names": {
-                "vi": "con Chuột túi",
+                "vi": "Con Chuột túi",
                 "en": "Kangaroo",
                 "zh": "袋鼠"
               },
@@ -3965,7 +3965,7 @@
             {
               "id": "squirrel",
               "names": {
-                "vi": "con Sóc",
+                "vi": "Con Sóc",
                 "en": "Squirrel",
                 "zh": "松鼠"
               },
@@ -3990,7 +3990,7 @@
             {
               "id": "hedgehog",
               "names": {
-                "vi": "con Nhím",
+                "vi": "Con Nhím",
                 "en": "Hedgehog",
                 "zh": "刺猬"
               },
@@ -4015,7 +4015,7 @@
             {
               "id": "otter",
               "names": {
-                "vi": "con Rái cá",
+                "vi": "Con Rái cá",
                 "en": "Otter",
                 "zh": "水獭"
               },
@@ -4040,7 +4040,7 @@
             {
               "id": "beaver",
               "names": {
-                "vi": "con Hải ly",
+                "vi": "Con Hải ly",
                 "en": "Beaver",
                 "zh": "海狸"
               },
@@ -4065,7 +4065,7 @@
             {
               "id": "sloth",
               "names": {
-                "vi": "con Lười",
+                "vi": "Con Lười",
                 "en": "Sloth",
                 "zh": "树懒"
               },
@@ -4090,7 +4090,7 @@
             {
               "id": "raccoon",
               "names": {
-                "vi": "con Gấu mèo",
+                "vi": "Con Gấu mèo",
                 "en": "Raccoon",
                 "zh": "浣熊"
               },
@@ -4115,7 +4115,7 @@
             {
               "id": "badger",
               "names": {
-                "vi": "con Lửng",
+                "vi": "Con Lửng",
                 "en": "Badger",
                 "zh": "獾"
               },
@@ -4140,7 +4140,7 @@
             {
               "id": "mole",
               "names": {
-                "vi": "con Chuột chũi",
+                "vi": "Con Chuột chũi",
                 "en": "Mole",
                 "zh": "鼹鼠"
               },
@@ -4165,7 +4165,7 @@
             {
               "id": "platypus",
               "names": {
-                "vi": "con Thú mỏ vịt",
+                "vi": "Con Thú mỏ vịt",
                 "en": "Platypus",
                 "zh": "鸭嘴兽"
               },
@@ -4190,7 +4190,7 @@
             {
               "id": "armadillo",
               "names": {
-                "vi": "con Tê tê Nam Mỹ",
+                "vi": "Con Tê tê Nam Mỹ",
                 "en": "Armadillo",
                 "zh": "犰狳"
               },
@@ -4241,7 +4241,7 @@
             {
               "id": "salmon",
               "names": {
-                "vi": "con Cá hồi",
+                "vi": "Con Cá hồi",
                 "en": "Salmon",
                 "zh": "三文鱼"
               },
@@ -4266,7 +4266,7 @@
             {
               "id": "tuna",
               "names": {
-                "vi": "con Cá ngừ",
+                "vi": "Con Cá ngừ",
                 "en": "Tuna",
                 "zh": "金枪鱼"
               },
@@ -4291,7 +4291,7 @@
             {
               "id": "goldfish",
               "names": {
-                "vi": "con Cá vàng",
+                "vi": "Con Cá vàng",
                 "en": "Goldfish",
                 "zh": "金鱼"
               },
@@ -4316,7 +4316,7 @@
             {
               "id": "clownfish",
               "names": {
-                "vi": "con Cá hề",
+                "vi": "Con Cá hề",
                 "en": "Clownfish",
                 "zh": "小丑鱼"
               },
@@ -4341,7 +4341,7 @@
             {
               "id": "carp",
               "names": {
-                "vi": "con Cá chép",
+                "vi": "Con Cá chép",
                 "en": "Carp",
                 "zh": "鲤鱼"
               },
@@ -4366,7 +4366,7 @@
             {
               "id": "catfish",
               "names": {
-                "vi": "con Cá da trơn",
+                "vi": "Con Cá da trơn",
                 "en": "Catfish",
                 "zh": "鲶鱼"
               },
@@ -4391,7 +4391,7 @@
             {
               "id": "tilapia",
               "names": {
-                "vi": "con Cá rô phi",
+                "vi": "Con Cá rô phi",
                 "en": "Tilapia",
                 "zh": "罗非鱼"
               },
@@ -4416,7 +4416,7 @@
             {
               "id": "trout",
               "names": {
-                "vi": "con Cá hồi nước ngọt",
+                "vi": "Con Cá hồi nước ngọt",
                 "en": "Trout",
                 "zh": "鳟鱼"
               },
@@ -4441,7 +4441,7 @@
             {
               "id": "bass",
               "names": {
-                "vi": "con Cá vược",
+                "vi": "Con Cá vược",
                 "en": "Bass",
                 "zh": "鲈鱼"
               },
@@ -4466,7 +4466,7 @@
             {
               "id": "cod",
               "names": {
-                "vi": "con Cá tuyết",
+                "vi": "Con Cá tuyết",
                 "en": "Cod",
                 "zh": "鳕鱼"
               },
@@ -4491,7 +4491,7 @@
             {
               "id": "mackerel",
               "names": {
-                "vi": "con Cá thu",
+                "vi": "Con Cá thu",
                 "en": "Mackerel",
                 "zh": "鲭鱼"
               },
@@ -4516,7 +4516,7 @@
             {
               "id": "sardine",
               "names": {
-                "vi": "con Cá mòi",
+                "vi": "Con Cá mòi",
                 "en": "Sardine",
                 "zh": "沙丁鱼"
               },
@@ -4541,7 +4541,7 @@
             {
               "id": "anchovy",
               "names": {
-                "vi": "con Cá cơm",
+                "vi": "Con Cá cơm",
                 "en": "Anchovy",
                 "zh": "鳀鱼"
               },
@@ -4566,7 +4566,7 @@
             {
               "id": "guppy",
               "names": {
-                "vi": "con Cá bảy màu",
+                "vi": "Con Cá bảy màu",
                 "en": "Guppy",
                 "zh": "孔雀鱼"
               },
@@ -4591,7 +4591,7 @@
             {
               "id": "betta",
               "names": {
-                "vi": "con Cá betta",
+                "vi": "Con Cá betta",
                 "en": "Betta Fish",
                 "zh": "斗鱼"
               },
@@ -4616,7 +4616,7 @@
             {
               "id": "pufferfish",
               "names": {
-                "vi": "con Cá nóc",
+                "vi": "Con Cá nóc",
                 "en": "Pufferfish",
                 "zh": "河豚"
               },
@@ -4641,7 +4641,7 @@
             {
               "id": "anglerfish",
               "names": {
-                "vi": "con Cá cần câu",
+                "vi": "Con Cá cần câu",
                 "en": "Anglerfish",
                 "zh": "鮟鱇鱼"
               },
@@ -4666,7 +4666,7 @@
             {
               "id": "swordfish",
               "names": {
-                "vi": "con Cá kiếm",
+                "vi": "Con Cá kiếm",
                 "en": "Swordfish",
                 "zh": "剑鱼"
               },
@@ -4691,7 +4691,7 @@
             {
               "id": "marlin",
               "names": {
-                "vi": "con Cá cờ",
+                "vi": "Con Cá cờ",
                 "en": "Marlin",
                 "zh": "枪鱼"
               },
@@ -4716,7 +4716,7 @@
             {
               "id": "koi",
               "names": {
-                "vi": "con Cá Koi",
+                "vi": "Con Cá Koi",
                 "en": "Koi",
                 "zh": "锦鲤"
               },
@@ -4767,7 +4767,7 @@
             {
               "id": "tyrannosaurus_rex",
               "names": {
-                "vi": "con Khủng long bạo chúa",
+                "vi": "Con Khủng long bạo chúa",
                 "en": "Tyrannosaurus Rex",
                 "zh": "霸王龙"
               },
@@ -4792,7 +4792,7 @@
             {
               "id": "triceratops",
               "names": {
-                "vi": "con Khủng long ba sừng",
+                "vi": "Con Khủng long ba sừng",
                 "en": "Triceratops",
                 "zh": "三角龙"
               },
@@ -4817,7 +4817,7 @@
             {
               "id": "stegosaurus",
               "names": {
-                "vi": "con Khủng long gai lưng",
+                "vi": "Con Khủng long gai lưng",
                 "en": "Stegosaurus",
                 "zh": "剑龙"
               },
@@ -4842,7 +4842,7 @@
             {
               "id": "brachiosaurus",
               "names": {
-                "vi": "con Khủng long cổ dài Brachiosaurus",
+                "vi": "Con Khủng long cổ dài Brachiosaurus",
                 "en": "Brachiosaurus",
                 "zh": "腕龙"
               },
@@ -4867,7 +4867,7 @@
             {
               "id": "brontosaurus",
               "names": {
-                "vi": "con Khủng long Brontosaurus",
+                "vi": "Con Khủng long Brontosaurus",
                 "en": "Brontosaurus",
                 "zh": "雷龙"
               },
@@ -4892,7 +4892,7 @@
             {
               "id": "diplodocus",
               "names": {
-                "vi": "con Khủng long Diplodocus",
+                "vi": "Con Khủng long Diplodocus",
                 "en": "Diplodocus",
                 "zh": "梁龙"
               },
@@ -4917,7 +4917,7 @@
             {
               "id": "velociraptor",
               "names": {
-                "vi": "con Khủng long Velociraptor",
+                "vi": "Con Khủng long Velociraptor",
                 "en": "Velociraptor",
                 "zh": "伶盗龙"
               },
@@ -4942,7 +4942,7 @@
             {
               "id": "spinosaurus",
               "names": {
-                "vi": "con Khủng long Spinosaurus",
+                "vi": "Con Khủng long Spinosaurus",
                 "en": "Spinosaurus",
                 "zh": "棘龙"
               },
@@ -4967,7 +4967,7 @@
             {
               "id": "ankylosaurus",
               "names": {
-                "vi": "con Khủng long bọc giáp",
+                "vi": "Con Khủng long bọc giáp",
                 "en": "Ankylosaurus",
                 "zh": "甲龙"
               },
@@ -4992,7 +4992,7 @@
             {
               "id": "parasaurolophus",
               "names": {
-                "vi": "con Khủng long Parasaurolophus",
+                "vi": "Con Khủng long Parasaurolophus",
                 "en": "Parasaurolophus",
                 "zh": "副栉龙"
               },
@@ -5017,7 +5017,7 @@
             {
               "id": "iguanodon",
               "names": {
-                "vi": "con Khủng long Iguanodon",
+                "vi": "Con Khủng long Iguanodon",
                 "en": "Iguanodon",
                 "zh": "禽龙"
               },
@@ -5042,7 +5042,7 @@
             {
               "id": "allosaurus",
               "names": {
-                "vi": "con Khủng long Allosaurus",
+                "vi": "Con Khủng long Allosaurus",
                 "en": "Allosaurus",
                 "zh": "异特龙"
               },
@@ -5067,7 +5067,7 @@
             {
               "id": "carnotaurus",
               "names": {
-                "vi": "con Khủng long Carnotaurus",
+                "vi": "Con Khủng long Carnotaurus",
                 "en": "Carnotaurus",
                 "zh": "食肉牛龙"
               },
@@ -5092,7 +5092,7 @@
             {
               "id": "dilophosaurus",
               "names": {
-                "vi": "con Khủng long Dilophosaurus",
+                "vi": "Con Khủng long Dilophosaurus",
                 "en": "Dilophosaurus",
                 "zh": "双脊龙"
               },
@@ -5117,7 +5117,7 @@
             {
               "id": "pachycephalosaurus",
               "names": {
-                "vi": "con Khủng long đầu dày",
+                "vi": "Con Khủng long đầu dày",
                 "en": "Pachycephalosaurus",
                 "zh": "厚头龙"
               },
@@ -5142,7 +5142,7 @@
             {
               "id": "oviraptor",
               "names": {
-                "vi": "con Khủng long Oviraptor",
+                "vi": "Con Khủng long Oviraptor",
                 "en": "Oviraptor",
                 "zh": "偷蛋龙"
               },
@@ -5167,7 +5167,7 @@
             {
               "id": "compsognathus",
               "names": {
-                "vi": "con Khủng long Compsognathus",
+                "vi": "Con Khủng long Compsognathus",
                 "en": "Compsognathus",
                 "zh": "美颌龙"
               },
@@ -5192,7 +5192,7 @@
             {
               "id": "gallimimus",
               "names": {
-                "vi": "con Khủng long Gallimimus",
+                "vi": "Con Khủng long Gallimimus",
                 "en": "Gallimimus",
                 "zh": "似鸡龙"
               },
@@ -5217,7 +5217,7 @@
             {
               "id": "argentinosaurus",
               "names": {
-                "vi": "con Khủng long Argentinosaurus",
+                "vi": "Con Khủng long Argentinosaurus",
                 "en": "Argentinosaurus",
                 "zh": "阿根廷龙"
               },
@@ -5242,7 +5242,7 @@
             {
               "id": "therizinosaurus",
               "names": {
-                "vi": "con Khủng long Therizinosaurus",
+                "vi": "Con Khủng long Therizinosaurus",
                 "en": "Therizinosaurus",
                 "zh": "镰刀龙"
               },
@@ -5293,7 +5293,7 @@
             {
               "id": "spider",
               "names": {
-                "vi": "con Nhện",
+                "vi": "Con Nhện",
                 "en": "Spider",
                 "zh": "蜘蛛"
               },
@@ -5318,7 +5318,7 @@
             {
               "id": "tarantula",
               "names": {
-                "vi": "con Nhện tarantula",
+                "vi": "Con Nhện tarantula",
                 "en": "Tarantula",
                 "zh": "捕鸟蛛"
               },
@@ -5343,7 +5343,7 @@
             {
               "id": "jumping_spider",
               "names": {
-                "vi": "con Nhện nhảy",
+                "vi": "Con Nhện nhảy",
                 "en": "Jumping Spider",
                 "zh": "跳蛛"
               },
@@ -5368,7 +5368,7 @@
             {
               "id": "wolf_spider",
               "names": {
-                "vi": "con Nhện sói",
+                "vi": "Con Nhện sói",
                 "en": "Wolf Spider",
                 "zh": "狼蛛"
               },
@@ -5393,7 +5393,7 @@
             {
               "id": "orb_weaver",
               "names": {
-                "vi": "con Nhện dệt lưới",
+                "vi": "Con Nhện dệt lưới",
                 "en": "Orb-weaver Spider",
                 "zh": "圆网蛛"
               },
@@ -5418,7 +5418,7 @@
             {
               "id": "black_widow",
               "names": {
-                "vi": "con Nhện góa phụ đen",
+                "vi": "Con Nhện góa phụ đen",
                 "en": "Black Widow",
                 "zh": "黑寡妇蜘蛛"
               },
@@ -5443,7 +5443,7 @@
             {
               "id": "brown_recluse",
               "names": {
-                "vi": "con Nhện nâu ẩn dật",
+                "vi": "Con Nhện nâu ẩn dật",
                 "en": "Brown Recluse",
                 "zh": "隐士蜘蛛"
               },
@@ -5468,7 +5468,7 @@
             {
               "id": "scorpion",
               "names": {
-                "vi": "con Bọ cạp",
+                "vi": "Con Bọ cạp",
                 "en": "Scorpion",
                 "zh": "蝎子"
               },
@@ -5493,7 +5493,7 @@
             {
               "id": "emperor_scorpion",
               "names": {
-                "vi": "con Bọ cạp hoàng đế",
+                "vi": "Con Bọ cạp hoàng đế",
                 "en": "Emperor Scorpion",
                 "zh": "帝王蝎"
               },
@@ -5518,7 +5518,7 @@
             {
               "id": "tick",
               "names": {
-                "vi": "con Ve",
+                "vi": "Con Ve",
                 "en": "Tick",
                 "zh": "蜱虫"
               },
@@ -5543,7 +5543,7 @@
             {
               "id": "mite",
               "names": {
-                "vi": "con Mạt",
+                "vi": "Con Mạt",
                 "en": "Mite",
                 "zh": "螨虫"
               },
@@ -5568,7 +5568,7 @@
             {
               "id": "harvestman",
               "names": {
-                "vi": "con Nhện chân dài",
+                "vi": "Con Nhện chân dài",
                 "en": "Harvestman",
                 "zh": "盲蛛"
               },
@@ -5593,7 +5593,7 @@
             {
               "id": "camel_spider",
               "names": {
-                "vi": "con Nhện lạc đà",
+                "vi": "Con Nhện lạc đà",
                 "en": "Camel Spider",
                 "zh": "风蝎"
               },
@@ -5618,7 +5618,7 @@
             {
               "id": "whip_spider",
               "names": {
-                "vi": "con Nhện roi",
+                "vi": "Con Nhện roi",
                 "en": "Whip Spider",
                 "zh": "无尾鞭蝎"
               },
@@ -5643,7 +5643,7 @@
             {
               "id": "whip_scorpion",
               "names": {
-                "vi": "con Bọ cạp roi",
+                "vi": "Con Bọ cạp roi",
                 "en": "Whip Scorpion",
                 "zh": "鞭蝎"
               },
@@ -5668,7 +5668,7 @@
             {
               "id": "pseudoscorpion",
               "names": {
-                "vi": "con Bọ cạp giả",
+                "vi": "Con Bọ cạp giả",
                 "en": "Pseudoscorpion",
                 "zh": "拟蝎"
               },
@@ -5693,7 +5693,7 @@
             {
               "id": "redback_spider",
               "names": {
-                "vi": "con Nhện lưng đỏ",
+                "vi": "Con Nhện lưng đỏ",
                 "en": "Redback Spider",
                 "zh": "红背蜘蛛"
               },
@@ -5718,7 +5718,7 @@
             {
               "id": "trapdoor_spider",
               "names": {
-                "vi": "con Nhện cửa sập",
+                "vi": "Con Nhện cửa sập",
                 "en": "Trapdoor Spider",
                 "zh": "陷阱门蛛"
               },
@@ -5743,7 +5743,7 @@
             {
               "id": "huntsman_spider",
               "names": {
-                "vi": "con Nhện thợ săn",
+                "vi": "Con Nhện thợ săn",
                 "en": "Huntsman Spider",
                 "zh": "巨蟹蛛"
               },
@@ -5768,7 +5768,7 @@
             {
               "id": "cellar_spider",
               "names": {
-                "vi": "con Nhện chân dài nhà",
+                "vi": "Con Nhện chân dài nhà",
                 "en": "Cellar Spider",
                 "zh": "长脚蛛"
               },
@@ -5819,7 +5819,7 @@
             {
               "id": "mouse",
               "names": {
-                "vi": "con Chuột nhắt",
+                "vi": "Con Chuột nhắt",
                 "en": "Mouse",
                 "zh": "老鼠"
               },
@@ -5844,7 +5844,7 @@
             {
               "id": "rat",
               "names": {
-                "vi": "con Chuột cống",
+                "vi": "Con Chuột cống",
                 "en": "Rat",
                 "zh": "大鼠"
               },
@@ -5869,7 +5869,7 @@
             {
               "id": "hamster",
               "names": {
-                "vi": "con Chuột hamster",
+                "vi": "Con Chuột hamster",
                 "en": "Hamster",
                 "zh": "仓鼠"
               },
@@ -5894,7 +5894,7 @@
             {
               "id": "guinea_pig",
               "names": {
-                "vi": "con Chuột lang",
+                "vi": "Con Chuột lang",
                 "en": "Guinea Pig",
                 "zh": "豚鼠"
               },
@@ -5919,7 +5919,7 @@
             {
               "id": "gerbil",
               "names": {
-                "vi": "con Chuột nhảy",
+                "vi": "Con Chuột nhảy",
                 "en": "Gerbil",
                 "zh": "沙鼠"
               },
@@ -5944,7 +5944,7 @@
             {
               "id": "chipmunk",
               "names": {
-                "vi": "con Sóc chuột",
+                "vi": "Con Sóc chuột",
                 "en": "Chipmunk",
                 "zh": "花栗鼠"
               },
@@ -5969,7 +5969,7 @@
             {
               "id": "porcupine",
               "names": {
-                "vi": "con Nhím lông",
+                "vi": "Con Nhím lông",
                 "en": "Porcupine",
                 "zh": "豪猪"
               },
@@ -5994,7 +5994,7 @@
             {
               "id": "capybara",
               "names": {
-                "vi": "con Chuột lang nước",
+                "vi": "Con Chuột lang nước",
                 "en": "Capybara",
                 "zh": "水豚"
               },
@@ -6019,7 +6019,7 @@
             {
               "id": "beaver",
               "names": {
-                "vi": "con Hải ly",
+                "vi": "Con Hải ly",
                 "en": "Beaver",
                 "zh": "海狸"
               },
@@ -6044,7 +6044,7 @@
             {
               "id": "marmot",
               "names": {
-                "vi": "con Marmot",
+                "vi": "Con Marmot",
                 "en": "Marmot",
                 "zh": "旱獭"
               },
@@ -6069,7 +6069,7 @@
             {
               "id": "vole",
               "names": {
-                "vi": "con Chuột đồng",
+                "vi": "Con Chuột đồng",
                 "en": "Vole",
                 "zh": "田鼠"
               },
@@ -6094,7 +6094,7 @@
             {
               "id": "muskrat",
               "names": {
-                "vi": "con Chuột xạ",
+                "vi": "Con Chuột xạ",
                 "en": "Muskrat",
                 "zh": "麝鼠"
               },
@@ -6119,7 +6119,7 @@
             {
               "id": "chinchilla",
               "names": {
-                "vi": "con Chuột Chinchilla",
+                "vi": "Con Chuột Chinchilla",
                 "en": "Chinchilla",
                 "zh": "龙猫"
               },
@@ -6144,7 +6144,7 @@
             {
               "id": "dormouse",
               "names": {
-                "vi": "con Chuột ngủ",
+                "vi": "Con Chuột ngủ",
                 "en": "Dormouse",
                 "zh": "睡鼠"
               },
@@ -6169,7 +6169,7 @@
             {
               "id": "lemming",
               "names": {
-                "vi": "con Chuột lemming",
+                "vi": "Con Chuột lemming",
                 "en": "Lemming",
                 "zh": "旅鼠"
               },
@@ -6194,7 +6194,7 @@
             {
               "id": "ground_squirrel",
               "names": {
-                "vi": "con Sóc đất",
+                "vi": "Con Sóc đất",
                 "en": "Ground Squirrel",
                 "zh": "地松鼠"
               },
@@ -6219,7 +6219,7 @@
             {
               "id": "flying_squirrel",
               "names": {
-                "vi": "con Sóc bay",
+                "vi": "Con Sóc bay",
                 "en": "Flying Squirrel",
                 "zh": "飞鼠"
               },
@@ -6244,7 +6244,7 @@
             {
               "id": "nutria",
               "names": {
-                "vi": "con Chuột hải ly",
+                "vi": "Con Chuột hải ly",
                 "en": "Nutria",
                 "zh": "河狸鼠"
               },
@@ -6269,7 +6269,7 @@
             {
               "id": "agouti",
               "names": {
-                "vi": "con Chuột Agouti",
+                "vi": "Con Chuột Agouti",
                 "en": "Agouti",
                 "zh": "刺豚鼠"
               },
@@ -6294,7 +6294,7 @@
             {
               "id": "degu",
               "names": {
-                "vi": "con Chuột Degu",
+                "vi": "Con Chuột Degu",
                 "en": "Degu",
                 "zh": "智利八齿鼠"
               },
@@ -6345,7 +6345,7 @@
             {
               "id": "raccoon",
               "names": {
-                "vi": "con Gấu mèo",
+                "vi": "Con Gấu mèo",
                 "en": "Raccoon",
                 "zh": "浣熊"
               },
@@ -6370,7 +6370,7 @@
             {
               "id": "opossum",
               "names": {
-                "vi": "con Chuột túi ôpôt",
+                "vi": "Con Chuột túi ôpôt",
                 "en": "Opossum",
                 "zh": "负鼠"
               },
@@ -6395,7 +6395,7 @@
             {
               "id": "aardvark",
               "names": {
-                "vi": "con Lợn đất",
+                "vi": "Con Lợn đất",
                 "en": "Aardvark",
                 "zh": "土豚"
               },
@@ -6420,7 +6420,7 @@
             {
               "id": "aardwolf",
               "names": {
-                "vi": "con Sói đất",
+                "vi": "Con Sói đất",
                 "en": "Aardwolf",
                 "zh": "土狼"
               },
@@ -6445,7 +6445,7 @@
             {
               "id": "genet",
               "names": {
-                "vi": "con Cầy Genet",
+                "vi": "Con Cầy Genet",
                 "en": "Genet",
                 "zh": "灵猫"
               },
@@ -6470,7 +6470,7 @@
             {
               "id": "civet",
               "names": {
-                "vi": "con Cầy hương",
+                "vi": "Con Cầy hương",
                 "en": "Civet",
                 "zh": "果子狸"
               },
@@ -6495,7 +6495,7 @@
             {
               "id": "slow_loris",
               "names": {
-                "vi": "con Cu li",
+                "vi": "Con Cu li",
                 "en": "Slow Loris",
                 "zh": "懒猴"
               },
@@ -6520,7 +6520,7 @@
             {
               "id": "tarsier",
               "names": {
-                "vi": "con Khỉ mắt to",
+                "vi": "Con Khỉ mắt to",
                 "en": "Tarsier",
                 "zh": "眼镜猴"
               },
@@ -6545,7 +6545,7 @@
             {
               "id": "pangolin",
               "names": {
-                "vi": "con Tê tê",
+                "vi": "Con Tê tê",
                 "en": "Pangolin",
                 "zh": "穿山甲"
               },
@@ -6570,7 +6570,7 @@
             {
               "id": "striped_skunk",
               "names": {
-                "vi": "con Chồn hôi",
+                "vi": "Con Chồn hôi",
                 "en": "Striped Skunk",
                 "zh": "臭鼬"
               },
@@ -6595,7 +6595,7 @@
             {
               "id": "ringtail",
               "names": {
-                "vi": "con Gấu mèo đuôi khoang",
+                "vi": "Con Gấu mèo đuôi khoang",
                 "en": "Ringtail",
                 "zh": "环尾猫"
               },
@@ -6620,7 +6620,7 @@
             {
               "id": "kiwi",
               "names": {
-                "vi": "con Chim Kiwi",
+                "vi": "Con Chim Kiwi",
                 "en": "Kiwi",
                 "zh": "几维鸟"
               },
@@ -6645,7 +6645,7 @@
             {
               "id": "nightjar",
               "names": {
-                "vi": "con Chim Dù dì",
+                "vi": "Con Chim Dù dì",
                 "en": "Nightjar",
                 "zh": "夜鹰"
               },
@@ -6670,7 +6670,7 @@
             {
               "id": "kinkajou",
               "names": {
-                "vi": "con Gấu mật",
+                "vi": "Con Gấu mật",
                 "en": "Kinkajou",
                 "zh": "蜜熊"
               },
@@ -6695,7 +6695,7 @@
             {
               "id": "bushbaby",
               "names": {
-                "vi": "con Khỉ Galago",
+                "vi": "Con Khỉ Galago",
                 "en": "Bushbaby",
                 "zh": "婴猴"
               },
@@ -6720,7 +6720,7 @@
             {
               "id": "fennec_fox",
               "names": {
-                "vi": "con Cáo tai lớn",
+                "vi": "Con Cáo tai lớn",
                 "en": "Fennec Fox",
                 "zh": "耳廓狐"
               },
@@ -6745,7 +6745,7 @@
             {
               "id": "honey_badger",
               "names": {
-                "vi": "con Lửng mật",
+                "vi": "Con Lửng mật",
                 "en": "Honey Badger",
                 "zh": "蜜獾"
               },
@@ -6770,7 +6770,7 @@
             {
               "id": "jerboa",
               "names": {
-                "vi": "con Chuột nhảy sa mạc",
+                "vi": "Con Chuột nhảy sa mạc",
                 "en": "Jerboa",
                 "zh": "跳鼠"
               },
@@ -6795,7 +6795,7 @@
             {
               "id": "loris",
               "names": {
-                "vi": "con Khỉ Lori",
+                "vi": "Con Khỉ Lori",
                 "en": "Loris",
                 "zh": "懒猴"
               },
@@ -6820,7 +6820,7 @@
             {
               "id": "tenrec",
               "names": {
-                "vi": "con Chuột nhím Tenrec",
+                "vi": "Con Chuột nhím Tenrec",
                 "en": "Tenrec",
                 "zh": "猬形兽"
               },
@@ -6871,7 +6871,7 @@
             {
               "id": "puppy",
               "names": {
-                "vi": "con Chó con",
+                "vi": "Con Chó con",
                 "en": "Puppy",
                 "zh": "小狗"
               },
@@ -6896,7 +6896,7 @@
             {
               "id": "kitten",
               "names": {
-                "vi": "con Mèo con",
+                "vi": "Con Mèo con",
                 "en": "Kitten",
                 "zh": "小猫"
               },
@@ -6921,7 +6921,7 @@
             {
               "id": "calf",
               "names": {
-                "vi": "con Bê",
+                "vi": "Con Bê",
                 "en": "Calf",
                 "zh": "小牛"
               },
@@ -6946,7 +6946,7 @@
             {
               "id": "foal",
               "names": {
-                "vi": "con Ngựa con",
+                "vi": "Con Ngựa con",
                 "en": "Foal",
                 "zh": "小马"
               },
@@ -6971,7 +6971,7 @@
             {
               "id": "lamb",
               "names": {
-                "vi": "con Cừu con",
+                "vi": "Con Cừu con",
                 "en": "Lamb",
                 "zh": "羊羔"
               },
@@ -6996,7 +6996,7 @@
             {
               "id": "kid",
               "names": {
-                "vi": "con Dê con",
+                "vi": "Con Dê con",
                 "en": "Kid",
                 "zh": "小山羊"
               },
@@ -7021,7 +7021,7 @@
             {
               "id": "piglet",
               "names": {
-                "vi": "con Lợn con",
+                "vi": "Con Lợn con",
                 "en": "Piglet",
                 "zh": "小猪"
               },
@@ -7046,7 +7046,7 @@
             {
               "id": "chick",
               "names": {
-                "vi": "con Gà con",
+                "vi": "Con Gà con",
                 "en": "Chick",
                 "zh": "小鸡"
               },
@@ -7071,7 +7071,7 @@
             {
               "id": "duckling",
               "names": {
-                "vi": "con Vịt con",
+                "vi": "Con Vịt con",
                 "en": "Duckling",
                 "zh": "小鸭"
               },
@@ -7096,7 +7096,7 @@
             {
               "id": "gosling",
               "names": {
-                "vi": "con Ngỗng con",
+                "vi": "Con Ngỗng con",
                 "en": "Gosling",
                 "zh": "小鹅"
               },
@@ -7121,7 +7121,7 @@
             {
               "id": "cub",
               "names": {
-                "vi": "con Con non (gấu, sư tử...)",
+                "vi": " Con non (gấu, sư tử...)",
                 "en": "Cub",
                 "zh": "幼崽"
               },
@@ -7146,7 +7146,7 @@
             {
               "id": "fawn",
               "names": {
-                "vi": "con Hươu con",
+                "vi": "Con Hươu con",
                 "en": "Fawn",
                 "zh": "幼鹿"
               },
@@ -7171,7 +7171,7 @@
             {
               "id": "joey",
               "names": {
-                "vi": "con Chuột túi con",
+                "vi": "Con Chuột túi con",
                 "en": "Joey",
                 "zh": "袋鼠宝宝"
               },
@@ -7196,7 +7196,7 @@
             {
               "id": "leveret",
               "names": {
-                "vi": "con Thỏ rừng con",
+                "vi": "Con Thỏ rừng con",
                 "en": "Leveret",
                 "zh": "幼野兔"
               },
@@ -7221,7 +7221,7 @@
             {
               "id": "cygnet",
               "names": {
-                "vi": "con Thiên nga con",
+                "vi": "Con Thiên nga con",
                 "en": "Cygnet",
                 "zh": "小天鹅"
               },
@@ -7246,7 +7246,7 @@
             {
               "id": "eaglet",
               "names": {
-                "vi": "con Đại bàng con",
+                "vi": "Con Đại bàng con",
                 "en": "Eaglet",
                 "zh": "小鹰"
               },
@@ -7271,7 +7271,7 @@
             {
               "id": "owlet",
               "names": {
-                "vi": "con Cú mèo con",
+                "vi": "Con Cú mèo con",
                 "en": "Owlet",
                 "zh": "小猫头鹰"
               },
@@ -7296,7 +7296,7 @@
             {
               "id": "tadpole",
               "names": {
-                "vi": "con Nòng nọc",
+                "vi": "Con Nòng nọc",
                 "en": "Tadpole",
                 "zh": "蝌蚪"
               },
@@ -7321,7 +7321,7 @@
             {
               "id": "hatchling",
               "names": {
-                "vi": "con Con mới nở",
+                "vi": "Con Con mới nở",
                 "en": "Hatchling",
                 "zh": "刚孵化的幼体"
               },
@@ -7346,7 +7346,7 @@
             {
               "id": "nestling",
               "names": {
-                "vi": "con Chim non",
+                "vi": "Con Chim non",
                 "en": "Nestling",
                 "zh": "雏鸟"
               },
@@ -7397,7 +7397,7 @@
             {
               "id": "nest",
               "names": {
-                "vi": "con Tổ chim",
+                "vi": " Tổ chim",
                 "en": "Nest",
                 "zh": "鸟巢"
               },
@@ -7421,7 +7421,7 @@
             {
               "id": "burrow",
               "names": {
-                "vi": "con Hang",
+                "vi": "Hang động ",
                 "en": "Burrow",
                 "zh": "地洞"
               },
@@ -7445,7 +7445,7 @@
             {
               "id": "den",
               "names": {
-                "vi": "con Hang ổ",
+                "vi": " Hang ổ",
                 "en": "Den",
                 "zh": "兽穴"
               },
@@ -7469,7 +7469,7 @@
             {
               "id": "cave",
               "names": {
-                "vi": "con Hang động",
+                "vi": " Hang động",
                 "en": "Cave",
                 "zh": "洞穴"
               },
@@ -7493,7 +7493,7 @@
             {
               "id": "hive",
               "names": {
-                "vi": "con Tổ ong",
+                "vi": " Tổ ong",
                 "en": "Hive",
                 "zh": "蜂巢"
               },
@@ -7517,7 +7517,7 @@
             {
               "id": "web",
               "names": {
-                "vi": "con Mạng nhện",
+                "vi": " Mạng nhện",
                 "en": "Web",
                 "zh": "蜘蛛网"
               },
@@ -7541,7 +7541,7 @@
             {
               "id": "anthill",
               "names": {
-                "vi": "con Tổ kiến",
+                "vi": " Tổ kiến",
                 "en": "Anthill",
                 "zh": "蚁丘"
               },
@@ -7565,7 +7565,7 @@
             {
               "id": "termite_mound",
               "names": {
-                "vi": "con Tổ mối",
+                "vi": " Tổ mối",
                 "en": "Termite Mound",
                 "zh": "白蚁丘"
               },
@@ -7589,7 +7589,7 @@
             {
               "id": "beehive",
               "names": {
-                "vi": "con Tổ ong mật",
+                "vi": "Tổ ong mật",
                 "en": "Beehive",
                 "zh": "蜂箱"
               },
@@ -7613,7 +7613,7 @@
             {
               "id": "stable",
               "names": {
-                "vi": "con Chuồng ngựa",
+                "vi": "Chuồng ngựa",
                 "en": "Stable",
                 "zh": "马厩"
               },
@@ -7637,7 +7637,7 @@
             {
               "id": "barn",
               "names": {
-                "vi": "con Chuồng trại",
+                "vi": "Chuồng trại",
                 "en": "Barn",
                 "zh": "谷仓"
               },
@@ -7661,7 +7661,7 @@
             {
               "id": "kennel",
               "names": {
-                "vi": "con Chuồng chó",
+                "vi": "Chuồng chó",
                 "en": "Kennel",
                 "zh": "狗舍"
               },
@@ -7685,7 +7685,7 @@
             {
               "id": "coop",
               "names": {
-                "vi": "con Chuồng gà",
+                "vi": "Chuồng gà",
                 "en": "Chicken Coop",
                 "zh": "鸡舍"
               },
@@ -7709,7 +7709,7 @@
             {
               "id": "sty",
               "names": {
-                "vi": "con Chuồng lợn",
+                "vi": "Chuồng lợn",
                 "en": "Pigsty",
                 "zh": "猪圈"
               },
@@ -7733,7 +7733,7 @@
             {
               "id": "pond",
               "names": {
-                "vi": "con Ao",
+                "vi": "Ao",
                 "en": "Pond",
                 "zh": "池塘"
               },
@@ -7757,7 +7757,7 @@
             {
               "id": "coral_reef",
               "names": {
-                "vi": "con Rạn san hô",
+                "vi": "Rạn san hô",
                 "en": "Coral Reef",
                 "zh": "珊瑚礁"
               },
@@ -7781,7 +7781,7 @@
             {
               "id": "tree_hollow",
               "names": {
-                "vi": "con Hốc cây",
+                "vi": "Hốc cây",
                 "en": "Tree Hollow",
                 "zh": "树洞"
               },
@@ -7805,7 +7805,7 @@
             {
               "id": "shell",
               "names": {
-                "vi": "con Vỏ sò",
+                "vi": "Vỏ sò",
                 "en": "Shell",
                 "zh": "贝壳"
               },
@@ -7829,7 +7829,7 @@
             {
               "id": "roost",
               "names": {
-                "vi": "con Chỗ đậu",
+                "vi": "Chỗ đậu",
                 "en": "Roost",
                 "zh": "栖息处"
               },
@@ -7853,7 +7853,7 @@
             {
               "id": "lodge",
               "names": {
-                "vi": "con Đập hải ly",
+                "vi": "Đập hải ly",
                 "en": "Beaver Lodge",
                 "zh": "海狸窝"
               },
@@ -7930,7 +7930,7 @@
             {
               "id": "rose",
               "names": {
-                "vi": "cây Hoa hồng",
+                "vi": "Hoa hồng",
                 "en": "Rose",
                 "zh": "玫瑰"
               },
@@ -7954,7 +7954,7 @@
             {
               "id": "sunflower",
               "names": {
-                "vi": "cây Hoa hướng dương",
+                "vi": "Hoa hướng dương",
                 "en": "Sunflower",
                 "zh": "向日葵"
               },
@@ -7978,7 +7978,7 @@
             {
               "id": "lotus",
               "names": {
-                "vi": "cây Hoa sen",
+                "vi": "Hoa sen",
                 "en": "Lotus",
                 "zh": "莲花"
               },
@@ -8002,7 +8002,7 @@
             {
               "id": "tulip",
               "names": {
-                "vi": "cây Hoa tulip",
+                "vi": "Hoa tulip",
                 "en": "Tulip",
                 "zh": "郁金香"
               },
@@ -8026,7 +8026,7 @@
             {
               "id": "orchid",
               "names": {
-                "vi": "cây Hoa lan",
+                "vi": "Hoa lan",
                 "en": "Orchid",
                 "zh": "兰花"
               },
@@ -8050,7 +8050,7 @@
             {
               "id": "daisy",
               "names": {
-                "vi": "cây Hoa cúc trắng",
+                "vi": "Hoa cúc trắng",
                 "en": "Daisy",
                 "zh": "雏菊"
               },
@@ -8074,7 +8074,7 @@
             {
               "id": "lily",
               "names": {
-                "vi": "cây Hoa ly",
+                "vi": "Hoa ly",
                 "en": "Lily",
                 "zh": "百合"
               },
@@ -8098,7 +8098,7 @@
             {
               "id": "jasmine",
               "names": {
-                "vi": "cây Hoa nhài",
+                "vi": "Hoa nhài",
                 "en": "Jasmine",
                 "zh": "茉莉花"
               },
@@ -8122,7 +8122,7 @@
             {
               "id": "lavender",
               "names": {
-                "vi": "cây Hoa oải hương",
+                "vi": "Hoa oải hương",
                 "en": "Lavender",
                 "zh": "薰衣草"
               },
@@ -8146,7 +8146,7 @@
             {
               "id": "hibiscus",
               "names": {
-                "vi": "cây Hoa dâm bụt",
+                "vi": "Hoa dâm bụt",
                 "en": "Hibiscus",
                 "zh": "木槿花"
               },
@@ -8170,7 +8170,7 @@
             {
               "id": "cherry_blossom",
               "names": {
-                "vi": "cây Hoa anh đào",
+                "vi": "Hoa anh đào",
                 "en": "Cherry Blossom",
                 "zh": "樱花"
               },
@@ -8194,7 +8194,7 @@
             {
               "id": "peony",
               "names": {
-                "vi": "cây Hoa mẫu đơn",
+                "vi": "Hoa mẫu đơn",
                 "en": "Peony",
                 "zh": "牡丹"
               },
@@ -8218,7 +8218,7 @@
             {
               "id": "camellia",
               "names": {
-                "vi": "cây Hoa trà",
+                "vi": "Hoa trà",
                 "en": "Camellia",
                 "zh": "山茶花"
               },
@@ -8242,7 +8242,7 @@
             {
               "id": "magnolia",
               "names": {
-                "vi": "cây Hoa mộc lan",
+                "vi": "Hoa mộc lan",
                 "en": "Magnolia",
                 "zh": "玉兰花"
               },
@@ -8266,7 +8266,7 @@
             {
               "id": "marigold",
               "names": {
-                "vi": "cây Hoa cúc vạn thọ",
+                "vi": "Hoa cúc vạn thọ",
                 "en": "Marigold",
                 "zh": "万寿菊"
               },
@@ -8290,7 +8290,7 @@
             {
               "id": "carnation",
               "names": {
-                "vi": "cây Hoa cẩm chướng",
+                "vi": "Hoa cẩm chướng",
                 "en": "Carnation",
                 "zh": "康乃馨"
               },
@@ -8314,7 +8314,7 @@
             {
               "id": "iris",
               "names": {
-                "vi": "cây Hoa diên vĩ",
+                "vi": "Hoa diên vĩ",
                 "en": "Iris",
                 "zh": "鸢尾花"
               },
@@ -8338,7 +8338,7 @@
             {
               "id": "poppy",
               "names": {
-                "vi": "cây Hoa anh túc",
+                "vi": "Hoa anh túc",
                 "en": "Poppy",
                 "zh": "罂粟花"
               },
@@ -8362,7 +8362,7 @@
             {
               "id": "hydrangea",
               "names": {
-                "vi": "cây Hoa cẩm tú cầu",
+                "vi": "Hoa cẩm tú cầu",
                 "en": "Hydrangea",
                 "zh": "绣球花"
               },
@@ -8386,7 +8386,7 @@
             {
               "id": "violet",
               "names": {
-                "vi": "cây Hoa violet",
+                "vi": "Hoa violet",
                 "en": "Violet",
                 "zh": "紫罗兰"
               },
@@ -8436,7 +8436,7 @@
             {
               "id": "oak",
               "names": {
-                "vi": "cây Cây sồi",
+                "vi": "Cây sồi",
                 "en": "Oak",
                 "zh": "橡树"
               },
@@ -8460,7 +8460,7 @@
             {
               "id": "pine",
               "names": {
-                "vi": "cây Cây thông",
+                "vi": "Cây thông",
                 "en": "Pine",
                 "zh": "松树"
               },
@@ -8484,7 +8484,7 @@
             {
               "id": "maple",
               "names": {
-                "vi": "cây Cây phong",
+                "vi": "Cây phong",
                 "en": "Maple",
                 "zh": "枫树"
               },
@@ -8508,7 +8508,7 @@
             {
               "id": "bamboo",
               "names": {
-                "vi": "cây Cây tre",
+                "vi": "Cây tre",
                 "en": "Bamboo",
                 "zh": "竹子"
               },
@@ -8532,7 +8532,7 @@
             {
               "id": "coconut_tree",
               "names": {
-                "vi": "cây Cây dừa",
+                "vi": "Cây dừa",
                 "en": "Coconut Tree",
                 "zh": "椰子树"
               },
@@ -8556,7 +8556,7 @@
             {
               "id": "mango_tree",
               "names": {
-                "vi": "cây Cây xoài",
+                "vi": "Cây xoài",
                 "en": "Mango Tree",
                 "zh": "芒果树"
               },
@@ -8580,7 +8580,7 @@
             {
               "id": "apple_tree",
               "names": {
-                "vi": "cây Cây táo",
+                "vi": "Cây táo",
                 "en": "Apple Tree",
                 "zh": "苹果树"
               },
@@ -8604,7 +8604,7 @@
             {
               "id": "banana_tree",
               "names": {
-                "vi": "cây Cây chuối",
+                "vi": "Cây chuối",
                 "en": "Banana Plant",
                 "zh": "香蕉树"
               },
@@ -8628,7 +8628,7 @@
             {
               "id": "birch",
               "names": {
-                "vi": "cây Cây bạch dương",
+                "vi": "Cây bạch dương",
                 "en": "Birch",
                 "zh": "白桦树"
               },
@@ -8652,7 +8652,7 @@
             {
               "id": "willow",
               "names": {
-                "vi": "cây Cây liễu",
+                "vi": "Cây liễu",
                 "en": "Willow",
                 "zh": "柳树"
               },
@@ -8676,7 +8676,7 @@
             {
               "id": "cedar",
               "names": {
-                "vi": "cây Cây tuyết tùng",
+                "vi": "Cây tuyết tùng",
                 "en": "Cedar",
                 "zh": "雪松"
               },
@@ -8700,7 +8700,7 @@
             {
               "id": "redwood",
               "names": {
-                "vi": "cây Cây gỗ đỏ",
+                "vi": "Cây gỗ đỏ",
                 "en": "Redwood",
                 "zh": "红杉"
               },
@@ -8724,7 +8724,7 @@
             {
               "id": "baobab",
               "names": {
-                "vi": "cây Cây bao báp",
+                "vi": "Cây bao báp",
                 "en": "Baobab",
                 "zh": "猴面包树"
               },
@@ -8748,7 +8748,7 @@
             {
               "id": "eucalyptus",
               "names": {
-                "vi": "cây Cây bạch đàn",
+                "vi": "Cây bạch đàn",
                 "en": "Eucalyptus",
                 "zh": "桉树"
               },
@@ -8772,7 +8772,7 @@
             {
               "id": "teak",
               "names": {
-                "vi": "cây Cây tếch",
+                "vi": "Cây tếch",
                 "en": "Teak",
                 "zh": "柚木"
               },
@@ -8796,7 +8796,7 @@
             {
               "id": "mahogany",
               "names": {
-                "vi": "cây Cây gụ",
+                "vi": "Cây gụ",
                 "en": "Mahogany",
                 "zh": "桃花心木"
               },
@@ -8820,7 +8820,7 @@
             {
               "id": "rubber_tree",
               "names": {
-                "vi": "cây Cây cao su",
+                "vi": "Cây cao su",
                 "en": "Rubber Tree",
                 "zh": "橡胶树"
               },
@@ -8844,7 +8844,7 @@
             {
               "id": "fig_tree",
               "names": {
-                "vi": "cây Cây sung",
+                "vi": "Cây sung",
                 "en": "Fig Tree",
                 "zh": "无花果树"
               },
@@ -8868,7 +8868,7 @@
             {
               "id": "acacia",
               "names": {
-                "vi": "cây Cây keo",
+                "vi": "Cây keo",
                 "en": "Acacia",
                 "zh": "金合欢树"
               },
@@ -8892,7 +8892,7 @@
             {
               "id": "spruce",
               "names": {
-                "vi": "cây Cây vân sam",
+                "vi": "Cây vân sam",
                 "en": "Spruce",
                 "zh": "云杉"
               },
@@ -8942,7 +8942,7 @@
             {
               "id": "apple",
               "names": {
-                "vi": "cây Táo",
+                "vi": "Quả Táo",
                 "en": "Apple",
                 "zh": "苹果"
               },
@@ -8966,7 +8966,7 @@
             {
               "id": "banana",
               "names": {
-                "vi": "cây Chuối",
+                "vi": "Quả Chuối",
                 "en": "Banana",
                 "zh": "香蕉"
               },
@@ -8990,7 +8990,7 @@
             {
               "id": "orange",
               "names": {
-                "vi": "cây Cam",
+                "vi": "Quả Cam",
                 "en": "Orange",
                 "zh": "橙子"
               },
@@ -9014,7 +9014,7 @@
             {
               "id": "grape",
               "names": {
-                "vi": "cây Nho",
+                "vi": "Quả Nho",
                 "en": "Grape",
                 "zh": "葡萄"
               },
@@ -9038,7 +9038,7 @@
             {
               "id": "mango",
               "names": {
-                "vi": "cây Xoài",
+                "vi": "Quả Xoài",
                 "en": "Mango",
                 "zh": "芒果"
               },
@@ -9062,7 +9062,7 @@
             {
               "id": "pineapple",
               "names": {
-                "vi": "cây Dứa",
+                "vi": "Quả Dứa",
                 "en": "Pineapple",
                 "zh": "菠萝"
               },
@@ -9086,7 +9086,7 @@
             {
               "id": "watermelon",
               "names": {
-                "vi": "cây Dưa hấu",
+                "vi": "Quả Dưa hấu",
                 "en": "Watermelon",
                 "zh": "西瓜"
               },
@@ -9110,7 +9110,7 @@
             {
               "id": "strawberry",
               "names": {
-                "vi": "cây Dâu tây",
+                "vi": "Quả Dâu tây",
                 "en": "Strawberry",
                 "zh": "草莓"
               },
@@ -9134,7 +9134,7 @@
             {
               "id": "pear",
               "names": {
-                "vi": "cây Lê",
+                "vi": "Quả Lê",
                 "en": "Pear",
                 "zh": "梨"
               },
@@ -9158,7 +9158,7 @@
             {
               "id": "peach",
               "names": {
-                "vi": "cây Đào",
+                "vi": "Quả Đào",
                 "en": "Peach",
                 "zh": "桃子"
               },
@@ -9182,7 +9182,7 @@
             {
               "id": "plum",
               "names": {
-                "vi": "cây Mận",
+                "vi": "Quả Mận",
                 "en": "Plum",
                 "zh": "李子"
               },
@@ -9206,7 +9206,7 @@
             {
               "id": "cherry",
               "names": {
-                "vi": "cây Anh đào",
+                "vi": "Quả Cherry",
                 "en": "Cherry",
                 "zh": "樱桃"
               },
@@ -9230,7 +9230,7 @@
             {
               "id": "kiwi",
               "names": {
-                "vi": "cây Kiwi",
+                "vi": "Quả Kiwi",
                 "en": "Kiwi",
                 "zh": "猕猴桃"
               },
@@ -9255,7 +9255,7 @@
             {
               "id": "dragon_fruit",
               "names": {
-                "vi": "cây Thanh long",
+                "vi": "Quả Thanh long",
                 "en": "Dragon Fruit",
                 "zh": "火龙果"
               },
@@ -9279,7 +9279,7 @@
             {
               "id": "papaya",
               "names": {
-                "vi": "cây Đu đủ",
+                "vi": "Quả Đu đủ",
                 "en": "Papaya",
                 "zh": "木瓜"
               },
@@ -9303,7 +9303,7 @@
             {
               "id": "guava",
               "names": {
-                "vi": "cây Ổi",
+                "vi": "Quả Ổi",
                 "en": "Guava",
                 "zh": "番石榴"
               },
@@ -9327,7 +9327,7 @@
             {
               "id": "lychee",
               "names": {
-                "vi": "cây Vải",
+                "vi": "Quả Vải",
                 "en": "Lychee",
                 "zh": "荔枝"
               },
@@ -9351,7 +9351,7 @@
             {
               "id": "longan",
               "names": {
-                "vi": "cây Nhãn",
+                "vi": "Quả Nhãn",
                 "en": "Longan",
                 "zh": "龙眼"
               },
@@ -9375,7 +9375,7 @@
             {
               "id": "durian",
               "names": {
-                "vi": "cây Sầu riêng",
+                "vi": "Quả Sầu riêng",
                 "en": "Durian",
                 "zh": "榴莲"
               },
@@ -9399,7 +9399,7 @@
             {
               "id": "coconut",
               "names": {
-                "vi": "cây Dừa",
+                "vi": "QuảDừa",
                 "en": "Coconut",
                 "zh": "椰子"
               },
@@ -9449,7 +9449,7 @@
             {
               "id": "carrot",
               "names": {
-                "vi": "cây Cà rốt",
+                "vi": "Củ Cà rốt",
                 "en": "Carrot",
                 "zh": "胡萝卜"
               },
@@ -9473,7 +9473,7 @@
             {
               "id": "potato",
               "names": {
-                "vi": "cây Khoai tây",
+                "vi": "Củ Khoai tây",
                 "en": "Potato",
                 "zh": "土豆"
               },
@@ -9497,7 +9497,7 @@
             {
               "id": "tomato",
               "names": {
-                "vi": "cây Cà chua",
+                "vi": "Quả Cà chua",
                 "en": "Tomato",
                 "zh": "西红柿"
               },
@@ -9521,7 +9521,7 @@
             {
               "id": "onion",
               "names": {
-                "vi": "cây Hành tây",
+                "vi": "Củ Hành tây",
                 "en": "Onion",
                 "zh": "洋葱"
               },
@@ -9545,7 +9545,7 @@
             {
               "id": "garlic",
               "names": {
-                "vi": "cây Tỏi",
+                "vi": "Củ Tỏi",
                 "en": "Garlic",
                 "zh": "大蒜"
               },
@@ -9569,7 +9569,7 @@
             {
               "id": "cabbage",
               "names": {
-                "vi": "cây Bắp cải",
+                "vi": "Cây Bắp cải",
                 "en": "Cabbage",
                 "zh": "卷心菜"
               },
@@ -9593,7 +9593,7 @@
             {
               "id": "lettuce",
               "names": {
-                "vi": "cây Rau diếp",
+                "vi": "Cây Rau diếp",
                 "en": "Lettuce",
                 "zh": "生菜"
               },
@@ -9617,7 +9617,7 @@
             {
               "id": "spinach",
               "names": {
-                "vi": "cây Rau bina",
+                "vi": "Cây Rau bina",
                 "en": "Spinach",
                 "zh": "菠菜"
               },
@@ -9641,7 +9641,7 @@
             {
               "id": "broccoli",
               "names": {
-                "vi": "cây Bông cải xanh",
+                "vi": "Cây Bông cải xanh",
                 "en": "Broccoli",
                 "zh": "西兰花"
               },
@@ -9665,7 +9665,7 @@
             {
               "id": "cauliflower",
               "names": {
-                "vi": "cây Súp lơ trắng",
+                "vi": "Cây Súp lơ trắng",
                 "en": "Cauliflower",
                 "zh": "花椰菜"
               },
@@ -9689,7 +9689,7 @@
             {
               "id": "cucumber",
               "names": {
-                "vi": "cây Dưa leo",
+                "vi": "Quả Dưa leo",
                 "en": "Cucumber",
                 "zh": "黄瓜"
               },
@@ -9713,7 +9713,7 @@
             {
               "id": "eggplant",
               "names": {
-                "vi": "cây Cà tím",
+                "vi": "Quả Cà tím",
                 "en": "Eggplant",
                 "zh": "茄子"
               },
@@ -9737,7 +9737,7 @@
             {
               "id": "pumpkin",
               "names": {
-                "vi": "cây Bí ngô",
+                "vi": "Quả Bí ngô",
                 "en": "Pumpkin",
                 "zh": "南瓜"
               },
@@ -9761,7 +9761,7 @@
             {
               "id": "corn",
               "names": {
-                "vi": "cây Ngô",
+                "vi": "Cây Ngô",
                 "en": "Corn",
                 "zh": "玉米"
               },
@@ -9785,7 +9785,7 @@
             {
               "id": "bell_pepper",
               "names": {
-                "vi": "cây Ớt chuông",
+                "vi": "Quả Ớt chuông",
                 "en": "Bell Pepper",
                 "zh": "甜椒"
               },
@@ -9809,7 +9809,7 @@
             {
               "id": "radish",
               "names": {
-                "vi": "cây Củ cải",
+                "vi": "Củ cải",
                 "en": "Radish",
                 "zh": "萝卜"
               },
@@ -9833,7 +9833,7 @@
             {
               "id": "celery",
               "names": {
-                "vi": "cây Cần tây",
+                "vi": "Cây Cần tây",
                 "en": "Celery",
                 "zh": "芹菜"
               },
@@ -9857,7 +9857,7 @@
             {
               "id": "asparagus",
               "names": {
-                "vi": "cây Măng tây",
+                "vi": "Cây Măng tây",
                 "en": "Asparagus",
                 "zh": "芦笋"
               },
@@ -9881,7 +9881,7 @@
             {
               "id": "pea",
               "names": {
-                "vi": "cây Đậu Hà Lan",
+                "vi": "Đậu Hà Lan",
                 "en": "Pea",
                 "zh": "豌豆"
               },
@@ -9905,7 +9905,7 @@
             {
               "id": "green_bean",
               "names": {
-                "vi": "cây Đậu que",
+                "vi": "Đậu que",
                 "en": "Green Bean",
                 "zh": "四季豆"
               },
@@ -9955,7 +9955,7 @@
             {
               "id": "basil",
               "names": {
-                "vi": "cây Húng quế",
+                "vi": "Cây Húng quế",
                 "en": "Basil",
                 "zh": "罗勒"
               },
@@ -9979,7 +9979,7 @@
             {
               "id": "mint",
               "names": {
-                "vi": "cây Bạc hà",
+                "vi": "Cây Bạc hà",
                 "en": "Mint",
                 "zh": "薄荷"
               },
@@ -10003,7 +10003,7 @@
             {
               "id": "rosemary",
               "names": {
-                "vi": "cây Hương thảo",
+                "vi": "Cây Hương thảo",
                 "en": "Rosemary",
                 "zh": "迷迭香"
               },
@@ -10027,7 +10027,7 @@
             {
               "id": "thyme",
               "names": {
-                "vi": "cây Cỏ xạ hương",
+                "vi": "Cỏ xạ hương",
                 "en": "Thyme",
                 "zh": "百里香"
               },
@@ -10051,7 +10051,7 @@
             {
               "id": "oregano",
               "names": {
-                "vi": "cây Kinh giới cay",
+                "vi": "Cây Kinh giới cay",
                 "en": "Oregano",
                 "zh": "牛至"
               },
@@ -10075,7 +10075,7 @@
             {
               "id": "parsley",
               "names": {
-                "vi": "cây Mùi tây",
+                "vi": "Cây Mùi tây",
                 "en": "Parsley",
                 "zh": "欧芹"
               },
@@ -10099,7 +10099,7 @@
             {
               "id": "cilantro",
               "names": {
-                "vi": "cây Rau mùi",
+                "vi": "Cây Rau mùi",
                 "en": "Cilantro",
                 "zh": "香菜"
               },
@@ -10123,7 +10123,7 @@
             {
               "id": "dill",
               "names": {
-                "vi": "cây Thì là",
+                "vi": "Cây Thì là",
                 "en": "Dill",
                 "zh": "莳萝"
               },
@@ -10147,7 +10147,7 @@
             {
               "id": "sage",
               "names": {
-                "vi": "cây Xô thơm",
+                "vi": "Cây Xô thơm",
                 "en": "Sage",
                 "zh": "鼠尾草"
               },
@@ -10171,7 +10171,7 @@
             {
               "id": "chives",
               "names": {
-                "vi": "cây Hẹ",
+                "vi": "Cây Hẹ",
                 "en": "Chives",
                 "zh": "细香葱"
               },
@@ -10195,7 +10195,7 @@
             {
               "id": "lemongrass",
               "names": {
-                "vi": "cây Sả",
+                "vi": "Cây Sả",
                 "en": "Lemongrass",
                 "zh": "香茅"
               },
@@ -10219,7 +10219,7 @@
             {
               "id": "ginger",
               "names": {
-                "vi": "cây Gừng",
+                "vi": "CủGừng",
                 "en": "Ginger",
                 "zh": "生姜"
               },
@@ -10243,7 +10243,7 @@
             {
               "id": "turmeric",
               "names": {
-                "vi": "cây Nghệ",
+                "vi": "CủNghệ",
                 "en": "Turmeric",
                 "zh": "姜黄"
               },
@@ -10267,7 +10267,7 @@
             {
               "id": "galangal",
               "names": {
-                "vi": "cây Riềng",
+                "vi": "CủRiềng",
                 "en": "Galangal",
                 "zh": "高良姜"
               },
@@ -10291,7 +10291,7 @@
             {
               "id": "bay_leaf",
               "names": {
-                "vi": "cây Lá nguyệt quế",
+                "vi": "Lá nguyệt quế",
                 "en": "Bay Leaf",
                 "zh": "月桂叶"
               },
@@ -10315,7 +10315,7 @@
             {
               "id": "fennel",
               "names": {
-                "vi": "cây Tiểu hồi",
+                "vi": "Cây Tiểu hồi",
                 "en": "Fennel",
                 "zh": "茴香"
               },
@@ -10339,7 +10339,7 @@
             {
               "id": "tarragon",
               "names": {
-                "vi": "cây Ngải giấm",
+                "vi": "Cây Ngải giấm",
                 "en": "Tarragon",
                 "zh": "龙蒿"
               },
@@ -10363,7 +10363,7 @@
             {
               "id": "marjoram",
               "names": {
-                "vi": "cây Kinh giới ngọt",
+                "vi": "Cây Kinh giới ngọt",
                 "en": "Marjoram",
                 "zh": "墨角兰"
               },
@@ -10387,7 +10387,7 @@
             {
               "id": "lavender",
               "names": {
-                "vi": "cây Oải hương",
+                "vi": "HoaOải hương",
                 "en": "Lavender",
                 "zh": "薰衣草"
               },
@@ -10411,7 +10411,7 @@
             {
               "id": "stevia",
               "names": {
-                "vi": "cây Cỏ ngọt",
+                "vi": "Cây Cỏ ngọt",
                 "en": "Stevia",
                 "zh": "甜叶菊"
               },
@@ -16081,16 +16081,16 @@
               }
             },
             {
-              "id": "container_ship",
+              "id": "Container_ship",
               "names": {
                 "vi": "Tàu container",
                 "en": "Container Ship",
                 "zh": "集装箱船"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/container_ship/LocalizedNames/vi/Container Ship.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/container_ship/LocalizedNames/en/Container Ship.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/container_ship/LocalizedNames/zh/Container Ship.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/Container_ship/LocalizedNames/vi/Container Ship.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/Container_ship/LocalizedNames/en/Container Ship.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/Container_ship/LocalizedNames/zh/Container Ship.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/water_vehicles/entitys/container_ship/container_ship.png",
               "pronunciation": {
@@ -17061,7 +17061,7 @@
           }
         },
         {
-          "id": "construction_vehicles",
+          "id": "Construction_vehicles",
           "names": {
             "vi": "Xe công trình",
             "en": "Construction Vehicles",
@@ -17076,9 +17076,9 @@
                 "zh": "挖掘机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/excavator/LocalizedNames/vi/Excavator.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/excavator/LocalizedNames/en/Excavator.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/excavator/LocalizedNames/zh/Excavator.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/excavator/LocalizedNames/vi/Excavator.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/excavator/LocalizedNames/en/Excavator.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/excavator/LocalizedNames/zh/Excavator.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/excavator/excavator.png",
               "pronunciation": {
@@ -17100,9 +17100,9 @@
                 "zh": "推土机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/bulldozer/LocalizedNames/vi/Bulldozer.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/bulldozer/LocalizedNames/en/Bulldozer.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/bulldozer/LocalizedNames/zh/Bulldozer.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/bulldozer/LocalizedNames/vi/Bulldozer.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/bulldozer/LocalizedNames/en/Bulldozer.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/bulldozer/LocalizedNames/zh/Bulldozer.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/bulldozer/bulldozer.png",
               "pronunciation": {
@@ -17124,9 +17124,9 @@
                 "zh": "装载机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/wheel_loader/LocalizedNames/vi/Wheel Loader.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/wheel_loader/LocalizedNames/en/Wheel Loader.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/wheel_loader/LocalizedNames/zh/Wheel Loader.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/wheel_loader/LocalizedNames/vi/Wheel Loader.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/wheel_loader/LocalizedNames/en/Wheel Loader.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/wheel_loader/LocalizedNames/zh/Wheel Loader.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/wheel_loader/wheel_loader.png",
               "pronunciation": {
@@ -17148,9 +17148,9 @@
                 "zh": "挖掘装载机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/backhoe_loader/LocalizedNames/vi/Backhoe Loader.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/backhoe_loader/LocalizedNames/en/Backhoe Loader.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/backhoe_loader/LocalizedNames/zh/Backhoe Loader.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/backhoe_loader/LocalizedNames/vi/Backhoe Loader.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/backhoe_loader/LocalizedNames/en/Backhoe Loader.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/backhoe_loader/LocalizedNames/zh/Backhoe Loader.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/backhoe_loader/backhoe_loader.png",
               "pronunciation": {
@@ -17172,9 +17172,9 @@
                 "zh": "起重机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/crane/LocalizedNames/vi/Crane.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/crane/LocalizedNames/en/Crane.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/crane/LocalizedNames/zh/Crane.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/crane/LocalizedNames/vi/Crane.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/crane/LocalizedNames/en/Crane.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/crane/LocalizedNames/zh/Crane.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/crane/crane.png",
               "pronunciation": {
@@ -17196,9 +17196,9 @@
                 "zh": "塔式起重机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/tower_crane/LocalizedNames/vi/Tower Crane.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/tower_crane/LocalizedNames/en/Tower Crane.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/tower_crane/LocalizedNames/zh/Tower Crane.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/tower_crane/LocalizedNames/vi/Tower Crane.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/tower_crane/LocalizedNames/en/Tower Crane.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/tower_crane/LocalizedNames/zh/Tower Crane.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/tower_crane/tower_crane.png",
               "pronunciation": {
@@ -17220,9 +17220,9 @@
                 "zh": "压路机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/road_roller/LocalizedNames/vi/Road Roller.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/road_roller/LocalizedNames/en/Road Roller.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/road_roller/LocalizedNames/zh/Road Roller.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/road_roller/LocalizedNames/vi/Road Roller.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/road_roller/LocalizedNames/en/Road Roller.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/road_roller/LocalizedNames/zh/Road Roller.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/road_roller/road_roller.png",
               "pronunciation": {
@@ -17244,9 +17244,9 @@
                 "zh": "平地机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/grader/LocalizedNames/vi/Motor Grader.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/grader/LocalizedNames/en/Motor Grader.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/grader/LocalizedNames/zh/Motor Grader.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/grader/LocalizedNames/vi/Motor Grader.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/grader/LocalizedNames/en/Motor Grader.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/grader/LocalizedNames/zh/Motor Grader.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/grader/grader.png",
               "pronunciation": {
@@ -17268,9 +17268,9 @@
                 "zh": "滑移装载机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/skid_steer_loader/LocalizedNames/vi/Skid-Steer Loader.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/skid_steer_loader/LocalizedNames/en/Skid-Steer Loader.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/skid_steer_loader/LocalizedNames/zh/Skid-Steer Loader.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/skid_steer_loader/LocalizedNames/vi/Skid-Steer Loader.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/skid_steer_loader/LocalizedNames/en/Skid-Steer Loader.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/skid_steer_loader/LocalizedNames/zh/Skid-Steer Loader.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/skid_steer_loader/skid_steer_loader.png",
               "pronunciation": {
@@ -17292,9 +17292,9 @@
                 "zh": "自卸卡车"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/dump_truck/LocalizedNames/vi/Dump Truck.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/dump_truck/LocalizedNames/en/Dump Truck.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/dump_truck/LocalizedNames/zh/Dump Truck.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/dump_truck/LocalizedNames/vi/Dump Truck.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/dump_truck/LocalizedNames/en/Dump Truck.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/dump_truck/LocalizedNames/zh/Dump Truck.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/dump_truck/dump_truck.png",
               "pronunciation": {
@@ -17309,16 +17309,16 @@
               }
             },
             {
-              "id": "concrete_mixer_truck",
+              "id": "Concrete_mixer_truck",
               "names": {
                 "vi": "Xe trộn bê tông",
                 "en": "Concrete Mixer Truck",
                 "zh": "混凝土搅拌车"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_mixer_truck/LocalizedNames/vi/Concrete Mixer Truck.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_mixer_truck/LocalizedNames/en/Concrete Mixer Truck.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_mixer_truck/LocalizedNames/zh/Concrete Mixer Truck.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_mixer_truck/LocalizedNames/vi/Concrete Mixer Truck.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_mixer_truck/LocalizedNames/en/Concrete Mixer Truck.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_mixer_truck/LocalizedNames/zh/Concrete Mixer Truck.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_mixer_truck/concrete_mixer_truck.png",
               "pronunciation": {
@@ -17333,16 +17333,16 @@
               }
             },
             {
-              "id": "concrete_pump_truck",
+              "id": "Concrete_pump_truck",
               "names": {
                 "vi": "Xe bơm bê tông",
                 "en": "Concrete Pump Truck",
                 "zh": "混凝土泵车"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_pump_truck/LocalizedNames/vi/Concrete Pump Truck.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_pump_truck/LocalizedNames/en/Concrete Pump Truck.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_pump_truck/LocalizedNames/zh/Concrete Pump Truck.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_pump_truck/LocalizedNames/vi/Concrete Pump Truck.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_pump_truck/LocalizedNames/en/Concrete Pump Truck.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/Concrete_pump_truck/LocalizedNames/zh/Concrete Pump Truck.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/concrete_pump_truck/concrete_pump_truck.png",
               "pronunciation": {
@@ -17364,9 +17364,9 @@
                 "zh": "叉车"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/forklift/LocalizedNames/vi/Forklift.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/forklift/LocalizedNames/en/Forklift.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/forklift/LocalizedNames/zh/Forklift.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/forklift/LocalizedNames/vi/Forklift.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/forklift/LocalizedNames/en/Forklift.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/forklift/LocalizedNames/zh/Forklift.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/forklift/forklift.png",
               "pronunciation": {
@@ -17388,9 +17388,9 @@
                 "zh": "摊铺机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/asphalt_paver/LocalizedNames/vi/Asphalt Paver.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/asphalt_paver/LocalizedNames/en/Asphalt Paver.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/asphalt_paver/LocalizedNames/zh/Asphalt Paver.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/asphalt_paver/LocalizedNames/vi/Asphalt Paver.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/asphalt_paver/LocalizedNames/en/Asphalt Paver.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/asphalt_paver/LocalizedNames/zh/Asphalt Paver.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/asphalt_paver/asphalt_paver.png",
               "pronunciation": {
@@ -17412,9 +17412,9 @@
                 "zh": "开沟机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/trencher/LocalizedNames/vi/Trencher.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/trencher/LocalizedNames/en/Trencher.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/trencher/LocalizedNames/zh/Trencher.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/trencher/LocalizedNames/vi/Trencher.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/trencher/LocalizedNames/en/Trencher.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/trencher/LocalizedNames/zh/Trencher.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/trencher/trencher.png",
               "pronunciation": {
@@ -17436,9 +17436,9 @@
                 "zh": "打桩机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/pile_driver/LocalizedNames/vi/Pile Driver.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/pile_driver/LocalizedNames/en/Pile Driver.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/pile_driver/LocalizedNames/zh/Pile Driver.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/pile_driver/LocalizedNames/vi/Pile Driver.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/pile_driver/LocalizedNames/en/Pile Driver.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/pile_driver/LocalizedNames/zh/Pile Driver.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/pile_driver/pile_driver.png",
               "pronunciation": {
@@ -17460,9 +17460,9 @@
                 "zh": "铲运机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/scraper/LocalizedNames/vi/Scraper.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/scraper/LocalizedNames/en/Scraper.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/scraper/LocalizedNames/zh/Scraper.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/scraper/LocalizedNames/vi/Scraper.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/scraper/LocalizedNames/en/Scraper.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/scraper/LocalizedNames/zh/Scraper.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/scraper/scraper.png",
               "pronunciation": {
@@ -17484,9 +17484,9 @@
                 "zh": "压实机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/compactor/LocalizedNames/vi/Compactor.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/compactor/LocalizedNames/en/Compactor.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/compactor/LocalizedNames/zh/Compactor.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/compactor/LocalizedNames/vi/Compactor.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/compactor/LocalizedNames/en/Compactor.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/compactor/LocalizedNames/zh/Compactor.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/compactor/compactor.png",
               "pronunciation": {
@@ -17508,9 +17508,9 @@
                 "zh": "钻机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/drilling_rig/LocalizedNames/vi/Drilling Rig.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/drilling_rig/LocalizedNames/en/Drilling Rig.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/drilling_rig/LocalizedNames/zh/Drilling Rig.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/drilling_rig/LocalizedNames/vi/Drilling Rig.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/drilling_rig/LocalizedNames/en/Drilling Rig.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/drilling_rig/LocalizedNames/zh/Drilling Rig.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/drilling_rig/drilling_rig.png",
               "pronunciation": {
@@ -17532,9 +17532,9 @@
                 "zh": "汽车起重机"
               },
               "audio": {
-                "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/mobile_crane/LocalizedNames/vi/Mobile Crane.mp3",
-                "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/mobile_crane/LocalizedNames/en/Mobile Crane.mp3",
-                "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/mobile_crane/LocalizedNames/zh/Mobile Crane.mp3"
+                "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/mobile_crane/LocalizedNames/vi/Mobile Crane.mp3",
+                "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/mobile_crane/LocalizedNames/en/Mobile Crane.mp3",
+                "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/entitys/mobile_crane/LocalizedNames/zh/Mobile Crane.mp3"
               },
               "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/entitys/mobile_crane/mobile_crane.png",
               "pronunciation": {
@@ -17550,9 +17550,9 @@
             }
           ],
           "audio": {
-            "vi": "wordzoo/vehicles/sub_categorys/construction_vehicles/LocalizedNames/vi/Construction Vehicles.mp3",
-            "en": "wordzoo/vehicles/sub_categorys/construction_vehicles/LocalizedNames/en/Construction Vehicles.mp3",
-            "zh": "wordzoo/vehicles/sub_categorys/construction_vehicles/LocalizedNames/zh/Construction Vehicles.mp3"
+            "vi": "wordzoo/vehicles/sub_categorys/Construction_vehicles/LocalizedNames/vi/Construction Vehicles.mp3",
+            "en": "wordzoo/vehicles/sub_categorys/Construction_vehicles/LocalizedNames/en/Construction Vehicles.mp3",
+            "zh": "wordzoo/vehicles/sub_categorys/Construction_vehicles/LocalizedNames/zh/Construction Vehicles.mp3"
           },
           "real_image": "wordzoo/vehicles/sub_categorys/construction_vehicles/construction_vehicles.png",
           "pronunciation": {
@@ -24950,16 +24950,16 @@
               }
             },
             {
-              "id": "confused",
+              "id": "Confused",
               "names": {
                 "vi": "Bối rối",
                 "en": "Confused",
                 "zh": "困惑"
               },
               "audio": {
-                "vi": "wordzoo/human_relations/sub_categorys/emotions/entitys/confused/LocalizedNames/vi/Confused.mp3",
-                "en": "wordzoo/human_relations/sub_categorys/emotions/entitys/confused/LocalizedNames/en/Confused.mp3",
-                "zh": "wordzoo/human_relations/sub_categorys/emotions/entitys/confused/LocalizedNames/zh/Confused.mp3"
+                "vi": "wordzoo/human_relations/sub_categorys/emotions/entitys/Confused/LocalizedNames/vi/Confused.mp3",
+                "en": "wordzoo/human_relations/sub_categorys/emotions/entitys/Confused/LocalizedNames/en/Confused.mp3",
+                "zh": "wordzoo/human_relations/sub_categorys/emotions/entitys/Confused/LocalizedNames/zh/Confused.mp3"
               },
               "real_image": "wordzoo/human_relations/sub_categorys/emotions/entitys/confused/confused.png",
               "pronunciation": {
@@ -33641,16 +33641,16 @@
               }
             },
             {
-              "id": "cone",
+              "id": "Cone",
               "names": {
                 "vi": "Khối nón",
                 "en": "Cone",
                 "zh": "圆锥体"
               },
               "audio": {
-                "vi": "wordzoo/basics/sub_categorys/shapes/entitys/cone/LocalizedNames/vi/Cone.mp3",
-                "en": "wordzoo/basics/sub_categorys/shapes/entitys/cone/LocalizedNames/en/Cone.mp3",
-                "zh": "wordzoo/basics/sub_categorys/shapes/entitys/cone/LocalizedNames/zh/Cone.mp3"
+                "vi": "wordzoo/basics/sub_categorys/shapes/entitys/Cone/LocalizedNames/vi/Cone.mp3",
+                "en": "wordzoo/basics/sub_categorys/shapes/entitys/Cone/LocalizedNames/en/Cone.mp3",
+                "zh": "wordzoo/basics/sub_categorys/shapes/entitys/Cone/LocalizedNames/zh/Cone.mp3"
               },
               "pronunciation": {
                 "en": {
@@ -40483,16 +40483,16 @@
               }
             },
             {
-              "id": "confused",
+              "id": "Confused",
               "names": {
                 "vi": "Bối rối",
                 "en": "Confused",
                 "zh": "困惑"
               },
               "audio": {
-                "vi": "wordzoo/basics/sub_categorys/emotions/entitys/confused/LocalizedNames/vi/Confused.mp3",
-                "en": "wordzoo/basics/sub_categorys/emotions/entitys/confused/LocalizedNames/en/Confused.mp3",
-                "zh": "wordzoo/basics/sub_categorys/emotions/entitys/confused/LocalizedNames/zh/Confused.mp3"
+                "vi": "wordzoo/basics/sub_categorys/emotions/entitys/Confused/LocalizedNames/vi/Confused.mp3",
+                "en": "wordzoo/basics/sub_categorys/emotions/entitys/Confused/LocalizedNames/en/Confused.mp3",
+                "zh": "wordzoo/basics/sub_categorys/emotions/entitys/Confused/LocalizedNames/zh/Confused.mp3"
               },
               "pronunciation": {
                 "en": {
@@ -41642,16 +41642,16 @@
               }
             },
             {
-              "id": "construction_worker",
+              "id": "Construction_worker",
               "names": {
                 "vi": "Công nhân xây dựng",
                 "en": "Construction Worker",
                 "zh": "建筑工人"
               },
               "audio": {
-                "vi": "wordzoo/basics/sub_categorys/occupations/entitys/construction_worker/LocalizedNames/vi/Construction Worker.mp3",
-                "en": "wordzoo/basics/sub_categorys/occupations/entitys/construction_worker/LocalizedNames/en/Construction Worker.mp3",
-                "zh": "wordzoo/basics/sub_categorys/occupations/entitys/construction_worker/LocalizedNames/zh/Construction Worker.mp3"
+                "vi": "wordzoo/basics/sub_categorys/occupations/entitys/Construction_worker/LocalizedNames/vi/Construction Worker.mp3",
+                "en": "wordzoo/basics/sub_categorys/occupations/entitys/Construction_worker/LocalizedNames/en/Construction Worker.mp3",
+                "zh": "wordzoo/basics/sub_categorys/occupations/entitys/Construction_worker/LocalizedNames/zh/Construction Worker.mp3"
               },
               "pronunciation": {
                 "en": {

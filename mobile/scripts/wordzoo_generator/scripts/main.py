@@ -105,7 +105,7 @@ async def main():
             "Audio generation finished"
         )
         # Tiếng kêu động vật
-        await generate_all_animal_sound(data)
+        #await generate_all_animal_sound(data)
         success(
             "generate_all_animal_sound finished"
         )

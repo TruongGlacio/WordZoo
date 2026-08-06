@@ -149,8 +149,11 @@ class $AssetsIconsGen {
   final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
   final AssetGenImage appIconForLaunch = const AssetGenImage('assets/icons/AppIconForLaunch.png');
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
+  final AssetGenImage china = const AssetGenImage('assets/icons/china.png');
+  final AssetGenImage england = const AssetGenImage('assets/icons/england.png');
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
+  final AssetGenImage vietnam = const AssetGenImage('assets/icons/vietnam.png');
   final AssetGenImage volumeOn = const AssetGenImage('assets/icons/volume_on.png');
 }
 

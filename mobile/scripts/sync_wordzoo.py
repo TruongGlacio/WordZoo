@@ -503,9 +503,10 @@ def main():
 
     parser.add_argument(
         "--version",
-        default="1.0.0",
+        default="1.0.1",
         help="Data version",
     )
+
 
     parser.add_argument(
         "--supabase-url",
@@ -580,7 +581,8 @@ def main():
         wordzoo_dir,
     )
 
-    data["version"] = args.version
+    data["version"] = "1.0.1"
+    print(f"args.version:  {args.version}")
 
     print("\n==============================")
     print("Summary")

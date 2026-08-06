@@ -183,6 +183,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                       max: AudioService().playbackRateMax,
                       interval: 0.1,
                       showTicks: true,
+                      activeColor: AppColors.grassGreen,
                       showLabels: false,
                       enableTooltip: true,
                       minorTicksPerInterval: 0,
