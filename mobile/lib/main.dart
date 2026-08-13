@@ -11,18 +11,19 @@ import 'package:wordzoo/presentation/theme/app_theme.dart';
 import 'package:wordzoo/data/repositories/supabase_repository.dart';
 import 'package:wordzoo/data/repositories/data_sync_repository.dart';
 import 'package:wordzoo/data/repositories/progress_repository.dart';
-import 'package:wordzoo/data/repositories/iap_repository.dart';
 import 'package:wordzoo/blocs/auth/auth_bloc.dart';
 import 'package:wordzoo/blocs/category/category_bloc.dart';
 import 'package:wordzoo/blocs/entity/entity_bloc.dart';
 import 'package:wordzoo/blocs/progress/progress_bloc.dart';
-import 'package:wordzoo/blocs/iap/iap_bloc.dart';
 import 'package:wordzoo/blocs/language/language_bloc.dart';
 import 'package:wordzoo/l10n/app_localizations.dart';
 import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+import 'iap/blocs/iap_bloc.dart';
+import 'iap/data/repositories/iap_repository.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -75,8 +76,8 @@ Future<void> main() async {
           BlocProvider<ProgressBloc>(
             create: (_) => ProgressBloc(progressRepo: progressRepo)..add(LoadProgress()),
           ),
-          BlocProvider<IapBloc>(
-            create: (_) => IapBloc(iapRepo: iapRepo)..add(CheckPremiumStatus()),
+          BlocProvider<IAPBloc>(
+            create: (_) => IAPBloc(iapRepo: iapRepo)..add(const CheckPremiumStatus()),
           ),
           BlocProvider<LanguageBloc>(
             create: (_) => LanguageBloc(),

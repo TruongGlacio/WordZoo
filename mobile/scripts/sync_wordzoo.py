@@ -502,9 +502,9 @@ def main():
     )
 
     parser.add_argument(
-        "--version",
-        default="1.0.1",
-        help="Data version",
+    "--version",
+    required=True,
+    help="Data version, example: 1.0.2",
     )
 
 
@@ -581,8 +581,9 @@ def main():
         wordzoo_dir,
     )
 
-    data["version"] = "1.0.1"
-    print(f"args.version:  {args.version}")
+    data["version"] = args.version
+
+    print(f"Version : {data['version']}")
 
     print("\n==============================")
     print("Summary")

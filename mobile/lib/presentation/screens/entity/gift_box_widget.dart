@@ -40,7 +40,7 @@ class GiftBoxWidget extends StatelessWidget {
             ? frames[controller.currentFrame]
             : frames.last;
 
-        print('left:$left, top:$top');
+        //print('left:$left, top:$top');
         return Stack(
           fit: StackFit.expand,
           children: [

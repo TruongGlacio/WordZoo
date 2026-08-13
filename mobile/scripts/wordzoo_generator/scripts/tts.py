@@ -1,7 +1,7 @@
 import asyncio
 
 import edge_tts
-
+from pathlib import Path
 from config import (
     VOICE_MAP,
     AUDIO_EXTENSION
@@ -113,12 +113,10 @@ async def process_node_audio(
         )
 
 
-        json_path = str(
-
-            output_file
-
-        ).replace("\\", "/")
-
+        json_path = build_audio_json_path(
+            base_path,
+            output_file,
+        )
 
         audio_result[language] = json_path
 
@@ -348,3 +346,45 @@ async def generate_all_audio(data):
         "Generate audio completed"
 
     )
+
+def build_audio_json_path(
+        base_path,
+        output_file,
+):
+    """
+    Convert absolute audio path into
+    WordZoo relative path.
+
+    Example:
+
+    D:/.../scripts/wordzoo_generator/scripts/wordzoo/
+    plants/sub_categorys/flowers/entitys/rose/
+    LocalizedNames/vi/Rose.mp3
+
+    ->
+
+    wordzoo/plants/sub_categorys/flowers/entitys/rose/
+    LocalizedNames/vi/Rose.mp3
+    """
+
+    try:
+
+        # Find "wordzoo" folder
+        parts = output_file.parts
+
+        index = parts.index("wordzoo")
+
+        relative = Path(
+            *parts[index:]
+        )
+
+        return str(
+            relative
+        ).replace("\\", "/")
+
+    except ValueError:
+
+        # fallback
+        return str(
+            output_file
+        ).replace("\\", "/")

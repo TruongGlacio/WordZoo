@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:wordzoo/iap/iap_core.dart';
+
 class AppConstants {
   // Supabase
   static const supabaseUrl = '';
@@ -15,10 +19,6 @@ class AppConstants {
 
   // User defaults
   static const defaultLanguage = 'vi';
-
-  // IAP
-  static const iapProductMonthly = 'premium_monthly';
-  static const iapProductYearly = 'premium_yearly';
 
   // Workmanager
   static const syncTaskName = 'sync-data-task';

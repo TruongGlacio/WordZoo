@@ -41,8 +41,8 @@ class PronunciationInfo {
   PronunciationInfo({this.en, this.zh});
 
   PronunciationInfo.fromJson(Map<String, dynamic> json) {
-    en = json['en'] != null ? IpaInfo.fromJson(json['en']) : null;
-    zh = json['zh'] != null ? IpaInfo.fromJson(json['zh']) : null;
+    en = json['en'] != null ? IpaInfo.fromJson(json['en'] as Map<String, dynamic>) : null;
+    zh = json['zh'] != null ? IpaInfo.fromJson(json['zh'] as Map<String, dynamic>) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -75,8 +75,8 @@ class IpaInfo {
   IpaInfo({this.ipa, this.syllable});
 
   IpaInfo.fromJson(Map<String, dynamic> json) {
-    ipa = json['ipa'];
-    syllable = json['syllable'];
+    ipa = json['ipa'] as String?;
+    syllable = json['syllable'] as String?;
   }
 
   Map<String, dynamic> toJson() {

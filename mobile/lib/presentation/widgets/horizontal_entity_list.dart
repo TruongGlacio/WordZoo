@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
-import '../../blocs/iap/iap_bloc.dart';
+import 'package:wordzoo/iap/blocs/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../utils/size_manager.dart';
@@ -18,7 +18,7 @@ class HorizontalEntityList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPremium = context.watch<IapBloc>().state is PremiumActive;
+    final isPremium = context.watch<IAPBloc>().state is PremiumActive;
 
     return Container(
       decoration: BoxDecoration(

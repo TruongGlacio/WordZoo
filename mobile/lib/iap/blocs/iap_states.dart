@@ -1,28 +1,28 @@
 part of 'iap_bloc.dart';
 
-sealed class IapState extends Equatable {
-  const IapState();
+sealed class IAPState extends Equatable {
+  const IAPState();
   @override
   List<Object?> get props => [];
 }
 
-class IapInitial extends IapState {
+class IapInitial extends IAPState {
   const IapInitial();
 }
 
-class IapLoading extends IapState {
+class IapLoading extends IAPState {
   const IapLoading();
 }
 
-class PremiumActive extends IapState {
+class PremiumActive extends IAPState {
   const PremiumActive();
 }
 
-class PremiumInactive extends IapState {
+class PremiumInactive extends IAPState {
   const PremiumInactive();
 }
 
-class IapError extends IapState {
+class IapError extends IAPState {
   final String message;
   const IapError(this.message);
   @override

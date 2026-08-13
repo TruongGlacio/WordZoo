@@ -1,4 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wordzoo.app.wordzoo">
+    <!-- Required for billing (in-app purchases) -->
+    <uses-permission android:name="com.android.vending.BILLING"/>
+    
     <application
         android:label="WordZoo"
         android:name="${applicationName}"

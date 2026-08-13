@@ -1,9 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:wordzoo/utils/constants.dart';
+import 'package:wordzoo/iap/iap_core.dart';
 import 'package:wordzoo/utils/logger.dart';
-
 abstract class IapRepository {
   Future<bool> isPremium();
   Future<void> purchase(String productId);
@@ -49,9 +48,9 @@ class IapRepositoryImpl implements IapRepository {
     try {
       final products = await _iap.queryProductDetails({
         if (defaultTargetPlatform == TargetPlatform.android)
-          AppConstants.iapProductMonthly
+          IAPConfig.premiumMonthId
         else
-          AppConstants.iapProductYearly,
+          IAPConfig.premiumYearId,
       });
 
       if (products.error != null) {

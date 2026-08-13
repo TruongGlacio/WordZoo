@@ -1,22 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../data/repositories/iap_repository.dart';
+import '../data/repositories/iap_repository.dart';
+import '../data/services/iap_service.dart';
 
-part 'iap_event.dart';
-part 'iap_state.dart';
+part 'iap_events.dart';
+part 'iap_states.dart';
 
-class IapBloc extends Bloc<IapEvent, IapState> {
+class IAPBloc extends Bloc<IapEvent, IAPState> {
   final IapRepository iapRepo;
+  final IAPService iapService = IAPService();
 
-  IapBloc({required this.iapRepo}) : super(const IapInitial()) {
+  IAPBloc({required this.iapRepo}) : super(const IapInitial()) {
     on<CheckPremiumStatus>(_onCheckPremiumStatus);
     on<PurchasePremium>(_onPurchasePremium);
     on<ConsumeRewardedAd>(_onConsumeRewardedAd);
+    on<RestorePurchases>(_onRestorePurchases);
   }
 
   Future<void> _onCheckPremiumStatus(
     CheckPremiumStatus event,
-    Emitter<IapState> emit,
+    Emitter<IAPState> emit,
   ) async {
     emit(const IapLoading());
     try {
@@ -33,7 +36,7 @@ class IapBloc extends Bloc<IapEvent, IapState> {
 
   Future<void> _onPurchasePremium(
     PurchasePremium event,
-    Emitter<IapState> emit,
+    Emitter<IAPState> emit,
   ) async {
     emit(const IapLoading());
     try {
@@ -51,7 +54,7 @@ class IapBloc extends Bloc<IapEvent, IapState> {
 
   Future<void> _onConsumeRewardedAd(
     ConsumeRewardedAd event,
-    Emitter<IapState> emit,
+    Emitter<IAPState> emit,
   ) async {
     try {
       await iapRepo.consumeRewardedAd();
@@ -59,5 +62,28 @@ class IapBloc extends Bloc<IapEvent, IapState> {
     } catch (e) {
       emit(IapError(e.toString()));
     }
+  }
+
+  Future<void> _onRestorePurchases(
+    RestorePurchases event,
+    Emitter<IAPState> emit,
+  ) async {
+    emit(const IapLoading());
+    try {
+      await iapService.restorePurchases(this);
+      final isPremium = await iapRepo.isPremium();
+      if (isPremium) {
+        emit(const PremiumActive());
+      } else {
+        emit(const PremiumInactive());
+      }
+    } catch (e) {
+      emit(IapError(e.toString()));
+    }
+  }
+
+  /// Initialize the purchase listener when the BLoC is created
+  void initializeListener() {
+    // This will be called from the UI or app initialization where we have access to context and bloc
   }
 }

@@ -23,3 +23,7 @@ class ConsumeRewardedAd extends IapEvent {
   @override
   List<Object?> get props => [entityId];
 }
+
+class RestorePurchases extends IapEvent {
+  const RestorePurchases();
+}

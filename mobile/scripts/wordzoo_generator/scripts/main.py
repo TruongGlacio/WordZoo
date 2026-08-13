@@ -17,15 +17,15 @@ from resize_real_images import resize_all_images
 
 from image_generator import ImageGenerator
 
-
 from utils import (
     info,
     success,
     error
 )
-from download_real_image import generate_all_real_images
+#from download_real_image import generate_all_real_images
+from generate_wordzoo_images import generate_all_real_images
 from add_pronunciation import add_pronunciation
-
+from generate_visual_descriptions import generate_all_visual_descriptions
 # ============================================================
 # Print statistics
 # ============================================================
@@ -78,7 +78,9 @@ async def main():
         data = load_json()
         add_pronunciation(data)
         save_json(data)
-
+        data = load_json()
+        #generate_all_visual_descriptions(data)
+        #save_json(data)
         data = load_json()
         print_statistics(
             data
@@ -117,7 +119,8 @@ async def main():
         )
         #generator = ImageGenerator()
         #generator.generate_all( data )
-        #await generate_all_real_images(data)
+        # Step 2: Generate images from those descriptions
+        await generate_all_real_images(data)
         success(
             "Image generation finished"
         )

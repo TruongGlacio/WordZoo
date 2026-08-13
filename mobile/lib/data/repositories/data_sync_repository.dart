@@ -58,7 +58,15 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     final cached = await getCachedData();
     if (cached != null) {
       AppLogger.i('getData: using cached data');
-      return cached;
+      bool needUpdate = await needsUpdate();
+      if (needUpdate) {
+        AppLogger.i('getData: data is outdated, syncing...');
+        //await syncData();
+      }
+      else
+        {
+          return cached;
+        }
     }
 
     AppLogger.i('getData: no cache found, syncing...');
@@ -78,7 +86,13 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       final localVersion = box.get(AppConstants.dataVersionKey);
       if (localVersion == null) return true;
 
-      final response = await _client.from('data_versions').select().eq('is_active', true).single();
+      final response = await _client
+          .from('data_versions')
+          .select()
+          .eq('is_active', true)
+          .order('created_at', ascending: false)
+          .limit(1)
+          .single();
 
       final remoteVersion = response['version'] as String;
       return remoteVersion != localVersion;
@@ -93,8 +107,13 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     try {
       final box = Hive.box<String>('app_data');
 
-      final response = await _client.from('data_versions').select().eq('is_active', true).single();
-
+      final response = await _client
+          .from('data_versions')
+          .select()
+          .eq('is_active', true)
+          .order('created_at', ascending: false)
+          .limit(1)
+          .single();
       final remoteVersion = response['version'] as String;
       final fileName = 'data-v$remoteVersion.json';
       AppLogger.i('Downloading data.json version $remoteVersion');

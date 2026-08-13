@@ -8,7 +8,7 @@ part of 'subcategory.dart';
 
 Subcategory _$SubcategoryFromJson(Map<String, dynamic> json) =>
     $checkedCreate('Subcategory', json, ($checkedConvert) {
-      $checkKeys(json, allowedKeys: const ['id', 'order', 'names', 'entities','audio', 'real_image', 'pronunciation']);
+      $checkKeys(json, allowedKeys: const ['id', 'order', 'names', 'entities','audio', 'real_image', 'pronunciation','visual_description']);
       final val = Subcategory(
         id: $checkedConvert('id', (v) => v as String),
         order: $checkedConvert('order', (v) => ((v??0) as num).toInt()),

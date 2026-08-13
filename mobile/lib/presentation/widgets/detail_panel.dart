@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'package:wordzoo/iap/blocs/iap_bloc.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
-import '../../blocs/iap/iap_bloc.dart';
 import '../../data/models/entity.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
@@ -25,7 +25,7 @@ class DetailPanel extends StatefulWidget {
 
 class _DetailPanelState extends State<DetailPanel> {
   final AudioPlayer _audioPlayer = AudioPlayer();
-  String _currentLang = DataManager().getCurrentLocale().languageCode;
+  String _currentLang = DataManager().getCurrentLocaleForEntity().languageCode;
 
   @override
   void dispose() {
@@ -35,7 +35,7 @@ class _DetailPanelState extends State<DetailPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final isPremiumLocked = (widget.entity.isPremium ?? false) && context.watch<IapBloc>().state is! PremiumActive;
+    final isPremiumLocked = (widget.entity.isPremium ?? false) && context.watch<IAPBloc>().state is! PremiumActive;
 
     return Padding(
       padding: EdgeInsetsGeometry.symmetric(horizontal: SizeManager().spacing128),
@@ -143,26 +143,17 @@ class _DetailPanelState extends State<DetailPanel> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     _LangButton(label: 'VI', isSelected: _currentLang == 'vi', onTap:() {
-                      setState(() {
-                        _currentLang = 'vi';
-                      },);
-                      final audioPath = widget.entity.getLocalAudio(_currentLang);
-                      AudioService().playDeviceFileSource(audioPath!);
+                      setCurrentLocaleForEntity(currentLang: 'vi');
                     },),
                     Gap(SizeManager().spacing12),
                     _LangButton(label: 'EN', isSelected: _currentLang == 'en', onTap: () {
 
-                      setState(() {
-                        _currentLang = 'en';
-                      },);
-                      final audioPath = widget.entity.getLocalAudio(_currentLang);
-                      AudioService().playDeviceFileSource(audioPath!);
+                      setCurrentLocaleForEntity(currentLang: 'en');
+
                     },),
                     Gap(SizeManager().spacing12),
                     _LangButton(label: 'ZH', isSelected: _currentLang == 'zh', onTap: () {
-                      setState(() => _currentLang = 'zh');
-                      final audioPath = widget.entity.getLocalAudio(_currentLang);
-                      AudioService().playDeviceFileSource(audioPath!);
+                      setCurrentLocaleForEntity(currentLang: 'zh');
                     },),
                   ],
                 ),
@@ -193,6 +184,14 @@ class _DetailPanelState extends State<DetailPanel> {
         ],
       ),
     );
+  }
+  void setCurrentLocaleForEntity({required String currentLang}){
+    setState(() {
+      _currentLang = currentLang;
+      DataManager().setCurrentLocaleForEntity(Locale(_currentLang));
+    },);
+    final audioPath = widget.entity.getLocalAudio(_currentLang);
+    AudioService().playDeviceFileSource(audioPath!);
   }
 }
 

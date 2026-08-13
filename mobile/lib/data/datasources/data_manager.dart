@@ -25,11 +25,19 @@ class DataManager {
     return _rootPath;
   }
   Locale _currentLocale = Locale('vi');
+  Locale _currentLocaleForEntity = Locale('vi');
+
   void setCurrentLocale(Locale locale){
     _currentLocale = locale;
   }
   Locale getCurrentLocale(){
     return _currentLocale;
+  }
+  void setCurrentLocaleForEntity(Locale locale){
+    _currentLocaleForEntity = locale;
+  }
+  Locale getCurrentLocaleForEntity(){
+    return _currentLocaleForEntity;
   }
   List<Category> getCategories() {
     if(_categories.isEmpty) {

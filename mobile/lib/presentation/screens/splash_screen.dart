@@ -3,13 +3,52 @@ import 'package:gap/gap.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/presentation/screens/login_screen.dart';
 import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
+import 'home_screen.dart';
 
-class SplashScreen extends StatelessWidget {
+class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _rotationAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Animation chạy liên tục trong lúc load data.
+    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 500))..repeat(reverse: true);
+
+    _rotationAnimation = Tween<double>(begin: -0.1, end: 0.1).animate(CurvedAnimation(parent: _controller, curve: Curves.easeInOut));
+
+    _load();
+  }
+
+  Future<void> _load() async {
+    try {
+      if (!mounted)
+        return;
+
+      // Chuyển sang màn hình chính.
+      //Navigator.of(context).pushReplacement(MaterialPageRoute<void>(builder: (_) => const LoginScreen()));
+    } catch (e) {
+      if (!mounted) return;
+      // Xử lý lỗi loading ở đây.
+      debugPrint('Splash loading error: $e');
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +59,16 @@ class SplashScreen extends StatelessWidget {
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
-            const Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(AppColors.leafGreen))),
+            Center(
+              child: AnimatedBuilder(
+                animation: _rotationAnimation,
+                builder: (context, child) {
+                  return Transform.rotate(angle: _rotationAnimation.value, child: child);
+                },
+                child: ClipOval(
+                    child: Image.asset(Assets.assets.icons.appIcon.path, width: 120, height: 120)),
+              ),
+            ),
             ListenableBuilder(
               listenable: DataManager().downloadProgressModel,
               builder: (BuildContext context, Widget? child) {

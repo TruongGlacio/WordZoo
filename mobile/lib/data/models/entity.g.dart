@@ -23,7 +23,8 @@ Entity _$EntityFromJson(Map<String, dynamic> json) => $checkedCreate(
         'difficulty',
         'audio',
         'animal_sound',
-        'pronunciation'
+        'pronunciation',
+        'visual_description'
       ],
     );
     final val = Entity(

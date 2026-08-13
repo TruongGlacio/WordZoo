@@ -1,0 +1,770 @@
+"""
+generate_wordzoo_images.py
+
+Generate all WordZoo images locally through ComfyUI + Z-Image-Turbo.
+
+Expected files next to this script:
+    generate_wordzoo_images.py
+    image_z_image_turbo_wordzoo.json
+
+ComfyUI:
+    http://127.0.0.1:8188
+
+The public function is:
+    await generate_all_real_images(data)
+
+so main.py can call it directly after loading the WordZoo JSON.
+"""
+
+from __future__ import annotations
+
+import asyncio
+import json
+import random
+import time
+import uuid
+from pathlib import Path
+from typing import Any
+
+import requests
+
+from utils import (
+    ensure_folder,
+    file_exists,
+    progress,
+    warning,
+    success,
+)
+from path_builder import PathBuilder
+from json_utils import (
+    iter_categories,
+    iter_subcategories,
+    iter_entities,
+)
+
+
+# ============================================================
+# Configuration
+# ============================================================
+
+COMFYUI_URL = "http://127.0.0.1:8188"
+
+# Put the workflow JSON in the same directory as this script.
+WORKFLOW_FILE = Path(__file__).resolve().parent / "image_z_image_turbo_wordzoo.json"
+
+# Your workflow uses these node IDs.
+PROMPT_NODE_ID = "57:27"
+SAMPLER_NODE_ID = "57:3"
+SAVE_IMAGE_NODE_ID = "9"
+
+WIDTH = 512
+HEIGHT = 512
+STEPS = 8
+CFG = 1.0
+
+# How long to wait for ComfyUI to finish one image.
+GENERATION_TIMEOUT = 10 * 60
+
+# Poll interval while waiting for a job.
+POLL_INTERVAL = 1.0
+
+# Use a deterministic random seed for each entity.
+# Change to False if you want a random seed every run.
+DETERMINISTIC_SEED = True
+
+# Base style for WordZoo.
+BASE_STYLE = (
+    "children's educational illustration, "
+    "clear recognizable subject, "
+    "simple clean shapes, "
+    "friendly and appealing appearance, "
+    "natural proportions, "
+    "soft natural lighting, "
+    "centered composition, "
+    "full subject visible, "
+    "single subject only, "
+    "isolated subject, "
+    "clean edges, "
+    "square composition, "
+    "high quality, "
+    "no text, no letters, no words, no watermark"
+)
+
+# ============================================================
+# ComfyUI API
+# ============================================================
+
+SESSION = requests.Session()
+
+
+def check_comfyui() -> None:
+    """Fail early with a useful message if ComfyUI is not running."""
+    try:
+        response = SESSION.get(
+            f"{COMFYUI_URL}/system_stats",
+            timeout=5,
+        )
+        response.raise_for_status()
+    except Exception as exc:
+        raise RuntimeError(
+            f"Cannot connect to ComfyUI at {COMFYUI_URL}.\n"
+            "Start ComfyUI first, then run main.py again.\n"
+            f"Original error: {exc}"
+        ) from exc
+
+
+def load_workflow() -> dict[str, Any]:
+    if not WORKFLOW_FILE.exists():
+        raise FileNotFoundError(
+            f"Workflow not found: {WORKFLOW_FILE}\n"
+            "Put image_z_image_turbo_wordzoo.json next to "
+            "generate_wordzoo_images.py."
+        )
+
+    with WORKFLOW_FILE.open("r", encoding="utf-8") as f:
+        workflow = json.load(f)
+
+    if PROMPT_NODE_ID not in workflow:
+        raise RuntimeError(
+            f"Prompt node {PROMPT_NODE_ID} was not found in workflow."
+        )
+
+    if SAMPLER_NODE_ID not in workflow:
+        raise RuntimeError(
+            f"KSampler node {SAMPLER_NODE_ID} was not found in workflow."
+        )
+
+    if SAVE_IMAGE_NODE_ID not in workflow:
+        raise RuntimeError(
+            f"SaveImage node {SAVE_IMAGE_NODE_ID} was not found in workflow."
+        )
+
+    return workflow
+
+
+def queue_prompt(
+    workflow: dict[str, Any],
+    client_id: str,
+) -> str:
+    payload = {
+        "prompt": workflow,
+        "client_id": client_id,
+    }
+
+    response = SESSION.post(
+        f"{COMFYUI_URL}/prompt",
+        json=payload,
+        timeout=30,
+    )
+    response.raise_for_status()
+
+    result = response.json()
+
+    if "error" in result:
+        raise RuntimeError(f"ComfyUI rejected workflow: {result}")
+
+    prompt_id = result.get("prompt_id")
+    if not prompt_id:
+        raise RuntimeError(
+            f"ComfyUI did not return prompt_id: {result}"
+        )
+
+    return prompt_id
+
+
+def wait_for_history(prompt_id: str) -> dict[str, Any]:
+    deadline = time.monotonic() + GENERATION_TIMEOUT
+
+    while time.monotonic() < deadline:
+        response = SESSION.get(
+            f"{COMFYUI_URL}/history/{prompt_id}",
+            timeout=30,
+        )
+        response.raise_for_status()
+
+        history = response.json()
+
+        if prompt_id in history:
+            return history[prompt_id]
+
+        time.sleep(POLL_INTERVAL)
+
+    raise TimeoutError(
+        f"ComfyUI generation timed out after "
+        f"{GENERATION_TIMEOUT // 60} minutes. "
+        f"prompt_id={prompt_id}"
+    )
+
+
+def download_generated_image(
+    history: dict[str, Any],
+    output_file: Path,
+) -> None:
+    """
+    Find the image generated by SaveImage node 9 and copy it
+    from ComfyUI's /view endpoint to WordZoo's normal output path.
+    """
+    outputs = history.get("outputs", {})
+    save_output = outputs.get(SAVE_IMAGE_NODE_ID)
+
+    if not save_output:
+        # Some workflows may return a different output-node key.
+        # Fall back to the first output containing "images".
+        for node_output in outputs.values():
+            if node_output.get("images"):
+                save_output = node_output
+                break
+
+    if not save_output:
+        raise RuntimeError(
+            f"ComfyUI finished but no image output was found. "
+            f"history={history}"
+        )
+
+    images = save_output.get("images", [])
+    if not images:
+        raise RuntimeError(
+            "ComfyUI finished but SaveImage returned no images."
+        )
+
+    image = images[0]
+
+    params = {
+        "filename": image["filename"],
+        "subfolder": image.get("subfolder", ""),
+        "type": image.get("type", "output"),
+    }
+
+    response = SESSION.get(
+        f"{COMFYUI_URL}/view",
+        params=params,
+        timeout=120,
+    )
+    response.raise_for_status()
+
+    ensure_folder(output_file.parent)
+
+    with output_file.open("wb") as f:
+        f.write(response.content)
+
+
+# ============================================================
+# Prompt generation
+# ============================================================
+
+CATEGORY_CONTEXT = {
+    "animals": "animal",
+    "plants": "plant",
+    "vehicles": "vehicle",
+    "human_relations": "human",
+}
+
+
+def english_name(obj: dict[str, Any]) -> str:
+    names = obj.get("names", {})
+    name = names.get("en")
+
+    if name:
+        return str(name)
+
+    # Fallback if an object has no names.en.
+    return str(obj.get("id", "unknown")).replace("_", " ")
+
+
+def category_context(category: dict[str, Any]) -> str:
+    category_id = category.get("id", "")
+    return CATEGORY_CONTEXT.get(
+        category_id,
+        category_id.replace("_", " "),
+    )
+
+
+def build_category_prompt(
+        category: dict[str, Any]
+) -> str:
+
+    name = english_name(category)
+
+    visual_description = category.get(
+        "visual_description",
+        ""
+    ).strip()
+
+    if not visual_description:
+        visual_description = (
+            f"a clear visual representation of {name}"
+        )
+
+    return (
+        f"Create a children's educational illustration "
+        f"representing {name}. "
+
+        f"Visual appearance: {visual_description}. "
+
+        f"The image should clearly communicate the category "
+        f"to a child. "
+
+        f"{BASE_STYLE}"
+    )
+
+
+def build_subcategory_prompt(
+        category: dict[str, Any],
+        subcategory: dict[str, Any],
+) -> str:
+
+    name = english_name(subcategory)
+
+    category_name = english_name(category)
+
+    visual_description = subcategory.get(
+        "visual_description",
+        ""
+    ).strip()
+
+    if not visual_description:
+        visual_description = (
+            f"a clear visual representation of {name}"
+        )
+
+    return (
+        f"Create a children's educational illustration "
+        f"representing {name}. "
+
+        f"Category: {category_name}. "
+
+        f"Visual appearance: {visual_description}. "
+
+        f"The image should clearly communicate the "
+        f"subcategory to a child. "
+
+        f"{BASE_STYLE}"
+    )
+
+
+def build_entity_prompt(
+        category: dict[str, Any],
+        subcategory: dict[str, Any],
+        entity: dict[str, Any],
+) -> str:
+
+    name = english_name(entity)
+
+    category_name = english_name(category)
+
+    subcategory_name = english_name(subcategory)
+
+    visual_description = entity.get(
+        "visual_description",
+        ""
+    ).strip()
+
+    # Fallback nếu entity chưa có visual_description.
+    if not visual_description:
+        visual_description = (
+            f"a clearly recognizable {name}"
+        )
+
+    return (
+        f"Create a children's educational illustration of a {name}. "
+
+        f"Visual appearance: {visual_description}. "
+
+        f"The subject must be visually accurate and immediately "
+        f"recognizable as a {name}. "
+
+        f"Show the complete subject clearly, "
+        f"with its important distinguishing features visible. "
+
+        f"Do not replace it with another species, object, "
+        f"vehicle, plant, or person. "
+
+        f"Category: {category_name}. "
+        f"Subcategory: {subcategory_name}. "
+
+        f"{BASE_STYLE}"
+    )
+
+# ============================================================
+# Workflow preparation
+# ============================================================
+
+def make_seed(
+    category: dict[str, Any],
+    subcategory: dict[str, Any] | None,
+    entity: dict[str, Any] | None,
+) -> int:
+    if not DETERMINISTIC_SEED:
+        return random.randint(1, 2**63 - 1)
+
+    parts = [
+        str(category.get("id", "")),
+        str(subcategory.get("id", "")) if subcategory else "",
+        str(entity.get("id", "")) if entity else "",
+    ]
+
+    # Stable across Python runs/machines.
+    value = "|".join(parts)
+
+    seed = 0
+    for char in value:
+        seed = (seed * 131 + ord(char)) & 0x7FFFFFFFFFFFFFFF
+
+    return seed or 1
+
+
+def safe_prefix(name: str) -> str:
+    result = "".join(
+        c if c.isalnum() or c in "-_/" else "_"
+        for c in name
+    )
+    return result.strip("/") or "image"
+
+
+def prepare_workflow(
+    base_workflow: dict[str, Any],
+    prompt: str,
+    seed: int,
+    filename_prefix: str,
+) -> dict[str, Any]:
+    """
+    Deep-copy the workflow without relying on copy.deepcopy
+    implementation details of custom objects.
+    """
+    workflow = json.loads(json.dumps(base_workflow))
+
+    # Prompt.
+    workflow[PROMPT_NODE_ID]["inputs"]["text"] = prompt
+
+    # Seed.
+    workflow[SAMPLER_NODE_ID]["inputs"]["seed"] = seed
+
+    # Keep the 512x512 / 8-step Z-Image-Turbo setup.
+    if "57:13" in workflow:
+        workflow["57:13"]["inputs"]["width"] = WIDTH
+        workflow["57:13"]["inputs"]["height"] = HEIGHT
+        workflow["57:13"]["inputs"]["batch_size"] = 1
+
+    workflow[SAMPLER_NODE_ID]["inputs"]["steps"] = STEPS
+    workflow[SAMPLER_NODE_ID]["inputs"]["cfg"] = CFG
+
+    # Temporary ComfyUI output name.
+    workflow[SAVE_IMAGE_NODE_ID]["inputs"][
+        "filename_prefix"
+    ] = filename_prefix
+
+    return workflow
+
+
+# ============================================================
+# One image
+# ============================================================
+
+async def generate_one_image(
+    category: dict[str, Any],
+    subcategory: dict[str, Any] | None,
+    entity: dict[str, Any] | None,
+    output_file: Path,
+    display_name: str,
+) -> bool:
+    if file_exists(output_file):
+        print(f"[SKIP] {display_name}: {output_file}")
+        return True
+
+    if entity is not None:
+        prompt = build_entity_prompt(
+            category,
+            subcategory,
+            entity,
+        )
+    elif subcategory is not None:
+        prompt = build_subcategory_prompt(
+            category,
+            subcategory,
+        )
+    else:
+        prompt = build_category_prompt(category)
+
+    seed = make_seed(
+        category,
+        subcategory,
+        entity,
+    )
+
+    base_workflow = load_workflow()
+
+    filename_prefix = (
+        "wordzoo/"
+        + safe_prefix(display_name)
+    )
+
+    workflow = prepare_workflow(
+        base_workflow=base_workflow,
+        prompt=prompt,
+        seed=seed,
+        filename_prefix=filename_prefix,
+    )
+
+    print()
+    print("=" * 70)
+    print(f"Generating: {display_name}")
+    print(f"Prompt: {prompt}")
+    print(f"Seed: {seed}")
+    print(f"Output: {output_file}")
+    print("=" * 70)
+
+    try:
+        client_id = str(uuid.uuid4())
+
+        prompt_id = await asyncio.to_thread(
+            queue_prompt,
+            workflow,
+            client_id,
+        )
+
+        print(f"[ComfyUI] queued prompt_id={prompt_id}")
+
+        history = await asyncio.to_thread(
+            wait_for_history,
+            prompt_id,
+        )
+
+        await asyncio.to_thread(
+            download_generated_image,
+            history,
+            output_file,
+        )
+
+        if not file_exists(output_file):
+            raise RuntimeError(
+                f"Image was generated but file does not exist: "
+                f"{output_file}"
+            )
+
+        return True
+
+    except Exception as exc:
+        warning(
+            f"Generate failed: {display_name}: {exc}"
+        )
+        return False
+
+
+# ============================================================
+# Category
+# ============================================================
+
+async def process_category(
+    category: dict[str, Any],
+) -> None:
+    output_file = PathBuilder.image_file(
+        PathBuilder.category(category),
+        category["id"],
+    )
+
+    ok = await generate_one_image(
+        category=category,
+        subcategory=None,
+        entity=None,
+        output_file=output_file,
+        display_name=category["id"],
+    )
+
+    if ok:
+        category["real_image"] = (
+            PathBuilder.image_json_path(output_file)
+        )
+        success(f"Generated: {category['id']}")
+
+    progress.next(category["id"])
+
+
+# ============================================================
+# Subcategory
+# ============================================================
+
+async def process_subcategory(
+    category: dict[str, Any],
+    subcategory: dict[str, Any],
+) -> None:
+    output_file = PathBuilder.image_file(
+        PathBuilder.subcategory(
+            category,
+            subcategory,
+        ),
+        subcategory["id"],
+    )
+
+    ok = await generate_one_image(
+        category=category,
+        subcategory=subcategory,
+        entity=None,
+        output_file=output_file,
+        display_name=subcategory["id"],
+    )
+
+    if ok:
+        subcategory["real_image"] = (
+            PathBuilder.image_json_path(output_file)
+        )
+        success(f"Generated: {subcategory['id']}")
+
+    progress.next(subcategory["id"])
+
+
+# ============================================================
+# Entity
+# ============================================================
+
+async def process_entity(
+    category: dict[str, Any],
+    subcategory: dict[str, Any],
+    entity: dict[str, Any],
+) -> None:
+    output_file = PathBuilder.image_file(
+        PathBuilder.entity(
+            category,
+            subcategory,
+            entity,
+        ),
+        entity["id"],
+    )
+
+    ok = await generate_one_image(
+        category=category,
+        subcategory=subcategory,
+        entity=entity,
+        output_file=output_file,
+        display_name=entity["id"],
+    )
+
+    if ok:
+        entity["real_image"] = (
+            PathBuilder.image_json_path(output_file)
+        )
+        success(f"Generated: {entity['id']}")
+
+    progress.next(entity["id"])
+
+
+# ============================================================
+# Tasks
+# ============================================================
+
+def build_tasks(data: Any) -> list[tuple[str, Any]]:
+    tasks: list[tuple[str, Any]] = []
+
+    for category in iter_categories(data):
+        tasks.append(
+            ("category", category)
+        )
+
+    for category, subcategory in iter_subcategories(data):
+        tasks.append(
+            (
+                "subcategory",
+                (category, subcategory),
+            )
+        )
+
+    for category, subcategory, entity in iter_entities(data):
+        tasks.append(
+            (
+                "entity",
+                (category, subcategory, entity),
+            )
+        )
+
+    return tasks
+
+
+async def process_task(
+    task_type: str,
+    payload: Any,
+) -> None:
+    if task_type == "category":
+        await process_category(payload)
+
+    elif task_type == "subcategory":
+        category, subcategory = payload
+        await process_subcategory(
+            category,
+            subcategory,
+        )
+
+    elif task_type == "entity":
+        category, subcategory, entity = payload
+        await process_entity(
+            category,
+            subcategory,
+            entity,
+        )
+
+    else:
+        raise ValueError(
+            f"Unknown task type: {task_type}"
+        )
+
+
+# ============================================================
+# Main pipeline
+# ============================================================
+
+async def generate_all_real_images(
+    data: Any,
+) -> None:
+    """
+    Main entry point for WordZoo's main.py.
+
+    IMPORTANT:
+    Images are generated sequentially because the GPU has to
+    process one 1024x1024 Z-Image-Turbo job at a time.
+    """
+    check_comfyui()
+
+    # Validate workflow before starting thousands of jobs.
+    load_workflow()
+
+    tasks = build_tasks(data)
+
+    progress.reset(len(tasks))
+
+    success(
+        f"Need generate {len(tasks)} WordZoo images with "
+        "Z-Image-Turbo."
+    )
+
+    for index, (task_type, payload) in enumerate(tasks, start=1):
+        print(
+            f"\n[WordZoo] "
+            f"{index}/{len(tasks)}"
+        )
+
+        # Sequential by design: do NOT asyncio.gather() these.
+        await process_task(
+            task_type,
+            payload,
+        )
+
+    success("WordZoo image generation completed.")
+
+
+# ============================================================
+# Standalone execution
+# ============================================================
+
+if __name__ == "__main__":
+    from json_utils import (
+        load_json,
+        save_json,
+    )
+
+    data = load_json()
+
+    asyncio.run(
+        generate_all_real_images(data)
+    )
+
+    save_json(data)
+
+    success("JSON updated.")
