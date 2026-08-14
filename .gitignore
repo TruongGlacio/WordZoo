@@ -25,5 +25,8 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
-/mobile/scripts/wordzoo_generator/scripts/wordzoo
-/mobile/scripts/wordzoo_generator/scripts/wordzoo1
+/mobile/scripts/wordzoo_generator/scripts/wordzoo/animals
+/mobile/scripts/wordzoo_generator/scripts/wordzoo/basics
+/mobile/scripts/wordzoo_generator/scripts/wordzoo/human_relations
+/mobile/scripts/wordzoo_generator/scripts/wordzoo/plants
+/mobile/scripts/wordzoo_generator/scripts/wordzoo/vehicles

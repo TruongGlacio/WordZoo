@@ -96,7 +96,7 @@ BASE_STYLE = (
 
 SESSION = requests.Session()
 
-
+BASE_WORKFLOW: dict[str, Any] | None = None
 def check_comfyui() -> None:
     """Fail early with a useful message if ComfyUI is not running."""
     try:
@@ -467,23 +467,57 @@ async def generate_one_image(
     output_file: Path,
     display_name: str,
 ) -> bool:
+
+    global BASE_WORKFLOW
+
+    # --------------------------------------------------------
+    # Skip if image already exists
+    # --------------------------------------------------------
+
     if file_exists(output_file):
-        print(f"[SKIP] {display_name}: {output_file}")
+
+        print(
+            f"[SKIP] {display_name}: {output_file}"
+        )
+
         return True
 
+    # --------------------------------------------------------
+    # Load workflow only once
+    # --------------------------------------------------------
+
+    if BASE_WORKFLOW is None:
+
+        BASE_WORKFLOW = load_workflow()
+
+    # --------------------------------------------------------
+    # Build prompt
+    # --------------------------------------------------------
+
     if entity is not None:
+
         prompt = build_entity_prompt(
             category,
             subcategory,
             entity,
         )
+
     elif subcategory is not None:
+
         prompt = build_subcategory_prompt(
             category,
             subcategory,
         )
+
     else:
-        prompt = build_category_prompt(category)
+
+        prompt = build_category_prompt(
+            category
+        )
+
+    # --------------------------------------------------------
+    # Seed
+    # --------------------------------------------------------
 
     seed = make_seed(
         category,
@@ -491,15 +525,21 @@ async def generate_one_image(
         entity,
     )
 
-    base_workflow = load_workflow()
+    # --------------------------------------------------------
+    # Filename
+    # --------------------------------------------------------
 
     filename_prefix = (
         "wordzoo/"
         + safe_prefix(display_name)
     )
 
+    # --------------------------------------------------------
+    # Create workflow
+    # --------------------------------------------------------
+
     workflow = prepare_workflow(
-        base_workflow=base_workflow,
+        base_workflow=BASE_WORKFLOW,
         prompt=prompt,
         seed=seed,
         filename_prefix=filename_prefix,
@@ -507,14 +547,28 @@ async def generate_one_image(
 
     print()
     print("=" * 70)
-    print(f"Generating: {display_name}")
-    print(f"Prompt: {prompt}")
-    print(f"Seed: {seed}")
-    print(f"Output: {output_file}")
+    print(
+        f"Generating: {display_name}"
+    )
+    print(
+        f"Seed: {seed}"
+    )
+    print(
+        f"Output: {output_file}"
+    )
     print("=" * 70)
 
+    prompt_id = None
+
     try:
-        client_id = str(uuid.uuid4())
+
+        # ----------------------------------------------------
+        # Queue
+        # ----------------------------------------------------
+
+        client_id = str(
+            uuid.uuid4()
+        )
 
         prompt_id = await asyncio.to_thread(
             queue_prompt,
@@ -522,12 +576,31 @@ async def generate_one_image(
             client_id,
         )
 
-        print(f"[ComfyUI] queued prompt_id={prompt_id}")
+        print(
+            f"[ComfyUI] queued "
+            f"prompt_id={prompt_id}"
+        )
+
+        # ----------------------------------------------------
+        # IMPORTANT:
+        # Release local workflow reference as soon as it
+        # has been sent to ComfyUI.
+        # ----------------------------------------------------
+
+        del workflow
+
+        # ----------------------------------------------------
+        # Wait
+        # ----------------------------------------------------
 
         history = await asyncio.to_thread(
             wait_for_history,
             prompt_id,
         )
+
+        # ----------------------------------------------------
+        # Download image
+        # ----------------------------------------------------
 
         await asyncio.to_thread(
             download_generated_image,
@@ -535,21 +608,55 @@ async def generate_one_image(
             output_file,
         )
 
-        if not file_exists(output_file):
+        # ----------------------------------------------------
+        # Release history immediately
+        # ----------------------------------------------------
+
+        del history
+
+        # ----------------------------------------------------
+        # Verify output
+        # ----------------------------------------------------
+
+        if not file_exists(
+            output_file
+        ):
+
             raise RuntimeError(
-                f"Image was generated but file does not exist: "
+                "Image was generated but "
+                "output file does not exist: "
                 f"{output_file}"
             )
+
+        print(
+            f"[OK] Generated: "
+            f"{display_name}"
+        )
 
         return True
 
     except Exception as exc:
+
         warning(
-            f"Generate failed: {display_name}: {exc}"
+            f"Generate failed: "
+            f"{display_name}: {exc}"
         )
+
         return False
 
+    finally:
 
+        # ----------------------------------------------------
+        # Make sure large local objects are released.
+        # ----------------------------------------------------
+
+        if "workflow" in locals():
+
+            del workflow
+
+        if "history" in locals():
+
+            del history
 # ============================================================
 # Category
 # ============================================================
@@ -716,13 +823,15 @@ async def generate_all_real_images(
     """
     Main entry point for WordZoo's main.py.
 
-    IMPORTANT:
-    Images are generated sequentially because the GPU has to
-    process one 1024x1024 Z-Image-Turbo job at a time.
+    Images are generated sequentially.
+
+    After all images are generated, ask ComfyUI to unload
+    all models and release memory without shutting down ComfyUI.
     """
+
     check_comfyui()
 
-    # Validate workflow before starting thousands of jobs.
+    # Validate workflow before starting.
     load_workflow()
 
     tasks = build_tasks(data)
@@ -734,21 +843,69 @@ async def generate_all_real_images(
         "Z-Image-Turbo."
     )
 
-    for index, (task_type, payload) in enumerate(tasks, start=1):
-        print(
-            f"\n[WordZoo] "
-            f"{index}/{len(tasks)}"
+    try:
+        for index, (task_type, payload) in enumerate(
+            tasks,
+            start=1,
+        ):
+            print(
+                f"\n[WordZoo] "
+                f"{index}/{len(tasks)}"
+            )
+
+            # IMPORTANT:
+            # Generate only one image at a time.
+            await process_task(
+                task_type,
+                payload,
+            )
+
+    finally:
+        # ====================================================
+        # IMPORTANT:
+        # Release ComfyUI memory after generation.
+        # ComfyUI remains running.
+        # ====================================================
+
+        print()
+        print("=" * 70)
+        print("Releasing ComfyUI memory...")
+        print("=" * 70)
+
+        await asyncio.to_thread(
+            free_comfyui_memory
         )
 
-        # Sequential by design: do NOT asyncio.gather() these.
-        await process_task(
-            task_type,
-            payload,
+        print()
+        print("[ComfyUI] Memory cleanup requested.")
+
+    success(
+        "WordZoo image generation completed."
+    )
+def free_comfyui_memory() -> None:
+    """
+    Ask ComfyUI to unload all loaded models and free memory.
+
+    This keeps ComfyUI running but releases model memory from RAM/VRAM.
+    """
+    try:
+        response = SESSION.post(
+            f"{COMFYUI_URL}/free",
+            json={
+                "unload_models": True,
+                "free_memory": True,
+            },
+            timeout=30,
         )
 
-    success("WordZoo image generation completed.")
+        response.raise_for_status()
 
+        print("[ComfyUI] Models unloaded and memory cleanup requested.")
 
+    except Exception as exc:
+        warning(
+            f"[ComfyUI] Failed to free memory: {exc}"
+        )
 # ============================================================
 # Standalone execution
 # ============================================================

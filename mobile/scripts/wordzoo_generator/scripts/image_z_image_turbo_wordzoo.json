@@ -32,16 +32,6 @@
       "title": "Load VAE"
     }
   },
-  "57:28": {
-    "inputs": {
-      "unet_name": "z_image_turbo_bf16.safetensors",
-      "weight_dtype": "default"
-    },
-    "class_type": "UNETLoader",
-    "_meta": {
-      "title": "Load Diffusion Model"
-    }
-  },
   "57:13": {
     "inputs": {
       "width": 1024,
@@ -51,6 +41,16 @@
     "class_type": "EmptySD3LatentImage",
     "_meta": {
       "title": "EmptySD3LatentImage"
+    }
+  },
+  "57:28": {
+    "inputs": {
+      "unet_name": "z_image_turbo_fp8_e4m3fn.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
     }
   },
   "57:27": {
@@ -93,7 +93,7 @@
   },
   "57:3": {
     "inputs": {
-      "seed": 268121808618619,
+      "seed": 329225626625348,
       "steps": 8,
       "cfg": 1,
       "sampler_name": "res_multistep",
