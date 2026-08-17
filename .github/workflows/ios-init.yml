@@ -8,9 +8,15 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      # ---------------------------------------------------------
+      # Checkout
+      # ---------------------------------------------------------
       - name: Checkout
         uses: actions/checkout@v5
 
+      # ---------------------------------------------------------
+      # Flutter
+      # ---------------------------------------------------------
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -67,6 +73,18 @@ jobs:
             -k "github-actions" \
             "$KEYCHAIN_PATH"
 
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
+
+      # ---------------------------------------------------------
+      # Verify signing identity
+      # ---------------------------------------------------------
+      - name: Get signing identity
+        run: |
+          security find-identity \
+            -v \
+            -p codesigning \
+            "$RUNNER_TEMP/wordzoo-build.keychain-db"
+
       # ---------------------------------------------------------
       # Install provisioning profile
       # ---------------------------------------------------------
@@ -96,28 +114,108 @@ jobs:
             -c "Print :UUID" \
             "$RUNNER_TEMP/profile.plist")
 
-          BUNDLE_ID=$(/usr/libexec/PlistBuddy \
+          PROFILE_APP_ID=$(/usr/libexec/PlistBuddy \
             -c "Print :Entitlements:application-identifier" \
             "$RUNNER_TEMP/profile.plist")
 
-          echo "Profile Name: $PROFILE_NAME"
-          echo "Profile UUID: $PROFILE_UUID"
-          echo "Application Identifier: $BUNDLE_ID"
+          PROFILE_TEAM_ID=$(/usr/libexec/PlistBuddy \
+            -c "Print :Entitlements:com.apple.developer.team-identifier" \
+            "$RUNNER_TEMP/profile.plist")
+
+          echo "======================================"
+          echo "Provisioning Profile"
+          echo "Name: $PROFILE_NAME"
+          echo "UUID: $PROFILE_UUID"
+          echo "Application ID: $PROFILE_APP_ID"
+          echo "Team ID: $PROFILE_TEAM_ID"
+          echo "======================================"
 
           echo "PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
           echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
 
       # ---------------------------------------------------------
-      # Get signing information
+      # Verify Bundle ID and Team ID
       # ---------------------------------------------------------
-      - name: Get signing identity
+      - name: Verify signing configuration
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
         run: |
-          security find-identity \
-            -v \
-            -p codesigning \
-            "$RUNNER_TEMP/wordzoo-build.keychain-db"
+          echo "Expected Team ID: $TEAM_ID"
+          echo "Profile Name: $PROFILE_NAME"
+          echo "Profile UUID: $PROFILE_UUID"
 
-            - name: Create ExportOptions.plist
+          if [ -z "$PROFILE_NAME" ]; then
+            echo "ERROR: PROFILE_NAME is empty"
+            exit 1
+          fi
+
+          if [ -z "$PROFILE_UUID" ]; then
+            echo "ERROR: PROFILE_UUID is empty"
+            exit 1
+          fi
+
+      # ---------------------------------------------------------
+      # Configure Xcode signing
+      # ---------------------------------------------------------
+      - name: Configure Xcode signing
+        working-directory: mobile
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          python3 <<'PY'
+          import os
+          from pathlib import Path
+
+          path = Path("ios/Runner.xcodeproj/project.pbxproj")
+          text = path.read_text()
+
+          team_id = os.environ["TEAM_ID"]
+          profile_name = os.environ["PROFILE_NAME"]
+
+          # Runner target only.
+          # We modify the signing settings used by the application target.
+          text = text.replace(
+              'CODE_SIGN_STYLE = Automatic;',
+              'CODE_SIGN_STYLE = Manual;'
+          )
+
+          # Add signing settings to Runner configurations where they
+          # are not already present.
+          lines = text.splitlines()
+
+          output = []
+
+          for line in lines:
+              output.append(line)
+
+              stripped = line.strip()
+
+              if stripped == 'CODE_SIGN_STYLE = Manual;':
+                  indent = line[:len(line) - len(line.lstrip())]
+
+                  output.append(
+                      f'{indent}DEVELOPMENT_TEAM = {team_id};'
+                  )
+                  output.append(
+                      f'{indent}CODE_SIGN_IDENTITY = "Apple Distribution";'
+                  )
+                  output.append(
+                      f'{indent}PROVISIONING_PROFILE_SPECIFIER = "{profile_name}";'
+                  )
+
+          path.write_text("\n".join(output) + "\n")
+
+          print("Xcode signing configuration updated.")
+          PY
+
+          grep -n \
+            -E "CODE_SIGN_STYLE|DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER" \
+            ios/Runner.xcodeproj/project.pbxproj
+
+      # ---------------------------------------------------------
+      # Create ExportOptions.plist
+      # ---------------------------------------------------------
+      - name: Create ExportOptions.plist
         working-directory: mobile
         env:
           TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
@@ -157,20 +255,21 @@ jobs:
           EOF
 
           cat ios/ExportOptions.plist
+
       # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build iOS IPA
         working-directory: mobile
         run: |
-            flutter build ipa \
-              --release \
-              --export-options-plist=ios/ExportOptions.plist \
-              --build-name=1.0.0 \
-              --build-number=${GITHUB_RUN_NUMBER}
+          flutter build ipa \
+            --release \
+            --export-options-plist=ios/ExportOptions.plist \
+            --build-name=1.0.0 \
+            --build-number=${GITHUB_RUN_NUMBER}
 
       # ---------------------------------------------------------
-      # Upload IPA as GitHub artifact
+      # Upload IPA artifact
       # ---------------------------------------------------------
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
@@ -187,10 +286,10 @@ jobs:
           APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID_1 }}
           APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
         run: |
-          mkdir -p "$RUNNER_TEMP/private_keys"
+          mkdir -p "$HOME/.appstoreconnect/private_keys"
 
           printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" \
-            > "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+            > "$HOME/.appstoreconnect/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
 
           xcrun altool \
             --upload-app \
