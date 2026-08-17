@@ -280,9 +280,6 @@ jobs:
             -showBuildSettings \
           | grep -E \
             "CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|DEVELOPMENT_TEAM|PROVISIONING_PROFILE_SPECIFIER|PRODUCT_BUNDLE_IDENTIFIER"
-            
-          pod update
-          pod install --repo-update
       # =========================================================
       # 9. Archive
       # =========================================================
@@ -297,7 +294,9 @@ jobs:
           echo "TEAM_ID=$TEAM_ID"
           echo "PROFILE_NAME=$PROFILE_NAME"
           echo "PROFILE_UUID=$PROFILE_UUID"
-
+          
+          pod update
+          pod install --repo-update
           xcodebuild \
             -workspace ios/Runner.xcworkspace \
             -scheme Runner \
