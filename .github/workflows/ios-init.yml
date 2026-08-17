@@ -355,20 +355,105 @@ jobs:
           echo "=== CODE SIGNING IDENTITIES ==="
           security find-identity -v -p codesigning
       # ---------------------------------------------------------
+      # Configure Flutter/Xcode signing
+      # ---------------------------------------------------------
+      - name: Configure Flutter/Xcode signing
+        working-directory: mobile
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          set -e
+
+          echo "Team ID: $TEAM_ID"
+          echo "Profile: $PROFILE_NAME"
+
+          # Force Flutter project to use manual distribution signing
+          python3 <<'PY'
+          import os
+          from pathlib import Path
+
+          path = Path("ios/Runner.xcodeproj/project.pbxproj")
+          text = path.read_text()
+
+          team = os.environ["TEAM_ID"]
+          profile = os.environ["PROFILE_NAME"]
+
+          # Only modify Runner application target configurations.
+          # Flutter generated projects normally have these settings.
+          text = text.replace(
+              'CODE_SIGN_STYLE = Automatic;',
+              'CODE_SIGN_STYLE = Manual;'
+          )
+
+          # Add DEVELOPMENT_TEAM if missing in a build configuration.
+          lines = text.splitlines()
+          output = []
+
+          for line in lines:
+              output.append(line)
+
+              if line.strip() == 'CODE_SIGN_STYLE = Manual;':
+                  indent = line[:len(line) - len(line.lstrip())]
+
+                  output.append(
+                      f'{indent}DEVELOPMENT_TEAM = {team};'
+                  )
+                  output.append(
+                      f'{indent}CODE_SIGN_IDENTITY = "Apple Distribution";'
+                  )
+                  output.append(
+                      f'{indent}PROVISIONING_PROFILE_SPECIFIER = "{profile}";'
+                  )
+
+          path.write_text("\n".join(output) + "\n")
+          PY
+
+          echo "=== Signing settings ==="
+
+          grep -n \
+            -E "CODE_SIGN_STYLE|DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER" \
+            ios/Runner.xcodeproj/project.pbxproj
+
+      # ---------------------------------------------------------
+      # Inspect Xcode project signing
+      # ---------------------------------------------------------
+      - name: Inspect Xcode project signing
+        working-directory: mobile
+        run: |
+          echo "=== Bundle identifiers ==="
+          grep -n "PRODUCT_BUNDLE_IDENTIFIER" ios/Runner.xcodeproj/project.pbxproj
+
+          echo ""
+          echo "=== Development Team ==="
+          grep -n "DEVELOPMENT_TEAM" ios/Runner.xcodeproj/project.pbxproj || true
+
+          echo ""
+          echo "=== Code Sign Identity ==="
+          grep -n "CODE_SIGN_IDENTITY" ios/Runner.xcodeproj/project.pbxproj || true
+
+          echo ""
+          echo "=== Code Sign Style ==="
+          grep -n "CODE_SIGN_STYLE" ios/Runner.xcodeproj/project.pbxproj || true
+
+          echo ""
+          echo "=== Provisioning Profile ==="
+          grep -n "PROVISIONING_PROFILE" ios/Runner.xcodeproj/project.pbxproj || true
+      # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build iOS IPA
         working-directory: mobile
         env:
-          DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
-          CODE_SIGN_IDENTITY: "Apple Distribution"
-          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROFILE_NAME }}
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
         run: |
+          set -e
+
           flutter build ipa \
             --release \
             --export-options-plist=ios/ExportOptions.plist \
             --build-name=1.0.0 \
-            --build-number=${GITHUB_RUN_NUMBER}
+            --build-number=${GITHUB_RUN_NUMBER} \
+            --verbose
 
       # ---------------------------------------------------------
       # Upload IPA artifact
