@@ -238,20 +238,6 @@ jobs:
           ls -la \
             "$HOME/Library/MobileDevice/Provisioning Profiles"
       # =========================================================
-      # Verify iOS project
-      # =========================================================
-      - name: Verify iOS project
-        working-directory: mobile
-        run: |
-          set -e
-
-          echo "=== iOS files ==="
-          ls -la ios
-
-          echo "=== Podfile ==="
-          test -f ios/Podfile
-          echo "Podfile exists"
-      # =========================================================
       # 8. Clean Flutter/Xcode build
       # =========================================================
       - name: Clean build
