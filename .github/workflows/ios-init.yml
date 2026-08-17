@@ -449,6 +449,14 @@ jobs:
 
           echo "IPA found."
 
+          echo "KEY_ID length: ${#APP_STORE_CONNECT_KEY_ID}"
+          echo "KEY_ID bytes:"
+          printf '%s' "$APP_STORE_CONNECT_KEY_ID" | od -An -tx1
+
+          echo "KEY_PATH:"
+          printf '%q\n' "$KEY_PATH"
+
+          ls -la "$KEY_DIR"
           xcrun altool \
             --upload-app \
             --type ios \
