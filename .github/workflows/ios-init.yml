@@ -39,7 +39,18 @@ jobs:
       - name: Flutter iOS precache
         working-directory: mobile
         run: flutter precache --ios
-
+      # =========================================================
+      # Create .env
+      # =========================================================
+      - name: Create .env
+        working-directory: mobile
+        env:
+          ENV_FILE: ${{ secrets.ENV_FILE }}
+        run: |
+          set -e
+          printf '%s\n' "$ENV_FILE" > .env
+          test -s .env
+          echo "Created mobile/.env"
       # =========================================================
       # 3. Install Apple Distribution Certificate
       # =========================================================
