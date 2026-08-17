@@ -10,13 +10,13 @@
     <key>signingStyle</key>
     <string>manual</string>
 
-    <key>bundleIdentifier</key>
-    <string>com.wordzoo.app.wordzoo</string>
+    <key>teamID</key>
+    <string>YOUR_TEAM_ID</string>
 
     <key>provisioningProfiles</key>
     <dict>
         <key>com.wordzoo.app.wordzoo</key>
-        <string>WordZoo AppStore Distribution</string>
+        <string>YOUR_PROFILE_NAME</string>
     </dict>
 
     <key>signingCertificate</key>

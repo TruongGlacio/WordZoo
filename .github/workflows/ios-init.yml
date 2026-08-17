@@ -88,15 +88,24 @@ jobs:
             -i "$PROFILE_PATH" \
             > "$RUNNER_TEMP/profile.plist"
 
-          echo "Provisioning profile:"
-          /usr/libexec/PlistBuddy \
+          PROFILE_NAME=$(/usr/libexec/PlistBuddy \
             -c "Print :Name" \
-            "$RUNNER_TEMP/profile.plist"
+            "$RUNNER_TEMP/profile.plist")
 
-          echo "Bundle ID:"
-          /usr/libexec/PlistBuddy \
+          PROFILE_UUID=$(/usr/libexec/PlistBuddy \
+            -c "Print :UUID" \
+            "$RUNNER_TEMP/profile.plist")
+
+          BUNDLE_ID=$(/usr/libexec/PlistBuddy \
             -c "Print :Entitlements:application-identifier" \
-            "$RUNNER_TEMP/profile.plist"
+            "$RUNNER_TEMP/profile.plist")
+
+          echo "Profile Name: $PROFILE_NAME"
+          echo "Profile UUID: $PROFILE_UUID"
+          echo "Application Identifier: $BUNDLE_ID"
+
+          echo "PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
+          echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
 
       # ---------------------------------------------------------
       # Get signing information
@@ -108,17 +117,57 @@ jobs:
             -p codesigning \
             "$RUNNER_TEMP/wordzoo-build.keychain-db"
 
+            - name: Create ExportOptions.plist
+        working-directory: mobile
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          cat > ios/ExportOptions.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+            "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+
+              <key>signingStyle</key>
+              <string>manual</string>
+
+              <key>teamID</key>
+              <string>${TEAM_ID}</string>
+
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>com.wordzoo.app.wordzoo</key>
+                  <string>${PROFILE_NAME}</string>
+              </dict>
+
+              <key>signingCertificate</key>
+              <string>Apple Distribution</string>
+
+              <key>stripSwiftSymbols</key>
+              <true/>
+
+              <key>uploadSymbols</key>
+              <true/>
+          </dict>
+          </plist>
+          EOF
+
+          cat ios/ExportOptions.plist
       # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build iOS IPA
         working-directory: mobile
-        env:
-          DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
         run: |
-          flutter build ipa \
-            --release \
-            --export-options-plist=ios/ExportOptions.plist
+            flutter build ipa \
+              --release \
+              --export-options-plist=ios/ExportOptions.plist \
+              --build-name=1.0.0 \
+              --build-number=${GITHUB_RUN_NUMBER}
 
       # ---------------------------------------------------------
       # Upload IPA as GitHub artifact
