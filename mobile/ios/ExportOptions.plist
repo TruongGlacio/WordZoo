@@ -15,7 +15,7 @@
 
     <key>provisioningProfiles</key>
     <dict>
-        <key>com.wordzoo.app.wordzoo</key>
+        <key>${BUNDLE_ID}</key>
         <string>${PROFILE_NAME}</string>
     </dict>
 
