@@ -39,10 +39,15 @@ jobs:
           IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
           IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
         run: |
+          set -e
+
           CERTIFICATE_PATH="$RUNNER_TEMP/WordZoo_Distribution.p12"
           KEYCHAIN_PATH="$RUNNER_TEMP/wordzoo-build.keychain-db"
 
           echo "$IOS_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+
+          echo "Checking certificate file..."
+          ls -lh "$CERTIFICATE_PATH"
 
           security create-keychain \
             -p "github-actions" \
@@ -56,6 +61,16 @@ jobs:
             -p "github-actions" \
             "$KEYCHAIN_PATH"
 
+          # Make this keychain available to codesign/Xcode
+          security list-keychain \
+            -d user \
+            -s "$KEYCHAIN_PATH" \
+            "$HOME/Library/Keychains/login.keychain-db"
+
+          security default-keychain \
+            -s "$KEYCHAIN_PATH"
+
+          # Import certificate + private key
           security import "$CERTIFICATE_PATH" \
             -P "$IOS_CERTIFICATE_PASSWORD" \
             -A \
@@ -63,17 +78,43 @@ jobs:
             -f pkcs12 \
             -k "$KEYCHAIN_PATH"
 
-          security list-keychain \
-            -d user \
-            -s "$KEYCHAIN_PATH"
-
+          # Allow Apple tools to access the private key
           security set-key-partition-list \
-            -S apple-tool:,apple: \
+            -S apple-tool:,apple:,codesign: \
             -s \
             -k "github-actions" \
             "$KEYCHAIN_PATH"
 
-          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
+          echo "======================================"
+          echo "KEYCHAIN CONTENTS"
+          echo "======================================"
+
+          security find-identity \
+            -v \
+            -p codesigning \
+            "$KEYCHAIN_PATH"
+
+          echo "======================================"
+          echo "CERTIFICATES"
+          echo "======================================"
+
+          security find-certificate \
+            -a \
+            -p \
+            "$KEYCHAIN_PATH" > "$RUNNER_TEMP/certificates.pem"
+
+          security find-certificate \
+            -a \
+            -Z \
+            "$KEYCHAIN_PATH"
+
+          echo "======================================"
+          echo "PRIVATE KEYS"
+          echo "======================================"
+
+          security find-key \
+            -a \
+            "$KEYCHAIN_PATH" || true
 
       # ---------------------------------------------------------
       # Verify signing identity
@@ -256,11 +297,54 @@ jobs:
 
           cat ios/ExportOptions.plist
 
+      - name: Verify signing configuration
+        working-directory: mobile
+        run: |
+          echo "=== Signing identities ==="
+
+          security find-identity \
+            -v \
+            -p codesigning \
+            "$RUNNER_TEMP/wordzoo-build.keychain-db"
+
+          echo ""
+          echo "=== Provisioning profile ==="
+
+          ls -la "$HOME/Library/MobileDevice/Provisioning Profiles"
+
+          security cms \
+            -D \
+            -i "$HOME/Library/MobileDevice/Provisioning Profiles/WordZoo.mobileprovision" \
+            > "$RUNNER_TEMP/profile-check.plist"
+
+          echo "Profile:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :Name" \
+            "$RUNNER_TEMP/profile-check.plist"
+
+          echo "UUID:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :UUID" \
+            "$RUNNER_TEMP/profile-check.plist"
+
+          echo "Application ID:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :Entitlements:application-identifier" \
+            "$RUNNER_TEMP/profile-check.plist"
+
+          echo "Team ID:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :Entitlements:com.apple.developer.team-identifier" \
+            "$RUNNER_TEMP/profile-check.plist"
       # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build iOS IPA
         working-directory: mobile
+        env:
+          DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+          CODE_SIGN_IDENTITY: "Apple Distribution"
+          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROFILE_NAME }}
         run: |
           flutter build ipa \
             --release \
