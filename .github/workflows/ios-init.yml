@@ -46,8 +46,7 @@ jobs:
 
           echo "$IOS_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
 
-          echo "Checking certificate file..."
-          ls -lh "$CERTIFICATE_PATH"
+          echo "Creating keychain..."
 
           security create-keychain \
             -p "github-actions" \
@@ -61,16 +60,8 @@ jobs:
             -p "github-actions" \
             "$KEYCHAIN_PATH"
 
-          # Make this keychain available to codesign/Xcode
-          security list-keychain \
-            -d user \
-            -s "$KEYCHAIN_PATH" \
-            "$HOME/Library/Keychains/login.keychain-db"
+          echo "Importing certificate..."
 
-          security default-keychain \
-            -s "$KEYCHAIN_PATH"
-
-          # Import certificate + private key
           security import "$CERTIFICATE_PATH" \
             -P "$IOS_CERTIFICATE_PASSWORD" \
             -A \
@@ -78,15 +69,47 @@ jobs:
             -f pkcs12 \
             -k "$KEYCHAIN_PATH"
 
-          # Allow Apple tools to access the private key
+          echo "Configuring keychain..."
+
           security set-key-partition-list \
             -S apple-tool:,apple:,codesign: \
             -s \
             -k "github-actions" \
             "$KEYCHAIN_PATH"
 
+          # IMPORTANT:
+          # Make the custom keychain visible to Flutter/Xcode
+          security list-keychain \
+            -d user \
+            -s "$KEYCHAIN_PATH" \
+               "$HOME/Library/Keychains/login.keychain-db"
+
+          # Make it the default keychain
+          security default-keychain \
+            -s "$KEYCHAIN_PATH"
+
           echo "======================================"
-          echo "KEYCHAIN CONTENTS"
+          echo "Default keychain"
+          echo "======================================"
+
+          security default-keychain
+
+          echo "======================================"
+          echo "Keychain search list"
+          echo "======================================"
+
+          security list-keychain
+
+          echo "======================================"
+          echo "Code signing identities"
+          echo "======================================"
+
+          security find-identity \
+            -v \
+            -p codesigning
+
+          echo "======================================"
+          echo "Direct keychain check"
           echo "======================================"
 
           security find-identity \
@@ -94,27 +117,7 @@ jobs:
             -p codesigning \
             "$KEYCHAIN_PATH"
 
-          echo "======================================"
-          echo "CERTIFICATES"
-          echo "======================================"
-
-          security find-certificate \
-            -a \
-            -p \
-            "$KEYCHAIN_PATH" > "$RUNNER_TEMP/certificates.pem"
-
-          security find-certificate \
-            -a \
-            -Z \
-            "$KEYCHAIN_PATH"
-
-          echo "======================================"
-          echo "PRIVATE KEYS"
-          echo "======================================"
-
-          security find-key \
-            -a \
-            "$KEYCHAIN_PATH" || true
+          echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
 
       # ---------------------------------------------------------
       # Verify signing identity
@@ -336,6 +339,21 @@ jobs:
           /usr/libexec/PlistBuddy \
             -c "Print :Entitlements:com.apple.developer.team-identifier" \
             "$RUNNER_TEMP/profile-check.plist"
+      # ---------------------------------------------------------
+      # Verify Flutter signing environment
+      # ---------------------------------------------------------
+      - name: Verify Flutter signing environment
+        run: |
+          echo "=== DEFAULT KEYCHAIN ==="
+          security default-keychain
+
+          echo ""
+          echo "=== KEYCHAIN SEARCH LIST ==="
+          security list-keychain
+
+          echo ""
+          echo "=== CODE SIGNING IDENTITIES ==="
+          security find-identity -v -p codesigning
       # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
