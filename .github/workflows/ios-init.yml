@@ -233,8 +233,21 @@ jobs:
       - name: Clean build
         working-directory: mobile
         run: |
+          set -e
+
           flutter clean
+
+          rm -rf ios/Pods
+          rm -rf ios/.symlinks
+          rm -rf ios/Flutter/ephemeral
+          rm -rf ~/Library/Developer/Xcode/DerivedData/*
+
           flutter pub get
+          flutter precache --ios
+
+          cd ios
+          pod deintegrate || true
+          pod install --repo-update
 
       # =========================================================
       # Verify final Runner signing
