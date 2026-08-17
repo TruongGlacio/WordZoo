@@ -299,6 +299,7 @@ jobs:
             -configuration Release \
             -sdk iphoneos \
             -archivePath "$RUNNER_TEMP/WordZoo.xcarchive" \
+            IPHONEOS_DEPLOYMENT_TARGET=15.0 \
             archive
 
       # =========================================================
