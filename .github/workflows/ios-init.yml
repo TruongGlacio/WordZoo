@@ -299,12 +299,12 @@ jobs:
 
 
           xcodebuild \
-            -workspace ios/Runner.xcworkspace \
+            -workspace Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -sdk iphoneos \
             -archivePath "$RUNNER_TEMP/WordZoo.xcarchive" \
-            -xcconfig ios/Flutter/CIRelease.xcconfig \
+            -xcconfig Flutter/CIRelease.xcconfig \
             IPHONEOS_DEPLOYMENT_TARGET=15.0 \
             archive
 
