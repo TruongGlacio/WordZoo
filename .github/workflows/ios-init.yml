@@ -439,6 +439,40 @@ jobs:
           echo "=== Provisioning Profile ==="
           grep -n "PROVISIONING_PROFILE" ios/Runner.xcodeproj/project.pbxproj || true
       # ---------------------------------------------------------
+      # Configure Flutter signing
+      # ---------------------------------------------------------
+      - name: Configure Flutter signing
+        working-directory: mobile
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          set -e
+
+          python3 <<'PY'
+          from pathlib import Path
+          import os
+
+          path = Path("ios/Runner.xcodeproj/project.pbxproj")
+          text = path.read_text()
+
+          team = os.environ["TEAM_ID"]
+
+          text = text.replace(
+              "CODE_SIGN_STYLE = Automatic;",
+              "CODE_SIGN_STYLE = Manual;"
+          )
+
+          text = text.replace(
+              "DEVELOPMENT_TEAM = ;",
+              f"DEVELOPMENT_TEAM = {team};"
+          )
+
+          path.write_text(text)
+          PY
+
+          echo "=== DEVELOPMENT_TEAM ==="
+          grep -n "DEVELOPMENT_TEAM" ios/Runner.xcodeproj/project.pbxproj || true
+      # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build Flutter iOS
