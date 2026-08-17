@@ -393,39 +393,65 @@ jobs:
           set -euo pipefail
 
           KEY_DIR="$RUNNER_TEMP/private_keys"
-          KEY_PATH="$KEY_DIR/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
-
           mkdir -p "$KEY_DIR"
 
-          if [ -z "$APP_STORE_CONNECT_KEY_ID" ]; then
+          if [ -z "${APP_STORE_CONNECT_KEY_ID:-}" ]; then
             echo "ERROR: APP_STORE_CONNECT_KEY_ID is empty"
             exit 1
           fi
 
-          if [ -z "$APP_STORE_CONNECT_ISSUER_ID" ]; then
+          if [ -z "${APP_STORE_CONNECT_ISSUER_ID:-}" ]; then
             echo "ERROR: APP_STORE_CONNECT_ISSUER_ID is empty"
             exit 1
           fi
 
-          if [ -z "$APP_STORE_CONNECT_PRIVATE_KEY" ]; then
+          if [ -z "${APP_STORE_CONNECT_PRIVATE_KEY:-}" ]; then
             echo "ERROR: APP_STORE_CONNECT_PRIVATE_KEY is empty"
             exit 1
           fi
+
+          KEY_PATH="$KEY_DIR/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+
+          echo "Creating App Store Connect API key..."
 
           printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" > "$KEY_PATH"
 
           chmod 600 "$KEY_PATH"
 
-          echo "API key file created:"
-          ls -l "$KEY_PATH"
+          echo "Checking generated key file..."
 
-          test -s "$KEY_PATH"
+          if [ ! -f "$KEY_PATH" ]; then
+            echo "ERROR: API key file was not created"
+            exit 1
+          fi
 
-          echo "Uploading IPA..."
+          echo "API key file exists."
+
+          # Check PEM structure without exposing private key
+          if ! grep -q "BEGIN PRIVATE KEY" "$KEY_PATH"; then
+            echo "ERROR: Invalid .p8 private key format"
+            exit 1
+          fi
+
+          if ! grep -q "END PRIVATE KEY" "$KEY_PATH"; then
+            echo "ERROR: Invalid .p8 private key format"
+            exit 1
+          fi
+
+          echo "Private key format OK."
+
+          IPA_FILE=$(find "$RUNNER_TEMP/export" -maxdepth 1 -name "*.ipa" -print -quit)
+
+          if [ -z "${IPA_FILE:-}" ]; then
+            echo "ERROR: No IPA file found"
+            exit 1
+          fi
+
+          echo "IPA found."
 
           xcrun altool \
             --upload-app \
             --type ios \
-            --file "$RUNNER_TEMP/export"/*.ipa \
+            --file "$IPA_FILE" \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
