@@ -173,15 +173,9 @@ jobs:
         working-directory: mobile
         run: |
           set -e
+
           cat > ios/Flutter/CIRelease.xcconfig <<EOF
           #include "Generated.xcconfig"
-
-          CODE_SIGN_STYLE = Manual
-          DEVELOPMENT_TEAM = ${TEAM_ID}
-          CODE_SIGN_IDENTITY = Apple Distribution
-
-          CODE_SIGNING_ALLOWED = YES
-          CODE_SIGNING_REQUIRED = YES
           EOF
 
           echo "=== CIRelease.xcconfig ==="
@@ -190,6 +184,9 @@ jobs:
       # =========================================================
       # 6. Verify project signing configuration
       # =========================================================
+      # =========================================================
+      # 6. Verify Runner signing configuration
+      # =========================================================
       - name: Verify Runner signing configuration
         working-directory: mobile
         run: |
@@ -197,17 +194,13 @@ jobs:
 
           echo "=== RUNNER RELEASE SIGNING ==="
 
-          grep -n \
-            -E \
-            "CODE_SIGN_STYLE|DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER" \
-            ios/Runner.xcodeproj/project.pbxproj
-
-          echo ""
-          echo "=== BUNDLE ID ==="
-
-          grep -n \
-            "PRODUCT_BUNDLE_IDENTIFIER = com.wordzoo.app.wordzoo;" \
-            ios/Runner.xcodeproj/project.pbxproj
+          xcodebuild \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -showBuildSettings \
+            | grep -E \
+              "PRODUCT_BUNDLE_IDENTIFIER|CODE_SIGN_STYLE|DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER"
 
       # =========================================================
       # 7. Verify certificate + profile
@@ -244,6 +237,21 @@ jobs:
           flutter pub get
 
       # =========================================================
+      # Verify final Runner signing
+      # =========================================================
+      - name: Verify final Runner signing
+        working-directory: mobile
+        run: |
+          set -e
+
+          xcodebuild \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -showBuildSettings \
+          | grep -E \
+            "CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|DEVELOPMENT_TEAM|PROVISIONING_PROFILE_SPECIFIER|PRODUCT_BUNDLE_IDENTIFIER"
+      # =========================================================
       # 9. Archive
       # =========================================================
       - name: Archive iOS app
@@ -253,13 +261,17 @@ jobs:
 
           rm -rf "$RUNNER_TEMP/WordZoo.xcarchive"
 
+          echo "=== ARCHIVE SIGNING CONFIG ==="
+          echo "TEAM_ID=$TEAM_ID"
+          echo "PROFILE_NAME=$PROFILE_NAME"
+          echo "PROFILE_UUID=$PROFILE_UUID"
+
           xcodebuild \
             -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -sdk iphoneos \
             -archivePath "$RUNNER_TEMP/WordZoo.xcarchive" \
-            -xcconfig ios/Flutter/CIRelease.xcconfig \
             archive
 
       # =========================================================
