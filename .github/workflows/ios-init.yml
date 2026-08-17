@@ -1,4 +1,4 @@
-name: WordZoo iOS
+name: Build iOS and Upload TestFlight
 
 on:
   workflow_dispatch:
@@ -6,10 +6,6 @@ on:
 jobs:
   build-ios:
     runs-on: macos-latest
-
-    defaults:
-      run:
-        working-directory: mobile
 
     steps:
       - name: Checkout
@@ -19,23 +15,137 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: stable
+          cache: true
 
       - name: Flutter version
+        working-directory: mobile
         run: flutter --version
 
-      - name: Flutter doctor
-        run: flutter doctor -v
-
-      - name: Generate iOS project files
-        run: flutter create --platforms=ios .
-
-      - name: Get dependencies
+      - name: Flutter pub get
+        working-directory: mobile
         run: flutter pub get
 
-      - name: Check iOS configuration
+      # ---------------------------------------------------------
+      # Install Apple Distribution certificate
+      # ---------------------------------------------------------
+      - name: Install signing certificate
+        env:
+          IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
+          IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
         run: |
-          ls -la ios/Flutter
-          test -f ios/Flutter/Release.xcconfig
+          CERTIFICATE_PATH="$RUNNER_TEMP/WordZoo_Distribution.p12"
+          KEYCHAIN_PATH="$RUNNER_TEMP/wordzoo-build.keychain-db"
 
-      - name: Build iOS
-        run: flutter build ios --release --no-codesign
+          echo "$IOS_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
+
+          security create-keychain \
+            -p "github-actions" \
+            "$KEYCHAIN_PATH"
+
+          security set-keychain-settings \
+            -lut 21600 \
+            "$KEYCHAIN_PATH"
+
+          security unlock-keychain \
+            -p "github-actions" \
+            "$KEYCHAIN_PATH"
+
+          security import "$CERTIFICATE_PATH" \
+            -P "$IOS_CERTIFICATE_PASSWORD" \
+            -A \
+            -t cert \
+            -f pkcs12 \
+            -k "$KEYCHAIN_PATH"
+
+          security list-keychain \
+            -d user \
+            -s "$KEYCHAIN_PATH"
+
+          security set-key-partition-list \
+            -S apple-tool:,apple: \
+            -s \
+            -k "github-actions" \
+            "$KEYCHAIN_PATH"
+
+      # ---------------------------------------------------------
+      # Install provisioning profile
+      # ---------------------------------------------------------
+      - name: Install provisioning profile
+        env:
+          IOS_PROVISIONING_PROFILE_BASE64: ${{ secrets.IOS_PROVISIONING_PROFILE_BASE64 }}
+        run: |
+          PROFILE_PATH="$RUNNER_TEMP/WordZoo.mobileprovision"
+
+          echo "$IOS_PROVISIONING_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
+
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+
+          cp "$PROFILE_PATH" \
+            "$HOME/Library/MobileDevice/Provisioning Profiles/WordZoo.mobileprovision"
+
+          security cms \
+            -D \
+            -i "$PROFILE_PATH" \
+            > "$RUNNER_TEMP/profile.plist"
+
+          echo "Provisioning profile:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :Name" \
+            "$RUNNER_TEMP/profile.plist"
+
+          echo "Bundle ID:"
+          /usr/libexec/PlistBuddy \
+            -c "Print :Entitlements:application-identifier" \
+            "$RUNNER_TEMP/profile.plist"
+
+      # ---------------------------------------------------------
+      # Get signing information
+      # ---------------------------------------------------------
+      - name: Get signing identity
+        run: |
+          security find-identity \
+            -v \
+            -p codesigning \
+            "$RUNNER_TEMP/wordzoo-build.keychain-db"
+
+      # ---------------------------------------------------------
+      # Build IPA
+      # ---------------------------------------------------------
+      - name: Build iOS IPA
+        working-directory: mobile
+        env:
+          DEVELOPMENT_TEAM: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          flutter build ipa \
+            --release \
+            --export-options-plist=ios/ExportOptions.plist
+
+      # ---------------------------------------------------------
+      # Upload IPA as GitHub artifact
+      # ---------------------------------------------------------
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WordZoo-iOS
+          path: mobile/build/ios/ipa/*.ipa
+
+      # ---------------------------------------------------------
+      # Upload to App Store Connect
+      # ---------------------------------------------------------
+      - name: Upload to TestFlight
+        env:
+          APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+          APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID_1 }}
+          APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/private_keys"
+
+          printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            > "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+
+          xcrun altool \
+            --upload-app \
+            --type ios \
+            --file mobile/build/ios/ipa/*.ipa \
+            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
+            --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
