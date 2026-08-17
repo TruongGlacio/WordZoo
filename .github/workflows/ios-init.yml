@@ -532,7 +532,36 @@ jobs:
         run: |
           flutter pub get
           flutter precache --ios
-          
+      # ---------------------------------------------------------
+      # Create CI signing xcconfig
+      # --------------------------------------------------------- 
+      - name: Create CI signing xcconfig
+        working-directory: mobile
+        env:
+          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+        run: |
+          cat > ios/Flutter/CIRelease.xcconfig <<EOF
+          #include "Generated.xcconfig"
+
+          CODE_SIGN_STYLE = Manual
+          DEVELOPMENT_TEAM = ${TEAM_ID}
+          CODE_SIGN_IDENTITY = Apple Distribution
+          PROVISIONING_PROFILE_SPECIFIER = ${PROFILE_NAME}
+          EOF
+
+          cat ios/Flutter/CIRelease.xcconfig
+
+      # ---------------------------------------------------------
+      # Inspect Runner build configurations
+      # ---------------------------------------------------------  
+      - name: Inspect Runner build configurations
+        working-directory: mobile
+        run: |
+          echo "=== RUNNER CONFIGURATION REFERENCES ==="
+          grep -n -B 8 -A 20 \
+            "PRODUCT_BUNDLE_IDENTIFIER = com.wordzoo.app.wordzoo;" \
+            ios/Runner.xcodeproj/project.pbxproj
+
       # ---------------------------------------------------------
       # Archive iOS app
       # ---------------------------------------------------------    
