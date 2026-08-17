@@ -261,6 +261,7 @@ jobs:
 
           echo "=== CocoaPods ==="
           cd ios
+          pod update
           pod install --repo-update
 
       # =========================================================
