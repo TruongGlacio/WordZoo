@@ -25,6 +25,7 @@ class $AssetsBackgroundGen {
   const $AssetsBackgroundGen();
 
   final AssetGenImage loginLandScape = const AssetGenImage('assets/background/Login_landScape.png');
+  final AssetGenImage loginLandScapeCopy = const AssetGenImage('assets/background/Login_landScape - Copy.png');
   final AssetGenImage loginUp = const AssetGenImage('assets/background/Login_up.png');
   final AssetGenImage animalsCategoryMap2k = const AssetGenImage('assets/background/animals_category_map_2k.png');
   final AssetGenImage entityList = const AssetGenImage('assets/background/entity_list.png');
@@ -147,6 +148,7 @@ class $AssetsIconsGen {
   const $AssetsIconsGen();
 
   final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
+  final AssetGenImage appIconCopy = const AssetGenImage('assets/icons/AppIcon - Copy.png');
   final AssetGenImage appIconForLaunch = const AssetGenImage('assets/icons/AppIconForLaunch.png');
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
   final AssetGenImage china = const AssetGenImage('assets/icons/china.png');
