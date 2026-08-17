@@ -7,7 +7,12 @@ jobs:
   build-ios:
     runs-on: macos-latest
 
+    env:
+      TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+      BUNDLE_ID: com.wordzoo.app.wordzoo
+
     steps:
+
       # =========================================================
       # 1. Checkout
       # =========================================================
@@ -31,10 +36,14 @@ jobs:
         working-directory: mobile
         run: flutter pub get
 
+      - name: Flutter iOS precache
+        working-directory: mobile
+        run: flutter precache --ios
+
       # =========================================================
       # 3. Install Apple Distribution Certificate
       # =========================================================
-      - name: Install signing certificate
+      - name: Install Apple Distribution certificate
         env:
           IOS_CERTIFICATE_BASE64: ${{ secrets.IOS_CERTIFICATE_BASE64 }}
           IOS_CERTIFICATE_PASSWORD: ${{ secrets.IOS_CERTIFICATE_PASSWORD }}
@@ -45,8 +54,6 @@ jobs:
           KEYCHAIN_PATH="$RUNNER_TEMP/wordzoo-build.keychain-db"
 
           echo "$IOS_CERTIFICATE_BASE64" | base64 --decode > "$CERTIFICATE_PATH"
-
-          echo "Creating temporary keychain..."
 
           security create-keychain \
             -p "github-actions" \
@@ -59,8 +66,6 @@ jobs:
           security unlock-keychain \
             -p "github-actions" \
             "$KEYCHAIN_PATH"
-
-          echo "Importing Apple Distribution certificate..."
 
           security import "$CERTIFICATE_PATH" \
             -P "$IOS_CERTIFICATE_PASSWORD" \
@@ -78,14 +83,13 @@ jobs:
           security list-keychain \
             -d user \
             -s "$KEYCHAIN_PATH" \
-            "$HOME/Library/Keychains/login.keychain-db"
+               "$HOME/Library/Keychains/login.keychain-db"
 
           security default-keychain \
             -s "$KEYCHAIN_PATH"
 
           echo "KEYCHAIN_PATH=$KEYCHAIN_PATH" >> "$GITHUB_ENV"
 
-          echo ""
           echo "=== CODE SIGNING IDENTITIES ==="
 
           security find-identity \
@@ -94,7 +98,7 @@ jobs:
             "$KEYCHAIN_PATH"
 
       # =========================================================
-      # 4. Install App Store Provisioning Profile
+      # 4. Install Provisioning Profile
       # =========================================================
       - name: Install provisioning profile
         env:
@@ -106,9 +110,8 @@ jobs:
 
           echo "$IOS_PROVISIONING_PROFILE_BASE64" | base64 --decode > "$PROFILE_PATH"
 
-          PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
-
-          mkdir -p "$PROFILE_DIR"
+          mkdir -p \
+            "$HOME/Library/MobileDevice/Provisioning Profiles"
 
           security cms \
             -D \
@@ -127,194 +130,120 @@ jobs:
               "$RUNNER_TEMP/profile.plist"
           )
 
-          PROFILE_APP_ID=$(
-            /usr/libexec/PlistBuddy \
-              -c "Print :Entitlements:application-identifier" \
-              "$RUNNER_TEMP/profile.plist"
-          )
-
           PROFILE_TEAM_ID=$(
             /usr/libexec/PlistBuddy \
               -c "Print :Entitlements:com.apple.developer.team-identifier" \
               "$RUNNER_TEMP/profile.plist"
           )
 
-          echo "Provisioning Profile:"
-          echo "  Name: $PROFILE_NAME"
-          echo "  UUID: $PROFILE_UUID"
-          echo "  App ID: $PROFILE_APP_ID"
-          echo "  Team ID: $PROFILE_TEAM_ID"
+          PROFILE_APP_ID=$(
+            /usr/libexec/PlistBuddy \
+              -c "Print :Entitlements:application-identifier" \
+              "$RUNNER_TEMP/profile.plist"
+          )
+
+          echo "=== PROVISIONING PROFILE ==="
+          echo "Name: $PROFILE_NAME"
+          echo "UUID: $PROFILE_UUID"
+          echo "Team ID: $PROFILE_TEAM_ID"
+          echo "Application ID: $PROFILE_APP_ID"
+
+          if [ "$PROFILE_TEAM_ID" != "$TEAM_ID" ]; then
+            echo "ERROR: Provisioning Profile Team ID does not match APPLE_DEVELOPMENT_TEAM_ID"
+            exit 1
+          fi
+
+          if [ "$PROFILE_APP_ID" != "$TEAM_ID.$BUNDLE_ID" ]; then
+            echo "ERROR: Provisioning Profile App ID does not match Bundle ID"
+            echo "Expected: $TEAM_ID.$BUNDLE_ID"
+            echo "Actual:   $PROFILE_APP_ID"
+            exit 1
+          fi
 
           cp "$PROFILE_PATH" \
-            "$PROFILE_DIR/$PROFILE_UUID.mobileprovision"
+            "$HOME/Library/MobileDevice/Provisioning Profiles/$PROFILE_UUID.mobileprovision"
 
           echo "PROFILE_NAME=$PROFILE_NAME" >> "$GITHUB_ENV"
           echo "PROFILE_UUID=$PROFILE_UUID" >> "$GITHUB_ENV"
-          echo "PROFILE_APP_ID=$PROFILE_APP_ID" >> "$GITHUB_ENV"
-          echo "PROFILE_TEAM_ID=$PROFILE_TEAM_ID" >> "$GITHUB_ENV"
 
       # =========================================================
-      # 5. Verify Apple Signing
+      # 5. Create CI xcconfig
       # =========================================================
-      - name: Verify Apple signing
-        env:
-          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
-        run: |
-          set -e
-
-          echo "========================================"
-          echo "Apple Signing Verification"
-          echo "========================================"
-
-          echo ""
-          echo "Expected Team ID:"
-          echo "$TEAM_ID"
-
-          echo ""
-          echo "Provisioning Profile:"
-          echo "$PROFILE_NAME"
-
-          echo ""
-          echo "Profile UUID:"
-          echo "$PROFILE_UUID"
-
-          echo ""
-          echo "Profile App ID:"
-          echo "$PROFILE_APP_ID"
-
-          echo ""
-          echo "Profile Team ID:"
-          echo "$PROFILE_TEAM_ID"
-
-          echo ""
-          echo "Code Signing Identity:"
-          security find-identity \
-            -v \
-            -p codesigning \
-            "$RUNNER_TEMP/wordzoo-build.keychain-db"
-
-          if [ "$PROFILE_TEAM_ID" != "$TEAM_ID" ]; then
-            echo ""
-            echo "ERROR: Provisioning Profile Team ID does not match Apple Team ID."
-            exit 1
-          fi
-
-          if [ "$PROFILE_APP_ID" != "$TEAM_ID.com.wordzoo.app.wordzoo" ]; then
-            echo ""
-            echo "ERROR: Provisioning Profile App ID does not match Bundle ID."
-            exit 1
-          fi
-
-          echo ""
-          echo "Apple signing configuration looks correct."
-
-      # =========================================================
-      # 6. Configure Runner Release Signing
-      # =========================================================
-      - name: Configure Runner Release signing
+      - name: Create CI signing xcconfig
         working-directory: mobile
-        env:
-          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
         run: |
           set -e
 
-          cat > ios/Flutter/Release.xcconfig <<EOF
+          cat > ios/Flutter/CIRelease.xcconfig <<EOF
           #include "Generated.xcconfig"
 
           CODE_SIGN_STYLE = Manual
           DEVELOPMENT_TEAM = ${TEAM_ID}
           CODE_SIGN_IDENTITY = Apple Distribution
           PROVISIONING_PROFILE_SPECIFIER = ${PROFILE_NAME}
+
+          CODE_SIGNING_ALLOWED = YES
+          CODE_SIGNING_REQUIRED = YES
           EOF
 
-          echo "========================================"
-          echo "ios/Flutter/Release.xcconfig"
-          echo "========================================"
-
-          cat ios/Flutter/Release.xcconfig
+          echo "=== CIRelease.xcconfig ==="
+          cat ios/Flutter/CIRelease.xcconfig
 
       # =========================================================
-      # 7. Verify Flutter iOS project
+      # 6. Verify project signing configuration
       # =========================================================
-      - name: Verify iOS project
+      - name: Verify Runner signing configuration
         working-directory: mobile
         run: |
           set -e
 
-          echo "========================================"
-          echo "Bundle IDs"
-          echo "========================================"
+          echo "=== RUNNER RELEASE SIGNING ==="
 
-          grep -n "PRODUCT_BUNDLE_IDENTIFIER" \
+          grep -n \
+            -E \
+            "CODE_SIGN_STYLE|DEVELOPMENT_TEAM|CODE_SIGN_IDENTITY|PROVISIONING_PROFILE_SPECIFIER" \
             ios/Runner.xcodeproj/project.pbxproj
 
           echo ""
-          echo "========================================"
-          echo "Release.xcconfig"
-          echo "========================================"
+          echo "=== BUNDLE ID ==="
 
-          cat ios/Flutter/Release.xcconfig
-
-          echo ""
-          echo "========================================"
-          echo "Release.xcconfig references"
-          echo "========================================"
-
-          grep -n -B 5 -A 5 \
-            "Release.xcconfig" \
-            ios/Runner.xcodeproj/project.pbxproj || true
+          grep -n \
+            "PRODUCT_BUNDLE_IDENTIFIER = com.wordzoo.app.wordzoo;" \
+            ios/Runner.xcodeproj/project.pbxproj
 
       # =========================================================
-      # 8. Create ExportOptions.plist
+      # 7. Verify certificate + profile
       # =========================================================
-      - name: Create ExportOptions.plist
-        working-directory: mobile
-        env:
-          TEAM_ID: ${{ secrets.APPLE_DEVELOPMENT_TEAM_ID }}
+      - name: Verify Apple signing
         run: |
           set -e
 
-          cat > ios/ExportOptions.plist <<EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-            "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          echo "=== KEYCHAIN ==="
 
-          <plist version="1.0">
-          <dict>
+          security default-keychain
 
-              <key>method</key>
-              <string>app-store</string>
+          echo ""
+          echo "=== IDENTITIES ==="
 
-              <key>signingStyle</key>
-              <string>manual</string>
+          security find-identity \
+            -v \
+            -p codesigning \
+            "$KEYCHAIN_PATH"
 
-              <key>teamID</key>
-              <string>${TEAM_ID}</string>
+          echo ""
+          echo "=== PROVISIONING PROFILES ==="
 
-              <key>signingCertificate</key>
-              <string>Apple Distribution</string>
+          ls -la \
+            "$HOME/Library/MobileDevice/Provisioning Profiles"
 
-              <key>provisioningProfiles</key>
-              <dict>
-                  <key>com.wordzoo.app.wordzoo</key>
-                  <string>${PROFILE_NAME}</string>
-              </dict>
-
-              <key>stripSwiftSymbols</key>
-              <true/>
-
-              <key>uploadSymbols</key>
-              <true/>
-
-          </dict>
-          </plist>
-          EOF
-
-          echo "========================================"
-          echo "ExportOptions.plist"
-          echo "========================================"
-
-          cat ios/ExportOptions.plist
+      # =========================================================
+      # 8. Clean Flutter/Xcode build
+      # =========================================================
+      - name: Clean build
+        working-directory: mobile
+        run: |
+          flutter clean
+          flutter pub get
 
       # =========================================================
       # 9. Archive
@@ -332,6 +261,7 @@ jobs:
             -configuration Release \
             -sdk iphoneos \
             -archivePath "$RUNNER_TEMP/WordZoo.xcarchive" \
+            -xcconfig ios/Flutter/CIRelease.xcconfig \
             DEVELOPMENT_TEAM="$TEAM_ID" \
             CODE_SIGN_STYLE=Manual \
             CODE_SIGN_IDENTITY="Apple Distribution" \
@@ -339,31 +269,71 @@ jobs:
             archive
 
       # =========================================================
-      # 10. Export IPA
+      # 10. Create ExportOptions.plist
       # =========================================================
-      - name: Export IPA
+      - name: Create ExportOptions.plist
         working-directory: mobile
         run: |
           set -e
 
+          cat > ios/ExportOptions.plist <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+            "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+          <plist version="1.0">
+          <dict>
+              <key>method</key>
+              <string>app-store</string>
+
+              <key>signingStyle</key>
+              <string>manual</string>
+
+              <key>teamID</key>
+              <string>${TEAM_ID}</string>
+
+              <key>signingCertificate</key>
+              <string>Apple Distribution</string>
+
+              <key>provisioningProfiles</key>
+              <dict>
+                  <key>${BUNDLE_ID}</key>
+                  <string>${PROFILE_NAME}</string>
+              </dict>
+
+              <key>stripSwiftSymbols</key>
+              <true/>
+
+              <key>uploadSymbols</key>
+              <true/>
+          </dict>
+          </plist>
+          EOF
+
+          echo "=== ExportOptions.plist ==="
+          cat ios/ExportOptions.plist
+
+      # =========================================================
+      # 11. Export IPA
+      # =========================================================
+      - name: Export IPA
+        run: |
+          set -e
+
           rm -rf "$RUNNER_TEMP/export"
-          mkdir -p "$RUNNER_TEMP/export"
 
           xcodebuild \
             -exportArchive \
             -archivePath "$RUNNER_TEMP/WordZoo.xcarchive" \
-            -exportOptionsPlist ios/ExportOptions.plist \
+            -exportOptionsPlist mobile/ios/ExportOptions.plist \
             -exportPath "$RUNNER_TEMP/export"
 
-          echo ""
-          echo "========================================"
-          echo "Exported files"
-          echo "========================================"
+          echo "=== EXPORTED FILES ==="
 
           ls -lah "$RUNNER_TEMP/export"
 
       # =========================================================
-      # 11. Upload IPA as GitHub Artifact
+      # 12. Upload IPA Artifact
       # =========================================================
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
@@ -372,7 +342,7 @@ jobs:
           path: ${{ runner.temp }}/export/*.ipa
 
       # =========================================================
-      # 12. Upload to TestFlight
+      # 13. Upload to TestFlight
       # =========================================================
       - name: Upload to TestFlight
         env:
@@ -382,23 +352,14 @@ jobs:
         run: |
           set -e
 
-          PRIVATE_KEY_DIR="$RUNNER_TEMP/private_keys"
-
-          mkdir -p "$PRIVATE_KEY_DIR"
+          mkdir -p "$RUNNER_TEMP/private_keys"
 
           printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" \
-            > "$PRIVATE_KEY_DIR/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
-
-          echo "Uploading IPA to App Store Connect..."
+            > "$RUNNER_TEMP/private_keys/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
 
           xcrun altool \
             --upload-app \
             --type ios \
-            --file "$RUNNER_TEMP/export/"*.ipa \
+            --file "$RUNNER_TEMP/export"/*.ipa \
             --apiKey "$APP_STORE_CONNECT_KEY_ID" \
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
-
-          echo ""
-          echo "========================================"
-          echo "Upload completed"
-          echo "========================================"
