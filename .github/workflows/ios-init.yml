@@ -473,6 +473,22 @@ jobs:
           echo "=== DEVELOPMENT_TEAM ==="
           grep -n "DEVELOPMENT_TEAM" ios/Runner.xcodeproj/project.pbxproj || true
       # ---------------------------------------------------------
+      # Check Xcode signing config
+      # ---------------------------------------------------------
+      - name: Check Xcode signing config
+        working-directory: mobile
+        run: |
+          echo "=== DEVELOPMENT TEAM ==="
+          grep -n "DEVELOPMENT_TEAM" ios/Runner.xcodeproj/project.pbxproj || true
+
+          echo ""
+          echo "=== CODE SIGN STYLE ==="
+          grep -n "CODE_SIGN_STYLE" ios/Runner.xcodeproj/project.pbxproj || true
+
+          echo ""
+          echo "=== BUNDLE ID ==="
+          grep -n "PRODUCT_BUNDLE_IDENTIFIER" ios/Runner.xcodeproj/project.pbxproj
+      # ---------------------------------------------------------
       # Build IPA
       # ---------------------------------------------------------
       - name: Build Flutter iOS
