@@ -237,9 +237,9 @@ jobs:
 
           ls -la \
             "$HOME/Library/MobileDevice/Provisioning Profiles"
-      # =========================================================
-      # 8. Clean Flutter/Xcode build
-      # =========================================================
+    # =========================================================
+    # 8. Clean Flutter/Xcode build
+    # =========================================================
       - name: Clean build
         working-directory: mobile
         run: |
@@ -256,9 +256,10 @@ jobs:
           flutter precache --ios
 
           echo "=== Check Podfile ==="
-          ls -la ios/Podfile
           test -f ios/Podfile
+          ls -la ios/Podfile
 
+          echo "=== CocoaPods ==="
           cd ios
           pod install --repo-update
 
