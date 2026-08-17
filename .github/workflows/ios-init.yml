@@ -26,8 +26,16 @@ jobs:
       - name: Flutter doctor
         run: flutter doctor -v
 
+      - name: Generate iOS project files
+        run: flutter create --platforms=ios .
+
       - name: Get dependencies
         run: flutter pub get
+
+      - name: Check iOS configuration
+        run: |
+          ls -la ios/Flutter
+          test -f ios/Flutter/Release.xcconfig
 
       - name: Build iOS
         run: flutter build ios --release --no-codesign
