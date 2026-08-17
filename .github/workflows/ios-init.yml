@@ -289,14 +289,14 @@ jobs:
           set -e
 
           rm -rf "$RUNNER_TEMP/WordZoo.xcarchive"
-
+          pod update
+          pod install --repo-update
           echo "=== ARCHIVE SIGNING CONFIG ==="
           echo "TEAM_ID=$TEAM_ID"
           echo "PROFILE_NAME=$PROFILE_NAME"
           echo "PROFILE_UUID=$PROFILE_UUID"
-          
-          pod update
-          pod install --repo-update
+
+
           xcodebuild \
             -workspace ios/Runner.xcworkspace \
             -scheme Runner \
