@@ -392,29 +392,34 @@ jobs:
         run: |
           set -euo pipefail
 
-          KEY_DIR="$RUNNER_TEMP/private_keys"
-          mkdir -p "$KEY_DIR"
+          KEY_ID="$(printf '%s' "$APP_STORE_CONNECT_KEY_ID" | tr -d '[:space:]')"
 
-          if [ -z "${APP_STORE_CONNECT_KEY_ID:-}" ]; then
+          if [ -z "$KEY_ID" ]; then
             echo "ERROR: APP_STORE_CONNECT_KEY_ID is empty"
             exit 1
           fi
 
-          if [ -z "${APP_STORE_CONNECT_ISSUER_ID:-}" ]; then
+          if [ -z "$APP_STORE_CONNECT_ISSUER_ID" ]; then
             echo "ERROR: APP_STORE_CONNECT_ISSUER_ID is empty"
             exit 1
           fi
 
-          if [ -z "${APP_STORE_CONNECT_PRIVATE_KEY:-}" ]; then
+          if [ -z "$APP_STORE_CONNECT_PRIVATE_KEY" ]; then
             echo "ERROR: APP_STORE_CONNECT_PRIVATE_KEY is empty"
             exit 1
           fi
 
-          KEY_PATH="$KEY_DIR/AuthKey_${APP_STORE_CONNECT_KEY_ID}.p8"
+          # altool searches here automatically
+          KEY_DIR="$HOME/private_keys"
+          mkdir -p "$KEY_DIR"
+
+          KEY_PATH="$KEY_DIR/AuthKey_${KEY_ID}.p8"
 
           echo "Creating App Store Connect API key..."
 
-          printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" > "$KEY_PATH"
+          printf '%s\n' "$APP_STORE_CONNECT_PRIVATE_KEY" \
+            | tr -d '\r' \
+            > "$KEY_PATH"
 
           chmod 600 "$KEY_PATH"
 
@@ -425,41 +430,35 @@ jobs:
             exit 1
           fi
 
-          echo "API key file exists."
-
-          # Check PEM structure without exposing private key
           if ! grep -q "BEGIN PRIVATE KEY" "$KEY_PATH"; then
-            echo "ERROR: Invalid .p8 private key format"
+            echo "ERROR: Invalid private key format"
             exit 1
           fi
 
           if ! grep -q "END PRIVATE KEY" "$KEY_PATH"; then
-            echo "ERROR: Invalid .p8 private key format"
+            echo "ERROR: Invalid private key format"
             exit 1
           fi
 
+          echo "API key file exists."
           echo "Private key format OK."
 
-          IPA_FILE=$(find "$RUNNER_TEMP/export" -maxdepth 1 -name "*.ipa" -print -quit)
+          IPA_FILE="$(find "$RUNNER_TEMP/export" -maxdepth 1 -name '*.ipa' -print -quit)"
 
-          if [ -z "${IPA_FILE:-}" ]; then
-            echo "ERROR: No IPA file found"
+          if [ -z "$IPA_FILE" ]; then
+            echo "ERROR: IPA not found"
             exit 1
           fi
 
           echo "IPA found."
 
-          echo "KEY_ID length: ${#APP_STORE_CONNECT_KEY_ID}"
-          echo "KEY_ID bytes:"
-          printf '%s' "$APP_STORE_CONNECT_KEY_ID" | od -An -tx1
-
-          echo "KEY_PATH:"
-          printf '%q\n' "$KEY_PATH"
-
+          echo "KEY_ID length: ${#KEY_ID}"
+          echo "KEY_PATH: $KEY_PATH"
           ls -la "$KEY_DIR"
+
           xcrun altool \
             --upload-app \
             --type ios \
             --file "$IPA_FILE" \
-            --apiKey "$APP_STORE_CONNECT_KEY_ID" \
+            --apiKey "$KEY_ID" \
             --apiIssuer "$APP_STORE_CONNECT_ISSUER_ID"
