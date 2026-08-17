@@ -237,6 +237,7 @@ jobs:
 
           ls -la \
             "$HOME/Library/MobileDevice/Provisioning Profiles"
+            
     # =========================================================
     # 8. Clean Flutter/Xcode build
     # =========================================================
@@ -279,6 +280,9 @@ jobs:
             -showBuildSettings \
           | grep -E \
             "CODE_SIGN_STYLE|CODE_SIGN_IDENTITY|DEVELOPMENT_TEAM|PROVISIONING_PROFILE_SPECIFIER|PRODUCT_BUNDLE_IDENTIFIER"
+            
+          pod update
+          pod install --repo-update
       # =========================================================
       # 9. Archive
       # =========================================================
