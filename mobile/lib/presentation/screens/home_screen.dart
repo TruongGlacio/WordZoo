@@ -33,7 +33,6 @@ class HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -54,20 +53,46 @@ class HomeScreenState extends State<HomeScreen> {
       );
     }
     return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: null,
       body: Container(
         decoration: BoxDecoration(
-          gradient: AppColors.gradientSkyGrass,
-          image: DecorationImage(image: AssetImage(Assets.assets.background.home1.path), fit: BoxFit.fill),
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(0),
+          image: DecorationImage(
+              image: AssetImage(Assets.assets.background.home1.path),
+              fit: BoxFit.fill),
         ),
         child: Column(
           children: [
             Expanded(
               flex: 3,
-              child: Padding(
-                padding: EdgeInsets.only(top: SizeManager().spacing32),
-                child: ListView(shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    dragStartBehavior: DragStartBehavior.start, children: categoryListWidget),
+              child: SafeArea(
+                top: true,
+                bottom: false,
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    if (constraints.maxHeight >= SizeManager().iconXXXXXLarge * 2) {
+                      return Center(
+                        child: GridView.count(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            dragStartBehavior: DragStartBehavior.start,
+                            crossAxisCount: 2,
+                            crossAxisSpacing: SizeManager().spacing16,
+                            mainAxisSpacing: SizeManager().spacing16,
+                            children: categoryListWidget),
+                      );
+                    } else {
+                      return Center(
+                        child: Container(
+                          constraints: BoxConstraints(maxHeight: SizeManager().iconXXXXXLarge),
+                          child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, dragStartBehavior: DragStartBehavior.start, children: categoryListWidget),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
             Gap(SizeManager().spacing32),
@@ -79,42 +104,31 @@ class HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                         width: SizeManager().iconLarge * 3,
+                        width: SizeManager().iconLarge * 3,
                         child: DropdownButtonHideUnderline(
                           child: DropdownButton2(
-                            customButton:Center(
+                            customButton: Center(
                               child: Image.asset(
-                                  DataManager().getCurrentLocale().languageCode == 'vi' ?
-                                  Assets.assets.icons.vietnam.path : DataManager().getCurrentLocale().languageCode == 'en' ?
-                                  Assets.assets.icons.england.path : Assets.assets.icons.china.path,
+                                DataManager().getCurrentLocale().languageCode == 'vi'
+                                    ? Assets.assets.icons.vietnam.path
+                                    : DataManager().getCurrentLocale().languageCode == 'en'
+                                    ? Assets.assets.icons.england.path
+                                    : Assets.assets.icons.china.path,
                                 width: 80,
-                                  height: 60,
+                                height: 60,
                               ),
                             ),
-                            items: [
-                              ..._MenuItems.firstItems.map(
-                                    (item) => DropdownItem<_MenuItem>(
-                                  value: item,
-                                  height: 48,
-                                  child: _MenuItems.buildItem(item),
-                                ),
-                              ),
-                            ],
+                            items: [..._MenuItems.firstItems.map((item) => DropdownItem<_MenuItem>(value: item, height: 48, child: _MenuItems.buildItem(item)))],
                             onChanged: (value) {
                               _MenuItems.onChanged(context, value!);
                             },
                             dropdownStyleData: DropdownStyleData(
                               width: 200,
                               padding: const EdgeInsets.symmetric(vertical: 6),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4),
-                                color: Colors.white,
-                              ),
+                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Colors.white),
                               offset: const Offset(-32, -120),
                             ),
-                            menuItemStyleData: const MenuItemStyleData(
-                              padding: EdgeInsets.only(left: 16, right: 16),
-                            ),
+                            menuItemStyleData: const MenuItemStyleData(padding: EdgeInsets.only(left: 16, right: 16)),
                           ),
                         ),
                       ),
@@ -136,12 +150,12 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      IconButton(
+/*                      IconButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(const LogoutRequested());
                         },
                         icon: Image.asset(Assets.assets.icons.logout.path, width: SizeManager().iconLarge * 2, height: SizeManager().iconLarge * 2),
-                      ),
+                      ),*/
                     ],
                   ),
                 ],
@@ -179,7 +193,7 @@ class _CategoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
           ),
           child: SizedBox(
-            width: SizeManager().iconXXXXXXLarge,
+            width: SizeManager().iconXXXXLarge,
             height: SizeManager().iconXXXXLarge,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -187,14 +201,17 @@ class _CategoryCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  width: SizeManager().iconXXXXXLarge / 2 - SizeManager().iconSmall,
+                  width: SizeManager().iconXXXXLarge - SizeManager().iconSmall,
                   alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(bottom: 12, right: SizeManager().spacing8, left: SizeManager().spacing4),
+                  color: Colors.transparent,
+                  margin: EdgeInsets.only(
+                      bottom: 12,
+                      right: SizeManager().spacing8,
+                      left: SizeManager().spacing4),
                   padding: EdgeInsets.only(left: SizeManager().spacing4),
-
                   //color: Colors.white,
                   child: FittedBox(
-                    fit: BoxFit.fill,
+                    fit: BoxFit.fitHeight,
                     child: Text(
                       title,
                       textAlign: TextAlign.center,
@@ -210,11 +227,9 @@ class _CategoryCard extends StatelessWidget {
     ).animate().scale(duration: 200.ms);
   }
 }
+
 class _MenuItem {
-  const _MenuItem({
-    required this.text,
-    required this.icon,
-  });
+  const _MenuItem({required this.text, required this.icon});
 
   final String text;
   final String icon;
@@ -230,27 +245,20 @@ abstract class _MenuItems {
   static Widget buildItem(_MenuItem item) {
     return Row(
       children: [
-        Image.asset(item.icon, width: 50, height: 40,),
-        const SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Text(
-            item.text,
-            style:  FontManager().body,
-          ),
-        ),
+        Image.asset(item.icon, width: 50, height: 40),
+        const SizedBox(width: 10),
+        Expanded(child: Text(item.text, style: FontManager().body)),
       ],
     );
   }
 
   static void onChanged(BuildContext context, _MenuItem item) {
-      if (item == _MenuItems.vietnamese) {
-        context.read<LanguageBloc>().add(ChangeLanguage(Locale('vi')));
-      } else if (item == _MenuItems.english) {
-        context.read<LanguageBloc>().add(ChangeLanguage(Locale('en')));
-      } else if (item == _MenuItems.chinese) {
-        context.read<LanguageBloc>().add(ChangeLanguage(Locale('zh')));
-      }
+    if (item == _MenuItems.vietnamese) {
+      context.read<LanguageBloc>().add(ChangeLanguage(Locale('vi')));
+    } else if (item == _MenuItems.english) {
+      context.read<LanguageBloc>().add(ChangeLanguage(Locale('en')));
+    } else if (item == _MenuItems.chinese) {
+      context.read<LanguageBloc>().add(ChangeLanguage(Locale('zh')));
+    }
   }
 }

@@ -13,7 +13,7 @@ import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
 import '../widgets/airplane_animation.dart';
-import '../widgets/detail_panel.dart';
+import 'entity/detail_panel.dart';
 import '../widgets/horizontal_entity_list.dart';
 import 'package:wordzoo/l10n/app_localizations.dart';
 

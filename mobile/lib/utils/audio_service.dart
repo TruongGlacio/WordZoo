@@ -11,6 +11,8 @@ class AudioService {
   double playbackRate = 0.8;
   final playbackRateMin =0.5;
   final playbackRateMax = 2;
+  bool isPlaying = false;
+
   void setPlaybackRateValue(double rate) {
     if(rate>=playbackRateMin && rate<=playbackRateMax)
       {
@@ -18,23 +20,35 @@ class AudioService {
         print(playbackRate);
       }
   }
+
+  AudioPlayer getAudioPlayer(){
+    return _player;
+  }
   double getPlaybackRateValue(){
     return playbackRate;
   }
   Future<void> playDeviceFileSource(String path, {Function()? onEnd}) async {
 
+    isPlaying = true;
     await _player.stop();
     _player.setPlaybackRate(getPlaybackRateValue());
-    await _player.play(DeviceFileSource(path), volume: 2.0);
-    onEnd?.call();
+    _player.onPlayerComplete.listen((event) {
+      onEnd?.call();
+      isPlaying = false;
+    },);
+    await _player.play(DeviceFileSource(path), volume: 2.0,);
+
   }
   Future<void> playAssetSource(String path, {Function()? onEnd, Duration? position,}) async {
-
+    isPlaying = true;
     await _player.stop();
     _player.setPlaybackRate(1.2);
     path = path.replaceAll('assets/', '');
-    await _player.play(AssetSource(path), volume: 2.0, position: position);
-    onEnd?.call();
+    _player.onPlayerComplete.listen((event) {
+      onEnd?.call();
+      isPlaying = false;
+    },);
+     _player.play(AssetSource(path), volume: 2.0, position: position);
   }
   Future<void> stop() async {
     await _player.stop();

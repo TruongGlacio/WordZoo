@@ -222,6 +222,7 @@ class $AssetsEntityGen {
   const $AssetsEntityGen();
 
   final String burstWidget = 'lib/presentation/screens/entity/burst_widget.dart';
+  final String detailPanel = 'lib/presentation/screens/entity/detail_panel.dart';
   final String entityAnimation = 'lib/presentation/screens/entity/entity_animation.dart';
   final String entityRevealWidget = 'lib/presentation/screens/entity/entity_reveal_widget.dart';
   final String giftBoxWidget = 'lib/presentation/screens/entity/gift_box_widget.dart';

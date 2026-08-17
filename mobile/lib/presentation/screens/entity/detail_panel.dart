@@ -7,11 +7,11 @@ import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/iap/blocs/iap_bloc.dart';
 import 'package:wordzoo/utils/audio_service.dart';
-import '../../blocs/entity/entity_bloc.dart';
-import '../../data/models/entity.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import '../../../blocs/entity/entity_bloc.dart';
+import '../../../data/models/entity.dart';
+import '../../theme/app_colors.dart';
+import '../../theme/app_text_styles.dart';
+import '../../../utils/size_manager.dart';
 import 'package:wordzoo/l10n/app_localizations.dart';
 
 class DetailPanel extends StatefulWidget {
@@ -24,12 +24,10 @@ class DetailPanel extends StatefulWidget {
 }
 
 class _DetailPanelState extends State<DetailPanel> {
-  final AudioPlayer _audioPlayer = AudioPlayer();
   String _currentLang = DataManager().getCurrentLocaleForEntity().languageCode;
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
     super.dispose();
   }
 
@@ -44,7 +42,7 @@ class _DetailPanelState extends State<DetailPanel> {
         children: [
           // Real image
           Expanded(
-            flex: 2,
+            flex: 5,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -52,7 +50,7 @@ class _DetailPanelState extends State<DetailPanel> {
                 InkWell(
                   onTap: () async {
                     if (widget.entity.soundEffect != null) {
-                      await _audioPlayer.play(DeviceFileSource(widget.entity.soundEffect!));
+                      AudioService().playDeviceFileSource(widget.entity.soundEffect!);
                     }
                   },
                   child: Container(
@@ -85,17 +83,18 @@ class _DetailPanelState extends State<DetailPanel> {
               ],
             ),
           ),
-          Gap(SizeManager().spacing4),
-          VerticalDivider(
-            color: AppColors.earthBrown,
-            endIndent: SizeManager().spacing64,
-            indent: SizeManager().spacing64,
+          Gap(SizeManager().spacing8),
+          Center(
+            child: Container(
+              height: SizeManager().spacing128*2,
+              width: 1,
+              color: AppColors.darkText,
+            ),
           ),
-          Gap(SizeManager().spacing4),
-
+          Gap(SizeManager().spacing8),
           // Names
           Expanded(
-            flex: 3,
+            flex: 6,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,15 +105,17 @@ class _DetailPanelState extends State<DetailPanel> {
                       onTap: () {
                         final audioPath = widget.entity.getLocalAudio(_currentLang);
                         print('check exit audio file ${File(audioPath!).existsSync()}');
-                        if (audioPath != null) {
-                          setState(() {
-                            AudioService().playDeviceFileSource(audioPath,);
-                          });
-                        }
+                        setState(() {
+                          AudioService().playDeviceFileSource(audioPath, onEnd: () {
+                            setState(() {
+                              print('check exit audio file ${File(audioPath!).existsSync()}');
+                            },);
+                          },);
+                        });
                       },
                       child: Row(
                         children: [
-                          Icon(_audioPlayer.state == PlayerState.playing ? Icons.volume_up : Icons.volume_down, color: AppColors.earthBrown, size: SizeManager().imageSmall),
+                          Icon(AudioService().isPlaying == true ? Icons.volume_up : Icons.volume_down, color: AppColors.earthBrown, size: SizeManager().imageSmall),
                           Gap(SizeManager().spacing8),
                           Expanded(child: Text(widget.entity.names.getBy(_currentLang), style: AppTextStyles.heading)),
                         ],

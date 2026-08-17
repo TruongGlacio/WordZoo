@@ -21,3 +21,6 @@ build intro:
   - dart run flutter_native_splash:create
   - dart run flutter_launcher_icons:generate
 - Build
+  - Android
+    - flutter build appbundle -t lib/main.dart --release
+    - flutter build apk -t lib/main.dart --release

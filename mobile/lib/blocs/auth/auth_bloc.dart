@@ -21,7 +21,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthLoading());
       await ZipAssetService.instance.getRootDir();
       final data = await DataSyncRepositoryImpl.instance.getData();
-      add(const AuthStatusChanged());
+      add(const GuestModeRequested());
+      //add(const AuthStatusChanged());
     },);
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
