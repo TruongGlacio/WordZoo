@@ -7,11 +7,11 @@ sealed class AuthEvent extends Equatable {
 }
 
 class LoginRequested extends AuthEvent {
-  final String email;
+  final String name;
   final String password;
-  const LoginRequested(this.email, this.password);
+  const LoginRequested(this.name, this.password);
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [name, password];
 }
 
 class RegisterRequested extends AuthEvent {

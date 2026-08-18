@@ -16,7 +16,7 @@ dependencies:
   equatable: ^2.1.0
   gap: ^3.0.1
   # Supabase
-  supabase_flutter: ^2.16.0
+  supabase_flutter: ^2.17.2
 
   # UI / Responsive
   responsive_framework: ^1.5.1
@@ -59,7 +59,7 @@ dependencies:
   http: ^1.6.0
   archive: ^4.0.9
   percent_indicator: ^4.2.5
-  syncfusion_flutter_sliders: ^34.2.2
+  syncfusion_flutter_sliders: ^34.2.3
   dropdown_button2: ^3.1.0
 dependency_overrides:
   meta: ^1.19.0

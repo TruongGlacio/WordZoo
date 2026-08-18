@@ -45,6 +45,8 @@ class AppLocalizationsZh extends AppLocalizations {
   String get signIn => '登录';
 
   @override
+  String get playNow => '开始学习';
+  @override
   String get signOut => '登出';
 
   @override

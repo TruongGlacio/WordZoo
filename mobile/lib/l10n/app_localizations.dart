@@ -396,7 +396,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Learned'**
   String get learned;
-
+  String get playNow;
   /// No description provided for @favorite.
   ///
   /// In en, this message translates to:

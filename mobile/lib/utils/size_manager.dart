@@ -10,13 +10,13 @@ class SizeManager {
   late final double width;
   late final double height;
   late final double ratioWidth;
-  final double standWidthphone = 1920;
+  final double standWidthphone = 1920 ;
   void initialScreen(){
     final view = PlatformDispatcher.instance.views.first;
      width = view.physicalSize.width ;
      height = view.physicalSize.height;
      ratioWidth = width/standWidthphone;
-     print("ratioHeight: ${ratioWidth}");
+     print('ratioHeight: ${ratioWidth}');
   }
 
   // Font sizes
@@ -76,6 +76,7 @@ class SizeManager {
   double get iconLarge => 32.0* ratioWidth;
   double get iconXLarge => 36.0* ratioWidth;
   double get iconXXLarge => 48.0* ratioWidth;
+  double get iconXXLarge1 => 60.0* ratioWidth;
   double get iconXXXLarge => 80.0* ratioWidth;
   double get iconXXXXLarge => 120.0* ratioWidth;
   double get iconXXXXXLarge => 160.0* ratioWidth;

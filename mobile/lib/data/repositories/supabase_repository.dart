@@ -5,9 +5,10 @@ import 'package:wordzoo/utils/logger.dart';
 abstract class SupabaseRepository {
   Future<UserProfile?> getCurrentUserProfile();
   Future<UserProfile> createGuestProfile();
+
   Future<void> updateProfile(UserProfile profile);
-  Future<void> signUp(String email, String password, String displayName);
-  Future<void> signIn(String email, String password);
+  Future<AuthResponse?> signUp(String email, String password, String displayName);
+  Future<AuthResponse?> signIn(String email, String password);
   Future<void> signOut();
 }
 
@@ -73,7 +74,7 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
   }
 
   @override
-  Future<void> signUp(String email, String password, String displayName) async {
+  Future<AuthResponse?> signUp(String email, String password, String displayName) async {
     try {
       final response = await _client.auth.signUp(
         email: email,
@@ -92,6 +93,7 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
           'is_premium': false,
         });
       }
+      return response;
     } catch (e, st) {
       AppLogger.e('signUp failed', e, st);
       rethrow;
@@ -99,12 +101,14 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
   }
 
   @override
-  Future<void> signIn(String email, String password) async {
+  Future<AuthResponse?> signIn(String email, String password) async {
     try {
-      await _client.auth.signInWithPassword(
+      AuthResponse authResponse = await _client.auth.signInWithPassword(
         email: email,
         password: password,
       );
+
+      return authResponse;
     } catch (e, st) {
       AppLogger.e('signIn failed', e, st);
       rethrow;
@@ -120,4 +124,5 @@ class SupabaseRepositoryImpl implements SupabaseRepository {
       rethrow;
     }
   }
+
 }

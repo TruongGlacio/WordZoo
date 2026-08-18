@@ -17,6 +17,9 @@ class DataManager {
   DataManager._internal();
   List<Category> _categories = [];
   String _rootPath='';
+  final defaultPassWord = '123456';
+  final subFixEmail = '@gmail.com';
+
   void setRootPath(String? rootPath)
   {
     _rootPath = rootPath??'';

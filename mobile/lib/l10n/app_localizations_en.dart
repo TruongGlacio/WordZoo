@@ -45,6 +45,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signIn => 'Sign In';
 
   @override
+  String get playNow => 'Start Learning';
+
+  @override
   String get signOut => 'Sign Out';
 
   @override

@@ -66,12 +66,11 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Expanded(
-              flex: 3,
               child: SafeArea(
                 top: true,
                 bottom: false,
                 child: Padding(
-                  padding: EdgeInsets.all(MediaQuery.of(context).size.height/8),
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.height/24),
                   child: LayoutBuilder(
                     builder: (context, constraints) {
                       if (constraints.maxHeight >= SizeManager().iconXXXXXLarge * 2) {
@@ -88,8 +87,13 @@ class HomeScreenState extends State<HomeScreen> {
                       } else {
                         return Center(
                           child: Container(
-                            constraints: BoxConstraints(maxHeight: SizeManager().iconXXXXXLarge),
-                            child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, dragStartBehavior: DragStartBehavior.start, children: categoryListWidget),
+                            constraints: BoxConstraints(
+                                maxHeight: constraints.maxHeight
+                            ),
+                            child: ListView(shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                dragStartBehavior: DragStartBehavior.start,
+                                children: categoryListWidget),
                           ),
                         );
                       }
@@ -100,6 +104,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
             Gap(SizeManager().spacing32),
             SafeArea(
+              top: false,
               child: Column(
                 children: [
                   Row(
@@ -153,12 +158,12 @@ class HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-/*                      IconButton(
+                      IconButton(
                         onPressed: () {
                           context.read<AuthBloc>().add(const LogoutRequested());
                         },
                         icon: Image.asset(Assets.assets.icons.logout.path, width: SizeManager().iconLarge * 2, height: SizeManager().iconLarge * 2),
-                      ),*/
+                      ),
                     ],
                   ),
                 ],
@@ -197,8 +202,8 @@ class _CategoryCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
             ),
             child: SizedBox(
-              width: SizeManager().iconXXXXLarge,
-              height: SizeManager().iconXXXXLarge,
+              width: SizeManager().iconXXXXXLarge,
+              height: SizeManager().iconXXXXXLarge,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.end,

@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/repositories/data_sync_repository.dart';
 import 'package:wordzoo/data/service/zip_asset_service.dart';
 import 'package:wordzoo/generated/assets.dart';
@@ -21,8 +22,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(const AuthLoading());
       await ZipAssetService.instance.getRootDir();
       final data = await DataSyncRepositoryImpl.instance.getData();
-      add(const GuestModeRequested());
-      //add(const AuthStatusChanged());
+      //add(const GuestModeRequested());
+      add(const AuthStatusChanged());
     },);
     on<LoginRequested>(_onLoginRequested);
     on<RegisterRequested>(_onRegisterRequested);
@@ -36,15 +37,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) async {
     emit(const AuthLoading());
+    String email = '${event.name.trim()}${DataManager().subFixEmail}';
     try {
-      await authRepo.signIn(event.email.trim(), event.password.trim());
+      AuthResponse? authResponse=  await authRepo.signUp(email, DataManager().defaultPassWord, event.name.trim());
       final profile = await authRepo.getCurrentUserProfile();
       if (profile != null) {
         emit(Authenticated(user: profile, isPremium: profile.isPremium));
       } else {
         emit(const AuthError('Không thể tải thông tin người dùng'));
       }
-    } catch (e) {
+    } on AuthException catch(e){
+      if(e.statusCode == '422')/// code = "user_already_exists"
+      {
+        try {
+          AuthResponse? authResponse = await authRepo.signIn(email, DataManager().defaultPassWord);
+          final profile = await authRepo.getCurrentUserProfile();
+          if (profile != null) {
+            emit(Authenticated(user: profile, isPremium: profile.isPremium));
+          } else {
+            emit(const AuthError('Không thể tải thông tin người dùng'));
+          }
+        } catch (e) {
+          emit(AuthError(e.toString()));
+        }
+      }
+    }
+    catch (e) {
       emit(AuthError(e.toString()));
     }
   }

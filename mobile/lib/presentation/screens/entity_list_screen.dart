@@ -49,8 +49,6 @@ class _EntityListScreenState extends State<EntityListScreen> {
   }
   @override
   Widget build(BuildContext context) {
-
-
     return Scaffold(
       backgroundColor: Colors.transparent,
       appBar: null,
@@ -89,23 +87,20 @@ class _EntityListScreenState extends State<EntityListScreen> {
                             ),
                           ),
                           // Bottom horizontal list (30%)
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height/8,
-                            child: HorizontalEntityList(
-                              entities: state.entities,
-                              selectedId: selectedEntity?.id,
-                              onSelect: (entity) {
-                                //giftKey.currentState?.
-                                giftKey.currentState?.playCustom(Image.file(
-                                  File(entity.getLocalIcon()),
-                                  fit: BoxFit.fill,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 40));
-                                  },
-                                ));
-                                context.read<EntityBloc>().add(SelectEntity(entity.id, false ),);
-                              },
-                            ),
+                          HorizontalEntityList(
+                            entities: state.entities,
+                            selectedId: selectedEntity?.id,
+                            onSelect: (entity) {
+                              //giftKey.currentState?.
+                              giftKey.currentState?.playCustom(Image.file(
+                                File(entity.getLocalIcon()),
+                                fit: BoxFit.fill,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 40));
+                                },
+                              ));
+                              context.read<EntityBloc>().add(SelectEntity(entity.id, false ),);
+                            },
                           ),
                         ],
                       ),

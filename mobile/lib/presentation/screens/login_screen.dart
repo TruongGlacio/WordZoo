@@ -48,27 +48,13 @@ class LoginScreen extends StatelessWidget {
                       TextField(
                         controller: emailController,
                         decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.email,
-                          prefixIcon:  const Icon(Icons.email, color:AppColors.earthBrown),
+                          labelText: AppLocalizations.of(context)!.displayName,
+                          prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
                           enabledBorder:  OutlineInputBorder(
                             borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
                               borderSide: const BorderSide(
                                   color: AppColors.brown,
                               ))
-                        ),
-                      ),
-                      Gap(SizeManager().spacing16),
-                      TextField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.password,
-                          prefixIcon: const Icon(Icons.lock, color:AppColors.earthBrown),
-                            enabledBorder:  OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
-                                borderSide: const BorderSide(
-                                  color: AppColors.brown,
-                                ))
                         ),
                       ),
                       Gap(SizeManager().spacing24),
@@ -85,39 +71,11 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                             },
-                            style: const ButtonStyle(
-                                fixedSize: WidgetStatePropertyAll(Size(150, 50))
+                            style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
                             ),
-                            child: Text(AppLocalizations.of(context)!.signIn),
-                          ),
-                          Gap(SizeManager().spacing12),
-                          ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const RegisterScreen(),
-                                ),
-                              );
-                            },
-                            style: const ButtonStyle(
-                                backgroundColor: WidgetStatePropertyAll(AppColors.white),
-                                fixedSize: WidgetStatePropertyAll(Size(150, 50))
-                            ),
-                            child: Text(AppLocalizations.of(context)!.register, style: const TextStyle(color: AppColors.darkText),),
+                            child: Text(AppLocalizations.of(context)!.playNow),
                           ),
                         ],
-                      ),
-                      Gap(SizeManager().spacing12),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(const GuestModeRequested());
-                        },
-                        style: const ButtonStyle(
-                            backgroundColor: WidgetStatePropertyAll(AppColors.sunnyYellow),
-                            fixedSize: WidgetStatePropertyAll(Size(250, 50))
-                        ),
-                        child: Text(AppLocalizations.of(context)!.guestMode,style: TextStyle(color: AppColors.coralRed),),
                       ),
                     ],
                   ),
