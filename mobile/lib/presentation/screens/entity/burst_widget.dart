@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:wordzoo/utils/size_manager.dart';
 
 import 'gift_drop_controller.dart';
 
@@ -60,9 +61,9 @@ class BurstPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
 
-    const count = 16;
+    final count = SizeManager().spacing16;
 
-    final radius = 50 * progress;
+    final radius = SizeManager().spacing48 * progress;
 
     for (int i = 0; i < count; i++) {
 
@@ -75,8 +76,8 @@ class BurstPainter extends CustomPainter {
       );
 
       final end = Offset(
-        center.dx + cos(angle) * (radius + 18),
-        center.dy + sin(angle) * (radius + 18),
+        center.dx + cos(angle) * (radius + SizeManager().spacing16),
+        center.dy + sin(angle) * (radius + SizeManager().spacing16),
       );
 
       paint

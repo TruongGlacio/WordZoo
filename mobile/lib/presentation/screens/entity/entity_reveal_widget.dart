@@ -53,8 +53,8 @@ class EntityRevealWidget extends StatelessWidget {
                           boxShadow: [
                             BoxShadow(
                               color: Colors.yellow.withValues(alpha: 0.25),
-                              blurRadius: 40,
-                              spreadRadius: 10,
+                              blurRadius: SizeManager().spacing40,
+                              spreadRadius: SizeManager().spacing12,
                             ),
                           ],
                         ),

@@ -27,69 +27,74 @@ class HorizontalEntityList extends StatelessWidget {
         border: Border.all(color: AppColors.white, width: 2),
       ),
       margin: SizeManager().paddingHorizontalXXXXLarge,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        itemCount: entities.length,
-        itemBuilder: (context, index) {
-          final entity = entities[index];
-          final isLocked = (entity.isPremium ?? false) && !isPremium;
-          final isSelected = selectedId == entity.id;
+      child: Center(
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          padding:  EdgeInsets.symmetric(horizontal: SizeManager().spacing16, vertical: SizeManager().spacing8),
+          itemCount: entities.length,
+          itemBuilder: (context, index) {
+            final entity = entities[index];
+            final isLocked = (entity.isPremium ?? false) && !isPremium;
+            final isSelected = selectedId == entity.id;
 
-          return InkWell(
-            onTap: isLocked ? null : () => onSelect(entity),
-            child: Container(
-              width: SizeManager().imageMedium,
-              height: SizeManager().imageMedium,
-              margin: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: isSelected ? AppColors.leafGreen : Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: isSelected ? AppColors.leafGreen : AppColors.earthBrown, width: 2),
-              ),
-              child: Stack(
-                children: [
-                  Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.file(
-                          File(entity.getLocalIcon()),
-                          fit: BoxFit.fill,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 40));
-                          },
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.white.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusXSmall)
-                          ),
-                          padding: EdgeInsets.symmetric(horizontal: SizeManager().spacing4),
-                          child: Text(
-                            entity.names.getBy(DataManager().getCurrentLocale().languageCode),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),
+            return GestureDetector(
+              onTap: () {
+                isLocked ? null : () => onSelect(entity);
+              },
+              child: Container(
+                width: SizeManager().imageLarge,
+                height: SizeManager().imageMedium,
+                margin:  EdgeInsets.symmetric(horizontal: SizeManager().spacing8),
+                decoration: BoxDecoration(
+                  color: isSelected ? AppColors.leafGreen : Colors.white,
+                  borderRadius: BorderRadius.circular(SizeManager().spacing12),
+                  border: Border.all(color: isSelected ? AppColors.leafGreen : AppColors.earthBrown, width: 2),
+                ),
+                child: Stack(
+                  children: [
+                    Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(SizeManager().spacing12),
+                          child: Image.file(
+                            File(entity.getLocalIcon()),
+                            fit: BoxFit.fill,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(color: Colors.grey[300], child: Icon(Icons.image, size: SizeManager().spacing40));
+                            },
                           ),
                         ),
-                      ),
-                      if (isLocked)
-                        Container(
-                          color: AppColors.darkText.withOpacity(0.5),
-                          child: const Icon(Icons.lock, color: Colors.white, size: 24),
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white.withValues(alpha: 0.5),
+                              borderRadius: BorderRadius.circular(SizeManager().borderRadiusXSmall)
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: SizeManager().spacing4),
+                            child: Text(
+                              entity.names.getBy(DataManager().getCurrentLocale().languageCode),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: SizeManager().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),
+                            ),
+                          ),
                         ),
-                    ],
-                  ),
-                ],
+                        if (isLocked)
+                          Container(
+                            color: AppColors.darkText.withOpacity(0.5),
+                            child:  Icon(Icons.lock, color: Colors.white, size: SizeManager().spacing24),
+                          ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

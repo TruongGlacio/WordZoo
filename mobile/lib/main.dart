@@ -21,6 +21,7 @@ import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:wordzoo/utils/size_manager.dart';
 
 import 'iap/blocs/iap_bloc.dart';
 import 'iap/data/repositories/iap_repository.dart';
@@ -32,7 +33,7 @@ Future<void> main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-
+  SizeManager().initialScreen();
   await dotenv.load(fileName: '.env');
 
   await Hive.initFlutter();

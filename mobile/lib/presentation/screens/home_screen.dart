@@ -61,7 +61,7 @@ class HomeScreenState extends State<HomeScreen> {
           borderRadius: BorderRadius.circular(0),
           image: DecorationImage(
               image: AssetImage(Assets.assets.background.home1.path),
-              fit: BoxFit.fill),
+              fit: BoxFit.cover),
         ),
         child: Column(
           children: [
@@ -70,28 +70,31 @@ class HomeScreenState extends State<HomeScreen> {
               child: SafeArea(
                 top: true,
                 bottom: false,
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    if (constraints.maxHeight >= SizeManager().iconXXXXXLarge * 2) {
-                      return Center(
-                        child: GridView.count(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            dragStartBehavior: DragStartBehavior.start,
-                            crossAxisCount: 2,
-                            crossAxisSpacing: SizeManager().spacing16,
-                            mainAxisSpacing: SizeManager().spacing16,
-                            children: categoryListWidget),
-                      );
-                    } else {
-                      return Center(
-                        child: Container(
-                          constraints: BoxConstraints(maxHeight: SizeManager().iconXXXXXLarge),
-                          child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, dragStartBehavior: DragStartBehavior.start, children: categoryListWidget),
-                        ),
-                      );
-                    }
-                  },
+                child: Padding(
+                  padding: EdgeInsets.all(MediaQuery.of(context).size.height/8),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      if (constraints.maxHeight >= SizeManager().iconXXXXXLarge * 2) {
+                        return Center(
+                          child: GridView.count(
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              dragStartBehavior: DragStartBehavior.start,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: SizeManager().spacing16,
+                              mainAxisSpacing: SizeManager().spacing16,
+                              children: categoryListWidget),
+                        );
+                      } else {
+                        return Center(
+                          child: Container(
+                            constraints: BoxConstraints(maxHeight: SizeManager().iconXXXXXLarge),
+                            child: ListView(shrinkWrap: true, scrollDirection: Axis.horizontal, dragStartBehavior: DragStartBehavior.start, children: categoryListWidget),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
@@ -181,50 +184,53 @@ class _CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 1,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(iconAsset), fit: BoxFit.fill),
-            borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-          ),
-          child: SizedBox(
-            width: SizeManager().iconXXXXLarge,
-            height: SizeManager().iconXXXXLarge,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: SizeManager().iconXXXXLarge - SizeManager().iconSmall,
-                  alignment: Alignment.centerLeft,
-                  color: Colors.transparent,
-                  margin: EdgeInsets.only(
-                      bottom: 12,
-                      right: SizeManager().spacing8,
-                      left: SizeManager().spacing4),
-                  padding: EdgeInsets.only(left: SizeManager().spacing4),
-                  //color: Colors.white,
-                  child: FittedBox(
-                    fit: BoxFit.fitHeight,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: SizeManager().captionFontSize, fontWeight: FontWeight.bold, color: AppColors.white),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Card(
+        elevation: 1,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+          child: Container(
+            decoration: BoxDecoration(
+              image: DecorationImage(image: AssetImage(iconAsset), fit: BoxFit.fill),
+              borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+            ),
+            child: SizedBox(
+              width: SizeManager().iconXXXXLarge,
+              height: SizeManager().iconXXXXLarge,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: SizeManager().iconXXXXLarge - SizeManager().iconSmall,
+                    alignment: Alignment.centerLeft,
+                    color: Colors.transparent,
+                    margin: EdgeInsets.only(
+                        bottom: 12,
+                        right: SizeManager().spacing8,
+                        left: SizeManager().spacing4),
+                    padding: EdgeInsets.only(left: SizeManager().spacing4),
+                    //color: Colors.white,
+                    child: FittedBox(
+                      fit: BoxFit.fitHeight,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: SizeManager().captionFontSize, fontWeight: FontWeight.bold, color: AppColors.white),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    ).animate().scale(duration: 200.ms);
+      ).animate().scale(duration: 200.ms);
+    },);
+
   }
 }
 

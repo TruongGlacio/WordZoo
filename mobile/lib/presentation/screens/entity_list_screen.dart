@@ -90,7 +90,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                           ),
                           // Bottom horizontal list (30%)
                           SizedBox(
-                            height: SizeManager().imageMedium,
+                            height: MediaQuery.of(context).size.height/8,
                             child: HorizontalEntityList(
                               entities: state.entities,
                               selectedId: selectedEntity?.id,
@@ -157,44 +157,52 @@ class _EntityListScreenState extends State<EntityListScreen> {
             },
           ),
           ),
-
           SafeArea(
+            top: true,
+            left: true,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 36),
+                  padding:  EdgeInsets.only(top: SizeManager().imageSmall,),
                   child: IconButton(
                     onPressed: () => Navigator.pop(context),
                     icon: Image.asset(Assets.assets.icons.backPage.path, width: SizeManager().iconXLarge, height: SizeManager().iconXLarge),
                   ),
                 ),
-                Container(
-                  width: 50,
-                  height: 130,
-                  decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: SizeManager().imageSmall,
+                        height: SizeManager().imageXLarge,
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+                        ),
+                        child: StatefulBuilder(builder: (context, setState) {
+                          return SfSlider.vertical(
+                            min: AudioService().playbackRateMin,
+                            max: AudioService().playbackRateMax,
+                            interval: 0.1,
+                            showTicks: true,
+                            activeColor: AppColors.grassGreen,
+                            showLabels: false,
+                            enableTooltip: true,
+                            minorTicksPerInterval: 0,
+                            onChanged: (value) {
+                              setState(() {
+                                AudioService().setPlaybackRateValue(double.parse(value.toString()));
+                              },);
+                            },
+                            value: AudioService().getPlaybackRateValue(),
+                          );
+                        },),
+                      ),
+                    ],
                   ),
-                  child: StatefulBuilder(builder: (context, setState) {
-                    return SfSlider.vertical(
-                      min: AudioService().playbackRateMin,
-                      max: AudioService().playbackRateMax,
-                      interval: 0.1,
-                      showTicks: true,
-                      activeColor: AppColors.grassGreen,
-                      showLabels: false,
-                      enableTooltip: true,
-                      minorTicksPerInterval: 0,
-                      onChanged: (value) {
-                        setState(() {
-                          AudioService().setPlaybackRateValue(double.parse(value.toString()));
-                        },);
-                      },
-                      value: AudioService().getPlaybackRateValue(),
-                    );
-                  },),
                 ),
               ],
             ),

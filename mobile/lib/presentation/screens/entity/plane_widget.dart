@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/size_manager.dart';
 
 import 'gift_drop_controller.dart';
 
@@ -41,8 +42,8 @@ class PlaneWidget extends StatelessWidget {
                 child: SizedBox(
                   child: Image.asset(
                     Assets.assets.icons.flight.path,
-                    width: 180,
-                    height:  180,
+                    width: SizeManager().imageXLarge,
+                    height:  SizeManager().imageXLarge,
                     fit: BoxFit.contain,
                   ),
                 )
