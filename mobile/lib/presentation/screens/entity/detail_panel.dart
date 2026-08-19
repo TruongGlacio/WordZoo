@@ -91,7 +91,7 @@ class _DetailPanelState extends State<DetailPanel> {
             return Center(
               child: Container(
                 height: constraints.maxHeight/2,
-                width: 1,
+                width: SizeManager().spacing4/4,
                 color: AppColors.darkText,
               ),
             );
