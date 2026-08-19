@@ -172,7 +172,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                     children: [
                       Container(
                         width: SizeManager().imageSmall,
-                        height: SizeManager().imageXLarge,
+                        height: SizeManager().imageLarge,
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)

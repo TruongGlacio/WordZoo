@@ -19,12 +19,11 @@ class HorizontalEntityList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isPremium = context.watch<IAPBloc>().state is PremiumActive;
-
     double height = MediaQuery.of(context).size.height/8;
-    if(height <=( SizeManager().iconXXLarge + SizeManager().spacing16))
-      {
-        height = SizeManager().iconXXLarge +  SizeManager().spacing16;
-      }
+    if(height <=( SizeManager().buttonHeightMedium + SizeManager().spacing16))
+    {
+      height = SizeManager().buttonHeightMedium +  SizeManager().spacing16;
+    }
     return Container(
       decoration: BoxDecoration(
         color: AppColors.primaryColor.withValues(alpha: 0.8),
@@ -42,19 +41,15 @@ class HorizontalEntityList extends StatelessWidget {
           final entity = entities[index];
           final isLocked = (entity.isPremium ?? false) && !isPremium;
           final isSelected = selectedId == entity.id;
+
           return InkWell(
-            onTap: () {
-              if(isLocked)
-                {
-                  onSelect(entity);
-                }
-            },
+            onTap: isLocked ? null : () => onSelect(entity),
             child: Container(
               width: height,
               //height: height,
               margin:  EdgeInsets.symmetric(horizontal: SizeManager().spacing8),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.skyBlue : Colors.white,
+                color: isSelected ? AppColors.skyBlue  : Colors.white,
                 borderRadius: BorderRadius.circular(SizeManager().spacing12),
                 border: Border.all(color: isSelected ? AppColors.leafGreen : AppColors.earthBrown, width: 2),
               ),
@@ -67,7 +62,7 @@ class HorizontalEntityList extends StatelessWidget {
                         borderRadius: BorderRadius.circular(SizeManager().spacing12),
                         child: Image.file(
                           File(entity.getLocalIcon()),
-                          fit: BoxFit.fill,
+                          fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
                             return Container(color: Colors.grey[300], child: Icon(Icons.image, size: SizeManager().spacing40));
                           },
@@ -85,8 +80,7 @@ class HorizontalEntityList extends StatelessWidget {
                             entity.names.getBy(DataManager().getCurrentLocale().languageCode),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: SizeManager().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),
-                          ),
+                            style: TextStyle(fontSize: SizeManager().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),                          ),
                         ),
                       ),
                       if (isLocked)

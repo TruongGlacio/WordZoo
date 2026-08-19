@@ -38,47 +38,45 @@ class LoginScreen extends StatelessWidget {
             padding:  SizeManager().paddingMedium,
             child: Center(
               child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 350),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          labelText: AppLocalizations.of(context)!.displayName,
-                          prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
-                          enabledBorder:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
-                              borderSide: const BorderSide(
-                                  color: AppColors.brown,
-                              ))
-                        ),
+                constraints:  BoxConstraints(maxWidth: SizeManager().size450),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!.displayName,
+                        prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
+                        enabledBorder:  OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                            borderSide: const BorderSide(
+                                color: AppColors.brown,
+                            ))
                       ),
-                      Gap(SizeManager().spacing24),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              context.read<AuthBloc>().add(
-                                    LoginRequested(
-                                      emailController.text,
-                                      passwordController.text,
-                                    ),
-                                  );
-                            },
-                            style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
-                            ),
-                            child: Text(AppLocalizations.of(context)!.playNow),
+                    ),
+                    Gap(SizeManager().spacing32),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            context.read<AuthBloc>().add(
+                                  LoginRequested(
+                                    emailController.text,
+                                    passwordController.text,
+                                  ),
+                                );
+                          },
+                          style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                          child: Text(AppLocalizations.of(context)!.playNow),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),

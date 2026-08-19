@@ -53,46 +53,50 @@ class _DetailPanelState extends State<DetailPanel> {
                       AudioService().playDeviceFileSource(widget.entity.soundEffect!);
                     }
                   },
-                  child: Container(
-                    width: SizeManager().imageXXXLarge,
-                    height: SizeManager().imageXXLarge,
-                    constraints: BoxConstraints(
-                      maxWidth: SizeManager().imageXXXLarge,
-                      maxHeight: SizeManager().imageXXLarge,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-                      //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    margin: EdgeInsets.only(left: SizeManager().spacing12),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-                      child: Image.file(
-                        File(widget.entity.getLocalIcon()),
-                        fit: BoxFit.fitWidth,
-                        width: SizeManager().imageXXXLarge,
-                        height: SizeManager().imageXXLarge,
-                        errorBuilder: (context, error, stackTrace) {
-                          return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
-                        },
+                  child: LayoutBuilder(builder: (context, constraints) {
+                    return Container(
+                      width: constraints.maxHeight- SizeManager().spacing12*2,
+                      height: constraints.maxHeight,
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.of(context).size.width/4,
+                        maxHeight: MediaQuery.of(context).size.width/2,
                       ),
-                    ),
-                  ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+                        //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
+                      ),
+                      clipBehavior: Clip.hardEdge,
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.only(left: SizeManager().spacing12),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+                        child: Image.file(
+                          File(widget.entity.getLocalIcon()),
+                          fit: BoxFit.fitWidth,
+                          //width: SizeManager().imageXXXLarge,
+                          //height: SizeManager().imageXXLarge,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
+                          },
+                        ),
+                      ),
+                    );
+                  },)
                 ),
               ],
             ),
           ),
           Gap(SizeManager().spacing8),
-          Center(
-            child: Container(
-              height: SizeManager().spacing128*2,
-              width: 1,
-              color: AppColors.darkText,
-            ),
-          ),
+          LayoutBuilder(builder: (context, constraints) {
+            return Center(
+              child: Container(
+                height: constraints.maxHeight/2,
+                width: 1,
+                color: AppColors.darkText,
+              ),
+            );
+          },),
           Gap(SizeManager().spacing8),
-          // Names
           Expanded(
             flex: 6,
             child: Column(

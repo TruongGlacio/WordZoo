@@ -33,7 +33,6 @@ Future<void> main() async {
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  SizeManager().initialScreen();
   await dotenv.load(fileName: '.env');
 
   await Hive.initFlutter();
@@ -50,7 +49,7 @@ Future<void> main() async {
   final dataSyncRepo = DataSyncRepositoryImpl.instance;
   final progressRepo = ProgressRepositoryImpl.instance;
   final iapRepo = IapRepositoryImpl.instance;
-
+  SizeManager().initialScreen();
   runApp(
     MultiRepositoryProvider(
       providers: [

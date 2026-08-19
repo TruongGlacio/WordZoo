@@ -192,12 +192,15 @@ class _CategoryCard extends StatelessWidget {
     return LayoutBuilder(builder: (context, constraints) {
       return Card(
         elevation: 1,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)),
+        color: Colors.transparent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge)),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
           child: Container(
             decoration: BoxDecoration(
+              color: Colors.transparent,
               image: DecorationImage(image: AssetImage(iconAsset), fit: BoxFit.fill),
               borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
             ),
@@ -211,8 +214,8 @@ class _CategoryCard extends StatelessWidget {
                 children: [
                   Container(
                     width: SizeManager().iconXXXXLarge - SizeManager().iconSmall,
-                    alignment: Alignment.centerLeft,
-                    color: Colors.transparent,
+                    alignment: Alignment.centerRight,
+                   // color: Colors.white,
                     margin: EdgeInsets.only(
                         bottom: 12,
                         right: SizeManager().spacing8,
@@ -223,7 +226,7 @@ class _CategoryCard extends StatelessWidget {
                       fit: BoxFit.fitHeight,
                       child: Text(
                         title,
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.right,
                         style: TextStyle(fontSize: SizeManager().captionFontSize, fontWeight: FontWeight.bold, color: AppColors.white),
                       ),
                     ),

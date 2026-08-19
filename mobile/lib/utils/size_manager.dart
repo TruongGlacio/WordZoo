@@ -82,6 +82,7 @@ class SizeManager {
   double get iconXXXXXLarge => 160.0* ratioWidth;
   double get iconXXXXXXLarge => 180.0* ratioWidth;
   double get size450 => 450.0* ratioWidth;
+  double get size350 => 350.0* ratioWidth;
 
   // Button sizes
   double get buttonHeightSmall => 40.0* ratioWidth;
