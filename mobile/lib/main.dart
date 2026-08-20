@@ -16,18 +16,22 @@ import 'package:wordzoo/blocs/category/category_bloc.dart';
 import 'package:wordzoo/blocs/entity/entity_bloc.dart';
 import 'package:wordzoo/blocs/progress/progress_bloc.dart';
 import 'package:wordzoo/blocs/language/language_bloc.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
 import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wordzoo/utils/size_manager.dart';
 
-import 'iap/blocs/iap_bloc.dart';
-import 'iap/data/repositories/iap_repository.dart';
+import 'base/store/cache_storage.dart';
+import 'features/ads/google_mobile_ads/ads_manager.dart';
+import 'features/iap/blocs/iap_bloc.dart';
+import 'features/iap/data/repositories/iap_repository.dart';
+import 'generated/l10n.dart';
 
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesStorage().initSharedPreferences();
+  await AdsManager().initialize();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
@@ -57,6 +61,7 @@ Future<void> main() async {
         RepositoryProvider<DataSyncRepository>.value(value: dataSyncRepo),
         RepositoryProvider<ProgressRepository>.value(value: progressRepo),
         RepositoryProvider<IapRepository>.value(value: iapRepo),
+
       ],
       child: MultiBlocProvider(
         providers: [
@@ -98,6 +103,9 @@ class WordZooApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<LanguageBloc, LanguageState>(
       builder: (context, state) {
+        print(
+          'BLOC emit instance = ${identityHashCode(this)}',
+        );
         return ResponsiveBreakpoints(
           breakpoints: const [
             Breakpoint(start: 0, end: 840, name: 'PHONE'),
@@ -108,18 +116,14 @@ class WordZooApp extends StatelessWidget {
             title: 'WordZoo',
             theme: AppTheme.lightTheme,
             localizationsDelegates: const [
-              AppLocalizations.delegate,
+              S.delegate,
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
             locale: state.locale,
-            supportedLocales: const [
-              Locale('vi'),
-              Locale('en'),
-              Locale('zh'),
-            ],
-            home: const AuthGate(),
+            supportedLocales: AppLocalizationDelegate().supportedLocales,
+            home: AuthGate(),
           ),
         );
       },

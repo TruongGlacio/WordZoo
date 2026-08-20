@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'package:wordzoo/utils/premium_entity_manager.dart';
 import 'category.dart';
 import 'localized_names.dart';
 import 'audio_paths.dart';
@@ -11,7 +12,7 @@ part 'entity.g.dart';
 @JsonSerializable(explicitToJson: true)
 class Entity extends Equatable {
   final String id;
-  final bool ?isPremium;
+  bool ?isPremium;
   final LocalizedNames names;
   @JsonKey(name: 'animation_image')
   final String ?animationImage;
@@ -52,6 +53,19 @@ class Entity extends Equatable {
   }
   String getLocalIcon() {
       return DataManager().getRootPath()+ (realImage??'');
+  }
+
+  bool isOpenedEntity(){
+    bool isOpen = true;
+    if(isPremium == false)
+      {
+        isOpen = true;
+      }
+    else
+      {
+        isOpen = PremiumEntityManager().checkOpenedEntity(entity: this);
+      }
+    return isOpen;
   }
   String? getLocalAudio(String lang) {
     final path = lang == 'vi'

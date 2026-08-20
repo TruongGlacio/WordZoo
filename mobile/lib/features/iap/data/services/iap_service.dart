@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
-import 'package:wordzoo/iap/blocs/iap_bloc.dart';
+import 'package:wordzoo/features/iap/blocs/iap_bloc.dart';
 
 /// Service to handle In-App Purchase events and lifecycle management
 class IAPService {

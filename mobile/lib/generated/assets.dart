@@ -150,10 +150,12 @@ class $AssetsIconsGen {
   final AssetGenImage appIcon = const AssetGenImage('assets/icons/AppIcon.png');
   final AssetGenImage appIconCopy = const AssetGenImage('assets/icons/AppIcon - Copy.png');
   final AssetGenImage appIconForLaunch = const AssetGenImage('assets/icons/AppIconForLaunch.png');
+  final AssetGenImage ads = const AssetGenImage('assets/icons/ads.png');
   final AssetGenImage backPage = const AssetGenImage('assets/icons/back_page.png');
   final AssetGenImage china = const AssetGenImage('assets/icons/china.png');
   final AssetGenImage england = const AssetGenImage('assets/icons/england.png');
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
+  final AssetGenImage iap = const AssetGenImage('assets/icons/iap.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
   final AssetGenImage vietnam = const AssetGenImage('assets/icons/vietnam.png');
   final AssetGenImage volumeOn = const AssetGenImage('assets/icons/volume_on.png');
@@ -230,6 +232,7 @@ class $AssetsEntityGen {
   final String giftBoxWidget = 'lib/presentation/screens/entity/gift_box_widget.dart';
   final String giftDropAnimation = 'lib/presentation/screens/entity/gift_drop_animation.dart';
   final String giftDropController = 'lib/presentation/screens/entity/gift_drop_controller.dart';
+  final String horizontalEntityList = 'lib/presentation/screens/entity/horizontal_entity_list.dart';
   final String planeWidget = 'lib/presentation/screens/entity/plane_widget.dart';
 }
 

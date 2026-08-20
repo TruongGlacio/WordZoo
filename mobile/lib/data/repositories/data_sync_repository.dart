@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/service/zip_asset_service.dart';
+import 'package:wordzoo/utils/premium_entity_manager.dart';
 import '../models/word_zoo_data.dart';
 import 'package:wordzoo/utils/constants.dart';
 import 'package:wordzoo/utils/logger.dart';
@@ -44,9 +45,10 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       AppLogger.i('getCachedData: loading cached data...');
       final json = jsonDecode(jsonStr) as Map<String, dynamic>;
       final data = WordZooData.fromJson(json);
-      DataManager().setCategories(wordZooData: data);
+      WordZooData data1 = PremiumEntityManager().setUpWordZooDataWhenInitial(wordZooData: data);
+      DataManager().setCategories(wordZooData: data1);
       AppLogger.i('getCachedData: loaded ${data.categories.length} categories, version ${data.version}');
-      return data;
+      return data1;
     } catch (e, st) {
       AppLogger.e('getCachedData failed', e, st);
       return null;

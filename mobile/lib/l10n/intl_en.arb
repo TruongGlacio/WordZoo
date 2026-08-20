@@ -1,4 +1,5 @@
 {
+  "@@locale": "en",
   "appName": "WordZoo",
   "welcome": "Welcome to WordZoo",
   "subtitle": "Learn English through fun",
@@ -16,8 +17,11 @@
   "forgotPassword": "Forgot Password?",
   "noAccount": "Don't have an account? ",
   "alreadyHaveAccount": "Already have an account? ",
-  "passwordMismatch": "Passwords do not match", "passwordTooShort": "Password must be at least 6 characters", "confirmPasswordRequired": "Please confirm your password",
-  "emailRequired": "Email is required", "invalidEmail": "Please enter a valid email",
+  "passwordMismatch": "Passwords do not match",
+  "passwordTooShort": "Password must be at least 6 characters",
+  "confirmPasswordRequired": "Please confirm your password",
+  "emailRequired": "Email is required",
+  "invalidEmail": "Please enter a valid email",
   "passwordRequired": "Password is required",
   "displayNameRequired": "Display name is required",
   "loginSuccess": "Login successful",
@@ -254,5 +258,7 @@
   "selectEntityToViewDetails": "Select an entity to view details",
   "errorWithMessage": "Error: {message}",
   "englishLabel": "EN: {text}",
-  "chineseLabel": "ZH: {text}"
+  "chineseLabel": "ZH: {text}",
+  "buy_premium": "Buy Premium",
+  "watching_ads": "Watching Ads"
 }

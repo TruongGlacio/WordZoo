@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:wordzoo/iap/iap_core.dart';
+import 'package:wordzoo/features/iap/iap_core.dart';
 import 'package:wordzoo/utils/logger.dart';
 abstract class IapRepository {
   Future<bool> isPremium();

@@ -29,7 +29,10 @@ class LanguageBloc extends Bloc<LanguageEvent, LanguageState> {
   ) async {
     await _prefs.setString('preferred_language', event.locale.languageCode);
     DataManager().setCurrentLocale(event.locale);
-    emit(LanguageState(locale: event.locale));
+    print(
+      'BLOC emit instance = ${identityHashCode(this)}',
+    );
+    emit(state.copyWith(locale: event.locale));
   }
 
   Future<void> _onTogglePerEntity(

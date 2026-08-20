@@ -1,4 +1,5 @@
 {
+  "@@locale": "zh",
   "appName": "WordZoo",
   "welcome": "欢迎来到 WordZoo",
   "subtitle": "通过趣味学习英语",
@@ -254,5 +255,7 @@
   "selectEntityToViewDetails": "选择一个实体查看详情",
   "errorWithMessage": "错误：{message}",
   "englishLabel": "英文：{text}",
-  "chineseLabel": "中文：{text}"
+  "chineseLabel": "中文：{text}",
+  "buy_premium": "购买高级版",
+  "watching_ads": "观看广告"
 }

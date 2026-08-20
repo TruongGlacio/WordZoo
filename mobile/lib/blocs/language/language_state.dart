@@ -11,6 +11,17 @@ class LanguageState extends Equatable {
   }){
      locale??= const Locale('vi');
    }
+   LanguageState copyWith({
+     String? entityId,
+     Locale? locale,
+     Locale? globalLocale
+   }) {
+     return LanguageState(
+       entityId: entityId ?? this.entityId,
+       locale: locale ?? this.locale,
+       globalLocale: globalLocale ?? this.globalLocale,
+     );
+   }
   @override
   List<Object?> get props => [entityId, locale, globalLocale];
 }

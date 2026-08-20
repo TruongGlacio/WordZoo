@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
-import 'package:wordzoo/iap/blocs/iap_bloc.dart';
-import '../../data/models/entity.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/features/ads/google_mobile_ads/ads_manager.dart';
+import 'package:wordzoo/features/iap/blocs/iap_bloc.dart';
+import 'package:wordzoo/utils/premium_entity_manager.dart';
+import '../../../data/models/entity.dart';
+import '../../theme/app_colors.dart';
+import '../../../utils/size_manager.dart';
 
 class HorizontalEntityList extends StatelessWidget {
   final List<Entity> entities;
@@ -38,15 +40,53 @@ class HorizontalEntityList extends StatelessWidget {
         padding:  EdgeInsets.symmetric(horizontal: SizeManager().spacing16, vertical: SizeManager().spacing8),
         itemCount: entities.length,
         itemBuilder: (context, index) {
-          final entity = entities[index];
-          final isLocked = (entity.isPremium ?? false) && !isPremium;
+          final entity = entities.elementAt(index);
+          bool isOpen = false;
+          if(isPremium)
+            {
+              isOpen =true;
+            }
+          else
+            {
+              isOpen = entity.isOpenedEntity();
+            }
+
           final isSelected = selectedId == entity.id;
 
           return InkWell(
-            onTap: isLocked ? null : () => onSelect(entity),
+            onTap: () async {
+              if(isOpen)
+                {
+                  onSelect(entity);
+                }
+              else
+                {
+                  /// xi ly ads hoặc iap
+                  if(!PremiumEntityManager().isValidPoint()) {
+                    AdsManager().showRewardAds(
+                    onRewardEarned: (ad, reward) {
+                    },
+                    onAdFailedToShow: (error) {
+
+                    },
+                    onAdDismissed: () async {
+                      await PremiumEntityManager().increasePointForFreeEntityForOneAdsWatching();
+                      await PremiumEntityManager().updateListOfPassEntity({entity.id: true});
+                      onSelect(entity);
+                    },
+                  );
+                  }
+                  else
+                    {
+                      await PremiumEntityManager().updateListOfPassEntity({entity.id: true});
+                      onSelect(entity);
+
+                    }
+
+                }
+            },
             child: Container(
               width: height,
-              //height: height,
               margin:  EdgeInsets.symmetric(horizontal: SizeManager().spacing8),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.skyBlue  : Colors.white,
@@ -83,9 +123,9 @@ class HorizontalEntityList extends StatelessWidget {
                             style: TextStyle(fontSize: SizeManager().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),                          ),
                         ),
                       ),
-                      if (isLocked)
+                      if (!isOpen)
                         Container(
-                          color: AppColors.darkText.withOpacity(0.5),
+                          color: AppColors.darkText.withValues(alpha: 0.5),
                           child:  Icon(Icons.lock, color: Colors.white, size: SizeManager().spacing24),
                         ),
                     ],

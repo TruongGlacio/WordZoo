@@ -4,19 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wordzoo/blocs/language/language_bloc.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/category.dart';
-import 'package:wordzoo/data/models/localized_names.dart';
+import 'package:wordzoo/features/ads/google_mobile_ads/ads_manager.dart';
+import 'package:wordzoo/features/iap/iap_page.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/presentation/widgets/my_point_widget.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import 'package:wordzoo/utils/font_manager.dart';
+import 'package:wordzoo/utils/premium_entity_manager.dart';
 import '../../blocs/auth/auth_bloc.dart';
 import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
-
+import 'package:wordzoo/generated/l10n.dart';
 import 'Category/category_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -63,10 +66,14 @@ class HomeScreenState extends State<HomeScreen> {
               image: AssetImage(Assets.assets.background.home1.path),
               fit: BoxFit.cover),
         ),
-        child: Column(
+        child: Stack(
+          alignment: Alignment.topRight,
+          fit: StackFit.expand,
           children: [
-            Expanded(
-              child: SafeArea(
+            Column(
+            children: [
+              Expanded(
+                child: SafeArea(
                 top: true,
                 bottom: false,
                 child: Padding(
@@ -100,79 +107,115 @@ class HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
+                                ),
               ),
-            ),
-            Gap(SizeManager().spacing32),
-            SafeArea(
-              top: false,
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: SizeManager().iconLarge * 3,
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton2(
-                            customButton: Center(
-                              child: Image.asset(
-                                DataManager().getCurrentLocale().languageCode == 'vi'
-                                    ? Assets.assets.icons.vietnam.path
-                                    : DataManager().getCurrentLocale().languageCode == 'en'
-                                    ? Assets.assets.icons.england.path
-                                    : Assets.assets.icons.china.path,
-                                width: 80,
-                                height: 60,
+              Gap(SizeManager().spacing32),
+              SafeArea(
+                top: false,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: SizeManager().iconLarge * 3,
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                              customButton: Center(
+                                child: Image.asset(
+                                  DataManager().getCurrentLocale().languageCode == 'vi'
+                                      ? Assets.assets.icons.vietnam.path
+                                      : DataManager().getCurrentLocale().languageCode == 'en'
+                                      ? Assets.assets.icons.england.path
+                                      : Assets.assets.icons.china.path,
+                                  width: 80,
+                                  height: 60,
+                                ),
                               ),
+                              items: [..._LanguageMenuItems.languageItems.map((item) => DropdownItem<_MenuItem>(value: item, height: 48, child: _LanguageMenuItems.buildItem(item)))],
+                              onChanged: (value) {
+                                _LanguageMenuItems.onChanged(context, value!);
+                              },
+                              dropdownStyleData: DropdownStyleData(
+                                width: SizeManager().size200,
+                                padding: EdgeInsets.symmetric(vertical: SizeManager().spacing8),
+                                decoration: BoxDecoration(borderRadius: BorderRadius.circular(SizeManager().spacing8), color: Colors.white),
+                                offset: const Offset(-32, -120),
+                              ),
+                              menuItemStyleData:  MenuItemStyleData(padding: EdgeInsets.only(left: SizeManager().spacing16, right:  SizeManager().spacing16)),
                             ),
-                            items: [..._MenuItems.firstItems.map((item) => DropdownItem<_MenuItem>(value: item, height: 48, child: _MenuItems.buildItem(item)))],
-                            onChanged: (value) {
-                              _MenuItems.onChanged(context, value!);
-                            },
-                            dropdownStyleData: DropdownStyleData(
-                              width: 200,
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: Colors.white),
-                              offset: const Offset(-32, -120),
-                            ),
-                            menuItemStyleData: const MenuItemStyleData(padding: EdgeInsets.only(left: 16, right: 16)),
                           ),
                         ),
-                      ),
-                      Gap(SizeManager().spacing8),
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.sunnyYellow,
-                            border: Border.all(color: AppColors.earthBrown, width: 1),
-                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(AppLocalizations.of(context)!.helloUser(userName), style: AppTextStyles.body),
-                              Gap(SizeManager().spacing8),
-                              Text(AppLocalizations.of(context)!.todayIsNewDay, style: AppTextStyles.title),
-                            ],
+                        Gap(SizeManager().spacing8),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.sunnyYellow,
+                              border: Border.all(color: AppColors.earthBrown, width: 1),
+                              borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(S().helloUser(userName), style: AppTextStyles.body),
+                                Gap(SizeManager().spacing8),
+                                Text(S().todayIsNewDay, style: AppTextStyles.title),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(const LogoutRequested());
-                        },
-                        icon: Image.asset(Assets.assets.icons.logout.path, width: SizeManager().iconLarge * 2, height: SizeManager().iconLarge * 2),
-                      ),
-                    ],
-                  ),
-                ],
+                        IconButton(
+                          onPressed: () {
+                            context.read<AuthBloc>().add(const LogoutRequested());
+                          },
+                          icon: Image.asset(Assets.assets.icons.logout.path, width: SizeManager().iconLarge * 2, height: SizeManager().iconLarge * 2),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+            SafeArea(child: buildSettingMenu(context: context))
+
+          ]
         ),
       ),
     );
+  }
+
+  Widget buildSettingMenu({required BuildContext context}){
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children:[
+        SizedBox(
+          width: SizeManager().iconLarge * 3,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton2(
+              customButton: const Center(
+                child: MyPointWidget()
+              ),
+              items: [..._SettingMenuItems.settingItems.map((item) => DropdownItem<_MenuItem>(value: item, height: SizeManager().imageSmall, child: _SettingMenuItems.buildItem(item)))],
+              onChanged: (value) {
+                _SettingMenuItems.onSelected(context, value!);
+              },
+              dropdownStyleData: DropdownStyleData(
+                width: SizeManager().size200,
+                padding:  EdgeInsets.symmetric(vertical: SizeManager().spacing8),
+                decoration: BoxDecoration(borderRadius: BorderRadius.circular(SizeManager().spacing8), color: Colors.white),
+                offset: const Offset(0, 0),
+              ),
+              menuItemStyleData:  MenuItemStyleData(padding: EdgeInsets.only(left: SizeManager().spacing16, right:  SizeManager().spacing16)),
+            ),
+          ),
+        )
+      ],
+    );
+
   }
 
   void gotoCategoryScreen(BuildContext context, {required Category category}) {
@@ -249,8 +292,8 @@ class _MenuItem {
   final String icon;
 }
 
-abstract class _MenuItems {
-  static List<_MenuItem> firstItems = [vietnamese, english, chinese];
+abstract class _LanguageMenuItems {
+  static List<_MenuItem> languageItems = [vietnamese, english, chinese];
 
   static _MenuItem vietnamese = _MenuItem(text: 'Vietnamese', icon: Assets.assets.icons.vietnam.path);
   static _MenuItem english = _MenuItem(text: 'English', icon: Assets.assets.icons.england.path);
@@ -267,12 +310,69 @@ abstract class _MenuItems {
   }
 
   static void onChanged(BuildContext context, _MenuItem item) {
-    if (item == _MenuItems.vietnamese) {
-      context.read<LanguageBloc>().add(ChangeLanguage(Locale('vi')));
-    } else if (item == _MenuItems.english) {
-      context.read<LanguageBloc>().add(ChangeLanguage(Locale('en')));
-    } else if (item == _MenuItems.chinese) {
-      context.read<LanguageBloc>().add(ChangeLanguage(Locale('zh')));
+    if (item == _LanguageMenuItems.vietnamese) {
+      context.read<LanguageBloc>().add( const ChangeLanguage(Locale('vi')));
+    } else if (item == _LanguageMenuItems.english) {
+      context.read<LanguageBloc>().add( const ChangeLanguage(Locale('en')));
+    } else if (item == _LanguageMenuItems.chinese) {
+      context.read<LanguageBloc>().add( const ChangeLanguage(Locale('zh')));
+    }
+  }
+}
+
+abstract class _SettingMenuItems {
+  static List<_MenuItem> settingItems =
+  [
+    //iap,
+    openads
+  ];
+
+  static _MenuItem iap = _MenuItem(text: S().buy_premium, icon: Assets.assets.icons.iap.path);
+  static _MenuItem openads = _MenuItem(text: S().watching_ads, icon: Assets.assets.icons.ads.path);
+
+  static Widget buildItem(_MenuItem item) {
+    return Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+          ),
+            clipBehavior: Clip.hardEdge,
+            width: SizeManager().imageXSmall,
+            height: SizeManager().imageXSmall,
+            child: Image.asset(
+                item.icon,
+                width: SizeManager().imageXSmall, height: SizeManager().imageXSmall)),
+        Gap(SizeManager().spacing8),
+        Expanded(child: Text(item.text, style: FontManager().body)),
+      ],
+    );
+  }
+
+  static void onSelected(BuildContext context, _MenuItem item) {
+    if (item == _SettingMenuItems.iap) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!context.mounted) return;
+        Navigator.of(context, rootNavigator: true).push(
+          MaterialPageRoute<void>(
+            builder: (_) {
+              debugPrint('BUILD IAP PAGE');
+              return const IAPPage();
+            },
+          ),
+        );
+      });
+    } else if (item == _SettingMenuItems.openads) {
+      AdsManager().showRewardAds(
+        onRewardEarned: (ad, reward) {
+        },
+        onAdFailedToShow: (error) {
+
+        },
+        onAdDismissed: () async {
+          await PremiumEntityManager().increasePointForFreeEntityForOneAdsWatching();
+        },
+      );
     }
   }
 }

@@ -7,7 +7,7 @@ import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
 import '../../utils/notification_service.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
+import 'package:wordzoo/generated/l10n.dart';
 import 'register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -29,54 +29,59 @@ class LoginScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        extendBody: true,
+        appBar: null,
         body: Container(
           decoration: BoxDecoration(
             color: Colors.transparent,
-            image: DecorationImage(image: AssetImage(Assets.assets.background.loginLandScape.path), fit: BoxFit.fill),
+            image: DecorationImage(image: AssetImage(Assets.assets.background.loginLandScape.path), fit: BoxFit.cover),
           ),
           child: Padding(
             padding:  SizeManager().paddingMedium,
             child: Center(
               child: ConstrainedBox(
-                constraints:  BoxConstraints(maxWidth: SizeManager().size450),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.displayName,
-                        prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
-                        enabledBorder:  OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
-                            borderSide: const BorderSide(
-                                color: AppColors.brown,
-                            ))
-                      ),
-                    ),
-                    Gap(SizeManager().spacing32),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            context.read<AuthBloc>().add(
-                                  LoginRequested(
-                                    emailController.text,
-                                    passwordController.text,
-                                  ),
-                                );
-                          },
-                          style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
-                          ),
-                          child: Text(AppLocalizations.of(context)!.playNow),
+                constraints:  BoxConstraints(maxWidth: SizeManager().size350),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: S().displayName,
+                          prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
+                          enabledBorder:  OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                              borderSide: const BorderSide(
+                                  color: AppColors.brown,
+                              ))
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      Gap(SizeManager().spacing32),
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              context.read<AuthBloc>().add(
+                                    LoginRequested(
+                                      emailController.text,
+                                      passwordController.text,
+                                    ),
+                                  );
+                            },
+                            style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
+                            ),
+                            child: Text(S().playNow),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

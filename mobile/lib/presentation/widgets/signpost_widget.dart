@@ -25,11 +25,11 @@ class SignpostWidget extends StatelessWidget {
           color: AppColors.earthBrown,
           borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall),
           border: Border.all(color: AppColors.earthBrown, width: 4),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: AppColors.softShadow,
               blurRadius: 8,
-              offset: const Offset(4, 4),
+              offset: Offset(4, 4),
             ),
           ],
         ),

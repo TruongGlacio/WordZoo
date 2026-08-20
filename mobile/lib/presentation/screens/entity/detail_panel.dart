@@ -5,14 +5,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
-import 'package:wordzoo/iap/blocs/iap_bloc.dart';
+import 'package:wordzoo/features/iap/blocs/iap_bloc.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../../blocs/entity/entity_bloc.dart';
 import '../../../data/models/entity.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../../utils/size_manager.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
+import 'package:wordzoo/generated/l10n.dart';
 
 class DetailPanel extends StatefulWidget {
   final Entity entity;

@@ -7,7 +7,7 @@ import '../../presentation/theme/app_colors.dart';
 import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
 import '../../utils/notification_service.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
+import 'package:wordzoo/generated/l10n.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
@@ -58,7 +58,7 @@ class RegisterScreen extends StatelessWidget {
                                   TextFormField(
                                     controller: displayNameController,
                                     decoration: InputDecoration(
-                                      labelText: AppLocalizations.of(context)!.displayName,
+                                      labelText: S().displayName,
                                       prefixIcon: const Icon(Icons.person,color:AppColors.earthBrown),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
@@ -73,7 +73,7 @@ class RegisterScreen extends StatelessWidget {
                                     ),
                                     validator: (value) {
                                       if (value == null || value.trim().isEmpty) {
-                                        return AppLocalizations.of(context)!.displayNameRequired;
+                                        return S().displayNameRequired;
                                       }
                                       return null;
                                     },
@@ -82,7 +82,7 @@ class RegisterScreen extends StatelessWidget {
                                   TextFormField(
                                     controller: emailController,
                                     decoration: InputDecoration(
-                                      labelText: AppLocalizations.of(context)!.email,
+                                      labelText: S().email,
                                       prefixIcon: const Icon(Icons.email,color:AppColors.earthBrown),
                                       enabledBorder:  OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
@@ -95,10 +95,10 @@ class RegisterScreen extends StatelessWidget {
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (value) {
                                       if (value == null || value.trim().isEmpty) {
-                                        return AppLocalizations.of(context)!.emailRequired;
+                                        return S().emailRequired;
                                       }
                                       if (!value.contains('@')) {
-                                        return AppLocalizations.of(context)!.invalidEmail;
+                                        return S().invalidEmail;
                                       }
                                       return null;
                                     },
@@ -115,7 +115,7 @@ class RegisterScreen extends StatelessWidget {
                                   TextFormField(
                                     controller: passwordController,
                                     decoration: InputDecoration(
-                                      labelText: AppLocalizations.of(context)!.password,
+                                      labelText: S().password,
                                       prefixIcon: const Icon(Icons.lock,color:AppColors.earthBrown),
                                       enabledBorder:  OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
@@ -128,10 +128,10 @@ class RegisterScreen extends StatelessWidget {
                                     obscureText: true,
                                     validator: (value) {
                                       if (value == null || value.trim().isEmpty) {
-                                        return AppLocalizations.of(context)!.passwordRequired;
+                                        return S().passwordRequired;
                                       }
                                       if (value.length < 6) {
-                                        return AppLocalizations.of(context)!.passwordTooShort;
+                                        return S().passwordTooShort;
                                       }
                                       return null;
                                     },
@@ -140,7 +140,7 @@ class RegisterScreen extends StatelessWidget {
                                   TextFormField(
                                     controller: confirmPasswordController,
                                     decoration: InputDecoration(
-                                      labelText: AppLocalizations.of(context)!.confirmPassword,
+                                      labelText: S().confirmPassword,
                                       prefixIcon: const Icon(Icons.lock_outline, color: AppColors.earthBrown),
                                       enabledBorder: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
@@ -153,10 +153,10 @@ class RegisterScreen extends StatelessWidget {
                                     obscureText: true,
                                     validator: (value) {
                                       if (value == null || value.trim().isEmpty) {
-                                        return AppLocalizations.of(context)!.confirmPasswordRequired;
+                                        return S().confirmPasswordRequired;
                                       }
                                       if (value != passwordController.text) {
-                                        return AppLocalizations.of(context)!.passwordMismatch;
+                                        return S().passwordMismatch;
                                       }
                                       return null;
                                     },
@@ -197,7 +197,7 @@ class RegisterScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                 ),
-                                child: Text(AppLocalizations.of(context)!.signUp),
+                                child: Text(S().signUp),
                               ),
                             ),
                           ],
@@ -227,7 +227,7 @@ class RegisterScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    AppLocalizations.of(context)!.alreadyHaveAccount,
+                                    S().alreadyHaveAccount,
                                     style: AppTextStyles.body,
                                   ),
                                   GestureDetector(
@@ -240,7 +240,7 @@ class RegisterScreen extends StatelessWidget {
                                       );
                                     },
                                     child: Text(
-                                      AppLocalizations.of(context)!.signIn,
+                                      S().signIn,
                                       style: const TextStyle(
                                         color: AppColors.oceanBlue,
                                         fontWeight: FontWeight.bold,

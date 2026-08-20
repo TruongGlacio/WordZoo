@@ -83,6 +83,7 @@ class SizeManager {
   double get iconXXXXXXLarge => 180.0* ratioWidth;
   double get size450 => 450.0* ratioWidth;
   double get size350 => 350.0* ratioWidth;
+  double get size200 => 200.0* ratioWidth;
 
   // Button sizes
   double get buttonHeightSmall => 40.0* ratioWidth;
@@ -116,6 +117,8 @@ class SizeManager {
   double get spacingExtraLarge => spacing32;
 
   // Image sizes
+  double get imageXSmall => 36.0* ratioWidth;
+
   double get imageSmall => 48.0* ratioWidth;
   double get imageMedium => 80.0* ratioWidth;
   double get imageLarge => 120.0* ratioWidth;

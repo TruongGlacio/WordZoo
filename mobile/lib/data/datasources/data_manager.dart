@@ -7,6 +7,7 @@ import 'package:wordzoo/data/models/localized_names.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
 import 'package:wordzoo/data/models/word_zoo_data.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/utils/premium_entity_manager.dart';
 
 class DataManager {
   static final DataManager _singletonDummyData = DataManager._internal();
@@ -16,6 +17,7 @@ class DataManager {
   }
   DataManager._internal();
   List<Category> _categories = [];
+  WordZooData? _wordZooData;
   String _rootPath='';
   final defaultPassWord = '123456';
   final subFixEmail = '@gmail.com';
@@ -292,8 +294,10 @@ class DataManager {
     return _categories;
   }
   final DownloadProgressModel downloadProgressModel = DownloadProgressModel();
+  final MyPointModel myPointModel = MyPointModel();
 
   void setCategories({required WordZooData wordZooData}){
+    _wordZooData = wordZooData;
     _categories = wordZooData.categories;
   }
 }
@@ -307,6 +311,16 @@ class DownloadProgressModel extends ChangeNotifier {
   void notiDownloadProgress(int downloadProgress,bool needDownload) {
     _downloadProgress = downloadProgress;
     needDownloadFile = needDownload;
+    notifyListeners();
+  }
+}
+class MyPointModel extends ChangeNotifier {
+  int _point = PremiumEntityManager().getPointForFreeEntity();
+
+  // Getter to expose the private variable safely
+  int get point => _point;
+  void notiPoint(int point) {
+    _point = point;
     notifyListeners();
   }
 }

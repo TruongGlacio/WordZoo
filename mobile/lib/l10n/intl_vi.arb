@@ -1,4 +1,5 @@
 {
+  "@@locale": "vi",
   "appName": "WordZoo",
   "welcome": "Chào mừng đến với WordZoo",
   "subtitle": "Học tiếng Anh qua trò chơi",
@@ -254,5 +255,7 @@
   "selectEntityToViewDetails": "Chọn một thực thể để xem chi tiết",
   "errorWithMessage": "Lỗi: {message}",
   "englishLabel": "EN: {text}",
-  "chineseLabel": "ZH: {text}"
+  "chineseLabel": "ZH: {text}",
+  "buy_premium": "Mua Premium",
+  "watching_ads": "Xem quảng cáo"
 }

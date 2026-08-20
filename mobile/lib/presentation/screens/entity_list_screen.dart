@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
 import 'package:wordzoo/generated/assets.dart';
+import 'package:wordzoo/generated/l10n.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../data/models/category.dart';
@@ -14,8 +15,7 @@ import '../../presentation/theme/app_text_styles.dart';
 import '../../utils/size_manager.dart';
 import '../widgets/airplane_animation.dart';
 import 'entity/detail_panel.dart';
-import '../widgets/horizontal_entity_list.dart';
-import 'package:wordzoo/l10n/app_localizations.dart';
+import 'entity/horizontal_entity_list.dart';
 
 import 'entity/gift_drop_animation.dart';
 class EntityListScreen extends StatefulWidget {
@@ -81,7 +81,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                             )
                                 : Center(
                               child: Text(
-                                AppLocalizations.of(context)!.selectEntityToViewDetails,
+                                S().selectEntityToViewDetails,
                                 style: AppTextStyles.body,
                               ),
                             ),
@@ -146,7 +146,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                   ],
                 );
               } else if (state is EntityError) {
-                return Center(child: Text(AppLocalizations.of(context)!.errorWithMessage(state.message)));
+                return Center(child: Text(S().errorWithMessage(state.message)));
               }
               return const SizedBox.shrink();
             },
