@@ -28,17 +28,17 @@ class UnitIdManager {
 
 
   /// product unit ads
-  final String androidProductionBanner = 'ca-app-pub-1497971299528038/2396086247';
-  final String iosProductionBanner = 'ca-app-pub-1497971299528038/5647422775';
+  final String androidProductionBanner = 'ca-app-pub-4928233575981265/2195262927';
+  final String iosProductionBanner = 'ca-app-pub-4928233575981265/3777450677';
 
-  final String androidProductionInterstitial = 'ca-app-pub-1497971299528038/9995374669';
-  final String iosProductionInterstitial = 'ca-app-pub-1497971299528038/3541646959';
+  final String androidProductionInterstitial = 'ca-app-pub-4928233575981265/4028732117';
+  final String iosProductionInterstitial = 'ca-app-pub-4928233575981265/8808772736';
 
-  final String androidProductionAppOpen ='ca-app-pub-1497971299528038/2639628823' ;
-  final String iosProductionAppOpen = 'ca-app-pub-1497971299528038/3544787433';
+  final String androidProductionAppOpen ='ca-app-pub-4928233575981265/5444242796' ;
+  final String iosProductionAppOpen = 'ca-app-pub-4928233575981265/5859175768';
 
-  final String androidProductionRewarded = 'ca-app-pub-1497971299528038/7700383812';
-  final String iOSProductionRewarded = 'ca-app-pub-1497971299528038/9205037179';
+  final String androidProductionRewarded = 'ca-app-pub-4928233575981265/7528264476';
+  final String iOSProductionRewarded = 'ca-app-pub-4928233575981265/1402568771';
 
    String get banner {
     if (AdConfig.useTestAds) {
