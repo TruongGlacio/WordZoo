@@ -2,7 +2,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'dart:io';
 
-import 'unit_id_manager.dart';
+import 'google_mobile_ads_unit_id_manager.dart';
 
 class AppOpenAdManager {
   static final AppOpenAdManager _singletonAppOpenAdManager = AppOpenAdManager._internal();
@@ -18,7 +18,7 @@ class AppOpenAdManager {
   DateTime? _loadedTime;
 
   String get _adUnitId {
-      return UnitIdManager().appOpen;
+      return GoogleMobileAdsUnitIdManager().appOpen;
   }
 
   bool get isAdAvailable {

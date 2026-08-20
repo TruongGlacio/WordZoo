@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-class AdConfig {
-  AdConfig._();
+class GoogleMobileAdsConfig {
+  GoogleMobileAdsConfig._();
 
   /// Có thể override bằng:
   ///

@@ -8,7 +8,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:wordzoo/blocs/language/language_bloc.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/category.dart';
-import 'package:wordzoo/features/ads/google_mobile_ads/ads_manager.dart';
+import 'package:wordzoo/features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
 import 'package:wordzoo/features/iap/iap_page.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/presentation/widgets/my_point_widget.dart';
@@ -363,7 +363,7 @@ abstract class _SettingMenuItems {
         );
       });
     } else if (item == _SettingMenuItems.openads) {
-      AdsManager().showRewardAds(
+      GoogleMobileAdsManager().showRewardAds(
         onRewardEarned: (ad, reward) {
         },
         onAdFailedToShow: (error) {

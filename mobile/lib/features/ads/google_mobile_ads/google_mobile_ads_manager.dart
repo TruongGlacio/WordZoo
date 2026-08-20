@@ -6,13 +6,13 @@ import 'banner_ad_manager.dart';
 import 'interstitial_ad_manager.dart';
 import 'rewarded_ad_manager.dart';
 
-class AdsManager {
-  static final AdsManager _singletonAdsManager = AdsManager._internal();
-  static AdsManager get getInstance => _singletonAdsManager;
-  factory AdsManager() {
+class GoogleMobileAdsManager {
+  static final GoogleMobileAdsManager _singletonAdsManager = GoogleMobileAdsManager._internal();
+  static GoogleMobileAdsManager get getInstance => _singletonAdsManager;
+  factory GoogleMobileAdsManager() {
     return _singletonAdsManager;
   }
-  AdsManager._internal();
+  GoogleMobileAdsManager._internal();
 
   final AppOpenAdManager appOpen = AppOpenAdManager();
   final BannerAdManager banner = BannerAdManager();

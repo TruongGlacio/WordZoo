@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'unit_id_manager.dart';
+import 'google_mobile_ads_unit_id_manager.dart';
 
 class InterstitialAdManager {
   static final InterstitialAdManager _singletonInterstitialAdManager = InterstitialAdManager._internal();
@@ -17,7 +17,7 @@ class InterstitialAdManager {
   bool _isShowing = false;
 
   String get _adUnitId {
-      return UnitIdManager().interstitial;
+      return GoogleMobileAdsUnitIdManager().interstitial;
   }
 
   bool get isAvailable => _interstitialAd != null;

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'unit_id_manager.dart';
+import 'google_mobile_ads_unit_id_manager.dart';
 
 class BannerAdManager {
 
@@ -17,7 +17,7 @@ class BannerAdManager {
   bool _isLoaded = false;
 
   String get _adUnitId {
-      return UnitIdManager().banner;
+      return GoogleMobileAdsUnitIdManager().banner;
   }
 
   bool get isLoaded => _isLoaded;

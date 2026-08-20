@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
-import 'package:wordzoo/features/ads/google_mobile_ads/ads_manager.dart';
+import 'package:wordzoo/features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
 import 'package:wordzoo/features/iap/blocs/iap_bloc.dart';
 import 'package:wordzoo/utils/premium_entity_manager.dart';
 import '../../../data/models/entity.dart';
@@ -63,7 +63,7 @@ class HorizontalEntityList extends StatelessWidget {
                 {
                   /// xi ly ads hoặc iap
                   if(!PremiumEntityManager().isValidPoint()) {
-                    AdsManager().showRewardAds(
+                    GoogleMobileAdsManager().showRewardAds(
                     onRewardEarned: (ad, reward) {
                     },
                     onAdFailedToShow: (error) {

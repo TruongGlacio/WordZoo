@@ -1,16 +1,16 @@
 import 'dart:io';
 
-import 'ad_config.dart';
+import 'google_mobile_ads_config.dart';
 
-class UnitIdManager {
-  static final UnitIdManager _singletonUnitIdManager = UnitIdManager._internal();
+class GoogleMobileAdsUnitIdManager {
+  static final GoogleMobileAdsUnitIdManager _singletonUnitIdManager = GoogleMobileAdsUnitIdManager._internal();
 
-  static UnitIdManager get getInstance => _singletonUnitIdManager;
+  static GoogleMobileAdsUnitIdManager get getInstance => _singletonUnitIdManager;
 
-  factory UnitIdManager() {
+  factory GoogleMobileAdsUnitIdManager() {
     return _singletonUnitIdManager;
   }
-  UnitIdManager._internal();
+  GoogleMobileAdsUnitIdManager._internal();
 
 
   /// test unit ads
@@ -41,14 +41,14 @@ class UnitIdManager {
   final String iOSProductionRewarded = 'ca-app-pub-4928233575981265/1402568771';
 
    String get banner {
-    if (AdConfig.useTestAds) {
+    if (GoogleMobileAdsConfig.useTestAds) {
       return Platform.isAndroid ? bannerAndroidTest : bannerOpenIOSTest;
     }
     return Platform.isAndroid ? androidProductionBanner : iosProductionBanner;
   }
 
    String get interstitial {
-    if (AdConfig.useTestAds) {
+    if (GoogleMobileAdsConfig.useTestAds) {
       return Platform.isAndroid ? interstitialAndroidTest : interstitialOpenIOSTest;
     }
 
@@ -56,13 +56,13 @@ class UnitIdManager {
   }
 
    String get appOpen {
-    if (AdConfig.useTestAds) {
+    if (GoogleMobileAdsConfig.useTestAds) {
       return Platform.isAndroid ? appOpenAndroidTest : appOpenIOSTest;
     }
     return Platform.isAndroid ? androidProductionAppOpen : iosProductionAppOpen;
   }
   String get rewarded {
-    if (AdConfig.useTestAds) {
+    if (GoogleMobileAdsConfig.useTestAds) {
       return Platform.isAndroid ? rewardedAndroidTest : rewardedIOSTest;
     }
 

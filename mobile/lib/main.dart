@@ -23,8 +23,8 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:wordzoo/utils/size_manager.dart';
 
 import 'base/store/cache_storage.dart';
-//import 'features/ads/google_mobile_ads/ads_manager.dart';
-import 'features/ads/google_mobile_ads/ads_manager.dart';
+//import 'features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
+import 'features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
 import 'features/iap/blocs/iap_bloc.dart';
 import 'features/iap/data/repositories/iap_repository.dart';
 import 'generated/l10n.dart';
@@ -32,7 +32,7 @@ import 'generated/l10n.dart';
 Future<void> main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesStorage().initSharedPreferences();
-  await AdsManager().initialize();
+  await GoogleMobileAdsManager().initialize();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,

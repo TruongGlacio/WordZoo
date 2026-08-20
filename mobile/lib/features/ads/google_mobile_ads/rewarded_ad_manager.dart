@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'unit_id_manager.dart';
+import 'google_mobile_ads_unit_id_manager.dart';
 
 class RewardedAdManager {
   RewardedAd? _rewardedAd;
@@ -11,7 +11,7 @@ class RewardedAdManager {
   bool _isShowing = false;
 
   String get _adUnitId {
-      return UnitIdManager().rewarded;
+      return GoogleMobileAdsUnitIdManager().rewarded;
   }
 
   bool get isAvailable => _rewardedAd != null;
