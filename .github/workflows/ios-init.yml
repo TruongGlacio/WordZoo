@@ -180,22 +180,22 @@ jobs:
       # =========================================================
       # 5. Create CI xcconfig
       # =========================================================
-    - name: Create CI signing xcconfig
-      working-directory: mobile
-      run: |
-        set -e
+      - name: Create CI signing xcconfig
+        working-directory: mobile
+        run: |
+          set -e
 
-        DART_DEFINES=$(python3 -c \
-          "import base64; print(base64.b64encode(b'USE_TEST_ADS=false').decode())")
+          DART_DEFINES=$(python3 -c \
+            "import base64; print(base64.b64encode(b'USE_TEST_ADS=false').decode())")
 
-        cat > ios/Flutter/CIRelease.xcconfig <<EOF
-        #include "Generated.xcconfig"
+          cat > ios/Flutter/CIRelease.xcconfig <<EOF
+          #include "Generated.xcconfig"
 
-        DART_DEFINES=$DART_DEFINES
-        EOF
+          DART_DEFINES=$DART_DEFINES
+          EOF
 
-        echo "=== CIRelease.xcconfig ==="
-        cat ios/Flutter/CIRelease.xcconfig
+          echo "=== CIRelease.xcconfig ==="
+          cat ios/Flutter/CIRelease.xcconfig
 
       # =========================================================
       # 6. Verify project signing configuration
