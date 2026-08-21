@@ -2054,6 +2054,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Agree`
+  String get str_accept {
+    return Intl.message('Agree', name: 'str_accept', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get str_cancel {
+    return Intl.message('Cancel', name: 'str_cancel', desc: '', args: []);
+  }
+
+  /// `The application has a new version, please update to use the latest features`
+  String get update_notify {
+    return Intl.message(
+      'The application has a new version, please update to use the latest features',
+      name: 'update_notify',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

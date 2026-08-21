@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:syncfusion_flutter_sliders/sliders.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/generated/l10n.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../blocs/entity/entity_bloc.dart';
 import '../../data/models/category.dart';
 import '../../data/models/subcategory.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../base/resizer/size_manager.dart';
 import '../widgets/airplane_animation.dart';
 import 'entity/detail_panel.dart';
 import 'entity/horizontal_entity_list.dart';
@@ -82,7 +82,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                                 : Center(
                               child: Text(
                                 S().selectEntityToViewDetails,
-                                style: AppTextStyles.body,
+                                style: TextStyleConstant.body,
                               ),
                             ),
                           ),
@@ -160,10 +160,10 @@ class _EntityListScreenState extends State<EntityListScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding:  EdgeInsets.only(top: SizeManager().imageSmall,),
+                  padding:  EdgeInsets.only(top: Dimens().imageSmall,),
                   child: IconButton(
                     onPressed: () => Navigator.pop(context),
-                    icon: Image.asset(Assets.assets.icons.backPage.path, width: SizeManager().iconXLarge, height: SizeManager().iconXLarge),
+                    icon: Image.asset(Assets.assets.icons.backPage.path, width: Dimens().iconXLarge, height: Dimens().iconXLarge),
                   ),
                 ),
                 Expanded(
@@ -171,11 +171,11 @@ class _EntityListScreenState extends State<EntityListScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: SizeManager().imageSmall,
-                        height: SizeManager().imageLarge,
+                        width: Dimens().imageSmall,
+                        height: Dimens().imageLarge,
                         decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+                          color: ColorConst.white,
+                          borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall)
                         ),
                         child: StatefulBuilder(builder: (context, setState) {
                           return SfSlider.vertical(
@@ -183,7 +183,7 @@ class _EntityListScreenState extends State<EntityListScreen> {
                             max: AudioService().playbackRateMax,
                             interval: 0.1,
                             showTicks: true,
-                            activeColor: AppColors.grassGreen,
+                            activeColor: ColorConst.grassGreen,
                             showLabels: false,
                             enableTooltip: true,
                             minorTicksPerInterval: 0,

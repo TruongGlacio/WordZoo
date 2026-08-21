@@ -175,9 +175,9 @@ class _AppLovinMasterExampleState extends State<AppLovinMasterExample> {
           ),
           Card(
             child: ListTile(
-              title: Text('Rewarded'),
+              title: const Text('Rewarded'),
               subtitle:
-                  Text('Show rewarded ad for rewards'),
+                  const Text('Show rewarded ad for rewards'),
               onTap: () {
                 Navigator.push(
                   context,

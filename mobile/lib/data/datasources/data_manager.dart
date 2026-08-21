@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:wordzoo/data/models/audio_paths.dart';
 import 'package:wordzoo/data/models/category.dart';
@@ -22,6 +24,17 @@ class DataManager {
   final defaultPassWord = '123456';
   final subFixEmail = '@gmail.com';
 
+  String getWordZooStoreLink() {
+    if (Platform.isAndroid) {
+      return 'https://play.google.com/store/apps/details?id=com.wordzoo.app.wordzoo';
+    }
+
+    if (Platform.isIOS) {
+      return 'https://apps.apple.com/app/WORDZOO_APP_ID';
+    }
+
+    return 'https://wordzoo.app';
+  }
   void setRootPath(String? rootPath)
   {
     _rootPath = rootPath??'';

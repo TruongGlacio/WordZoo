@@ -257,5 +257,8 @@
   "englishLabel": "EN: {text}",
   "chineseLabel": "ZH: {text}",
   "buy_premium": "Mua Premium",
-  "watching_ads": "Xem quảng cáo"
+  "watching_ads": "Xem quảng cáo",
+  "str_accept": "Đồng ý",
+  "str_cancel": "Huỷ bỏ",
+  "update_notify": "Ứng dụng đã có phiên bản mới, vui lòng cập nhật để sử dụng những tính năng mới nhất"
 }

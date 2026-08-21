@@ -364,6 +364,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "storageWarning": MessageLookupByLibrary.simpleMessage(
       "Device storage is low",
     ),
+    "str_accept": MessageLookupByLibrary.simpleMessage("Agree"),
+    "str_cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
     "streak": MessageLookupByLibrary.simpleMessage("Streak"),
     "streakDays": m7,
     "streakDays_plural": m8,
@@ -394,6 +396,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unknownError": MessageLookupByLibrary.simpleMessage("Unknown error"),
     "unmarkAsLearned": MessageLookupByLibrary.simpleMessage(
       "Unmark as Learned",
+    ),
+    "update_notify": MessageLookupByLibrary.simpleMessage(
+      "The application has a new version, please update to use the latest features",
     ),
     "upgrade": MessageLookupByLibrary.simpleMessage("Upgrade"),
     "validationError": MessageLookupByLibrary.simpleMessage("Validation error"),

@@ -363,6 +363,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "storageWarning": MessageLookupByLibrary.simpleMessage(
       "Bộ nhớ thiết bị thấp",
     ),
+    "str_accept": MessageLookupByLibrary.simpleMessage("Đồng ý"),
+    "str_cancel": MessageLookupByLibrary.simpleMessage("Huỷ bỏ"),
     "streak": MessageLookupByLibrary.simpleMessage("Chuỗi"),
     "streakDays": m7,
     "streakDays_plural": m8,
@@ -397,6 +399,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "unknownError": MessageLookupByLibrary.simpleMessage("Lỗi không xác định"),
     "unmarkAsLearned": MessageLookupByLibrary.simpleMessage(
       "Bỏ đánh dấu đã học",
+    ),
+    "update_notify": MessageLookupByLibrary.simpleMessage(
+      "Ứng dụng đã có phiên bản mới, vui lòng cập nhật để sử dụng những tính năng mới nhất",
     ),
     "upgrade": MessageLookupByLibrary.simpleMessage("Nâng cấp"),
     "validationError": MessageLookupByLibrary.simpleMessage("Lỗi xác thực"),

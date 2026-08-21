@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
+import '../../base/resizer/size_manager.dart';
 
 class SignpostWidget extends StatelessWidget {
   final String title;
@@ -22,12 +22,12 @@ class SignpostWidget extends StatelessWidget {
         width: 160,
         height: 80,
         decoration: BoxDecoration(
-          color: AppColors.earthBrown,
-          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall),
-          border: Border.all(color: AppColors.earthBrown, width: 4),
+          color: ColorConst.earthBrown,
+          borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall),
+          border: Border.all(color: ColorConst.earthBrown, width: 4),
           boxShadow: const [
             BoxShadow(
-              color: AppColors.softShadow,
+              color: ColorConst.softShadow,
               blurRadius: 8,
               offset: Offset(4, 4),
             ),
@@ -36,7 +36,7 @@ class SignpostWidget extends StatelessWidget {
         child: Center(
           child: Text(
             title,
-            style: AppTextStyles.signpost,
+            style: TextStyleConstant.signpost,
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

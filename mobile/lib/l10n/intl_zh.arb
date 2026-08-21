@@ -257,5 +257,8 @@
   "englishLabel": "英文：{text}",
   "chineseLabel": "中文：{text}",
   "buy_premium": "购买高级版",
-  "watching_ads": "观看广告"
+  "watching_ads": "观看广告",
+  "str_accept": "同意",
+  "str_cancel": "取消",
+  "update_notify": "该应用有新版本，请更新以使用最新功能"
 }

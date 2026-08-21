@@ -8,8 +8,8 @@ import 'package:wordzoo/features/ads/google_mobile_ads/google_mobile_ads_manager
 import 'package:wordzoo/features/iap/blocs/iap_bloc.dart';
 import 'package:wordzoo/utils/premium_entity_manager.dart';
 import '../../../data/models/entity.dart';
-import '../../theme/app_colors.dart';
-import '../../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../../base/resizer/size_manager.dart';
 
 class HorizontalEntityList extends StatelessWidget {
   final List<Entity> entities;
@@ -22,22 +22,22 @@ class HorizontalEntityList extends StatelessWidget {
   Widget build(BuildContext context) {
     final isPremium = context.watch<IAPBloc>().state is PremiumActive;
     double height = MediaQuery.of(context).size.height/8;
-    if(height <=( SizeManager().buttonHeightMedium + SizeManager().spacing16))
+    if(height <=( Dimens().buttonHeightMedium + Dimens().spacing16))
     {
-      height = SizeManager().buttonHeightMedium +  SizeManager().spacing16;
+      height = Dimens().buttonHeightMedium +  Dimens().spacing16;
     }
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.primaryColor.withValues(alpha: 0.8),
-        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-        border: Border.all(color: AppColors.white, width: 2),
+        color: ColorConst.primaryColor.withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
+        border: Border.all(color: ColorConst.white, width: 2),
       ),
       height: height,
-      margin: SizeManager().paddingHorizontalXXXXLarge,
+      margin: Dimens().paddingHorizontalXXXXLarge,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         shrinkWrap: true,
-        padding:  EdgeInsets.symmetric(horizontal: SizeManager().spacing16, vertical: SizeManager().spacing8),
+        padding:  EdgeInsets.symmetric(horizontal: Dimens().spacing16, vertical: Dimens().spacing8),
         itemCount: entities.length,
         itemBuilder: (context, index) {
           final entity = entities.elementAt(index);
@@ -87,11 +87,11 @@ class HorizontalEntityList extends StatelessWidget {
             },
             child: Container(
               width: height,
-              margin:  EdgeInsets.symmetric(horizontal: SizeManager().spacing8),
+              margin:  EdgeInsets.symmetric(horizontal: Dimens().spacing8),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.skyBlue  : Colors.white,
-                borderRadius: BorderRadius.circular(SizeManager().spacing12),
-                border: Border.all(color: isSelected ? AppColors.leafGreen : AppColors.earthBrown, width: 2),
+                color: isSelected ? ColorConst.skyBlue  : Colors.white,
+                borderRadius: BorderRadius.circular(Dimens().spacing12),
+                border: Border.all(color: isSelected ? ColorConst.leafGreen : ColorConst.earthBrown, width: 2),
               ),
               child: Stack(
                 children: [
@@ -99,12 +99,12 @@ class HorizontalEntityList extends StatelessWidget {
                     fit: StackFit.expand,
                     children: [
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(SizeManager().spacing12),
+                        borderRadius: BorderRadius.circular(Dimens().spacing12),
                         child: Image.file(
                           File(entity.getLocalIcon()),
                           fit: BoxFit.contain,
                           errorBuilder: (context, error, stackTrace) {
-                            return Container(color: Colors.grey[300], child: Icon(Icons.image, size: SizeManager().spacing40));
+                            return Container(color: Colors.grey[300], child: Icon(Icons.image, size: Dimens().spacing40));
                           },
                         ),
                       ),
@@ -112,21 +112,21 @@ class HorizontalEntityList extends StatelessWidget {
                         alignment: Alignment.bottomLeft,
                         child: Container(
                           decoration: BoxDecoration(
-                            color: AppColors.white.withValues(alpha: 0.5),
-                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusXSmall)
+                            color: ColorConst.white.withValues(alpha: 0.5),
+                            borderRadius: BorderRadius.circular(Dimens().borderRadiusXSmall)
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: SizeManager().spacing4),
+                          padding: EdgeInsets.symmetric(horizontal: Dimens().spacing4),
                           child: Text(
                             entity.names.getBy(DataManager().getCurrentLocale().languageCode),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: SizeManager().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : AppColors.darkText),                          ),
+                            style: TextStyle(fontSize: Dimens().spacing12, fontWeight: isSelected ? FontWeight.bold : FontWeight.normal, color: isSelected ? Colors.white : ColorConst.darkText),                          ),
                         ),
                       ),
                       if (!isOpen)
                         Container(
-                          color: AppColors.darkText.withValues(alpha: 0.5),
-                          child:  Icon(Icons.lock, color: Colors.white, size: SizeManager().spacing24),
+                          color: ColorConst.darkText.withValues(alpha: 0.5),
+                          child:  Icon(Icons.lock, color: Colors.white, size: Dimens().spacing24),
                         ),
                     ],
                   ),

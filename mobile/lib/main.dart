@@ -20,8 +20,9 @@ import 'package:wordzoo/presentation/screens/splash_screen.dart';
 import 'package:wordzoo/presentation/screens/login_screen.dart';
 import 'package:wordzoo/presentation/screens/home_screen.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:wordzoo/utils/size_manager.dart';
+import 'package:wordzoo/base/resizer/size_manager.dart';
 
+import 'base/resizer/fetch_pixels.dart';
 import 'base/store/cache_storage.dart';
 //import 'features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
 import 'features/ads/google_mobile_ads/google_mobile_ads_manager.dart';
@@ -54,7 +55,7 @@ Future<void> main() async {
   final dataSyncRepo = DataSyncRepositoryImpl.instance;
   final progressRepo = ProgressRepositoryImpl.instance;
   final iapRepo = IapRepositoryImpl.instance;
-  SizeManager().initialScreen();
+  Dimens().initialScreen();
   runApp(
     MultiRepositoryProvider(
       providers: [
@@ -138,6 +139,7 @@ class AuthGate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FetchPixels().setFetchPixels(context);
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
         if (state is Authenticated) {

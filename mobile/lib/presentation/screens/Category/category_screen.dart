@@ -9,11 +9,11 @@ import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/presentation/screens/entity_list_screen.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../../data/models/category.dart';
-import '../../theme/app_colors.dart';
-import '../../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../../base/resizer/size_manager.dart';
 import 'category_map_layout.dart';
 
-double nodeSize = SizeManager().iconXXXLarge;
+double nodeSize = Dimens().iconXXXLarge;
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
@@ -87,7 +87,7 @@ class CategoryScreenState extends State<CategoryScreen> {
               children: [
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Image.asset(Assets.assets.icons.backPage.path, width: SizeManager().iconXLarge, height: SizeManager().iconXLarge),
+                  icon: Image.asset(Assets.assets.icons.backPage.path, width: Dimens().iconXLarge, height: Dimens().iconXLarge),
                 ),
               ],
             ),
@@ -124,7 +124,7 @@ class _SubCategoryItem extends StatelessWidget {
             fit: BoxFit.fill,
             //colorFilter: const ColorFilter.mode(Colors.black12, BlendMode.dstOut)
           ),
-          borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
+          borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
         ),
         child: SizedBox(
           width: nodeSize,
@@ -135,11 +135,11 @@ class _SubCategoryItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                height: SizeManager().iconMediumX,
-                width: SizeManager().iconMediumX,
-                margin: EdgeInsets.only(top: SizeManager().spacingExtraSmall),
+                height: Dimens().iconMediumX,
+                width: Dimens().iconMediumX,
+                margin: EdgeInsets.only(top: Dimens().spacingExtraSmall),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(SizeManager().iconMediumX)
+                  borderRadius: BorderRadius.circular(Dimens().iconMediumX)
                 ),
                 clipBehavior: Clip.hardEdge,
                 //alignment: Alignment.center,
@@ -151,17 +151,17 @@ class _SubCategoryItem extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                  // color: AppColors.brown,
-                  borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall)
+                  borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall)
                 ),
                 constraints: BoxConstraints(
-                  minHeight: SizeManager().spacing40
+                  minHeight: Dimens().spacing40
                 ),
-                margin: EdgeInsets.only(bottom: SizeManager().spacingSmall),
-                padding: EdgeInsets.symmetric(horizontal: SizeManager().spacingExtraSmall, vertical: SizeManager().spacingExtraSmall),
+                margin: EdgeInsets.only(bottom: Dimens().spacingSmall),
+                padding: EdgeInsets.symmetric(horizontal: Dimens().spacingExtraSmall, vertical: Dimens().spacingExtraSmall),
                 child: Text(
                   subcategory.names.getBy(DataManager().getCurrentLocale().languageCode),
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: SizeManager().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
+                  style: TextStyle(fontSize: Dimens().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
             ],

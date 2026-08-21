@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
 import 'package:wordzoo/generated/assets.dart';
 import '../../blocs/auth/auth_bloc.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import '../../base/resizer/size_manager.dart';
 import '../../utils/notification_service.dart';
 import 'package:wordzoo/generated/l10n.dart';
-import 'register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -38,10 +36,10 @@ class LoginScreen extends StatelessWidget {
             image: DecorationImage(image: AssetImage(Assets.assets.background.loginLandScape.path), fit: BoxFit.cover),
           ),
           child: Padding(
-            padding:  SizeManager().paddingMedium,
+            padding: EdgeInsetsGeometry.all(Dimens().paddingMedium),
             child: Center(
               child: ConstrainedBox(
-                constraints:  BoxConstraints(maxWidth: SizeManager().size350),
+                constraints:  BoxConstraints(maxWidth: Dimens().size350),
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -52,15 +50,15 @@ class LoginScreen extends StatelessWidget {
                         controller: emailController,
                         decoration: InputDecoration(
                           labelText: S().displayName,
-                          prefixIcon: const Icon(Icons.face, color:AppColors.earthBrown),
+                          prefixIcon: const Icon(Icons.face, color:ColorConst.earthBrown),
                           enabledBorder:  OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                            borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                               borderSide: const BorderSide(
-                                  color: AppColors.brown,
+                                  color: ColorConst.brown,
                               ))
                         ),
                       ),
-                      Gap(SizeManager().spacing32),
+                      Gap(Dimens().spacing32),
                       Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                             },
-                            style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(SizeManager().imageXXXLarge, SizeManager().imageSmall))
+                            style:  ButtonStyle(fixedSize: WidgetStatePropertyAll(Size(Dimens().imageXXXLarge, Dimens().imageSmall))
                             ),
                             child: Text(S().playNow),
                           ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordzoo/utils/size_manager.dart';
+import 'package:wordzoo/base/resizer/size_manager.dart';
 
 import 'gift_drop_controller.dart';
 
@@ -34,8 +34,8 @@ class GiftBoxWidget extends StatelessWidget {
         }
 
         double top = controller.giftY * h - giftSize / 2;
-         if(top<=SizeManager().spacing32)
-           {top=SizeManager().spacing32;}
+         if(top<=Dimens().spacing32)
+           {top=Dimens().spacing32;}
 
         final image = controller.currentFrame < frames.length
             ? frames[controller.currentFrame]
@@ -50,8 +50,8 @@ class GiftBoxWidget extends StatelessWidget {
               top: top,
               child: Image(
                 image: image,
-                width: SizeManager().spacing128,
-                height: SizeManager().spacing128,
+                width: Dimens().spacing128,
+                height: Dimens().spacing128,
                 fit: BoxFit.contain,
               ),
             ),

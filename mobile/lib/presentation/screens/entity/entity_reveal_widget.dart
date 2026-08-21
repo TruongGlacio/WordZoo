@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordzoo/utils/size_manager.dart';
+import 'package:wordzoo/base/resizer/size_manager.dart';
 
 import 'gift_drop_controller.dart';
 
@@ -49,12 +49,12 @@ class EntityRevealWidget extends StatelessWidget {
                         height: MediaQuery.of(context).size.width * 0.16,
                         clipBehavior: Clip.hardEdge,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                          borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                           boxShadow: [
                             BoxShadow(
                               color: Colors.yellow.withValues(alpha: 0.25),
-                              blurRadius: SizeManager().spacing40,
-                              spreadRadius: SizeManager().spacing12,
+                              blurRadius: Dimens().spacing40,
+                              spreadRadius: Dimens().spacing12,
                             ),
                           ],
                         ),

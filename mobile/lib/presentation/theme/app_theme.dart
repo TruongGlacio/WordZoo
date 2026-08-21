@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import '../../utils/font_manager.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
+import '../../base/resizer/size_manager.dart';
 
 class AppColors {
   static const skyBlue = Color(0xFF87CEEB);
@@ -20,16 +20,6 @@ class AppColors {
   );
 }
 
-class AppTextStyles {
-  static TextStyle get heading => FontManager.instance.heading;
-  static TextStyle get title => FontManager.instance.title;
-  static TextStyle get body => FontManager.instance.body;
-  static TextStyle get button => FontManager.instance.button;
-  static TextStyle get signpost => FontManager.instance.signpost;
-  static TextStyle get small => FontManager.instance.small;
-  static TextStyle get caption => FontManager.instance.caption;
-}
-
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
@@ -42,16 +32,16 @@ class AppTheme {
       scaffoldBackgroundColor: AppColors.skyBlue,
       cardColor: AppColors.white,
       textTheme: TextTheme(
-        displayLarge: FontManager.instance.heading,
-        headlineMedium: FontManager.instance.title,
-        bodyLarge: FontManager.instance.body,
-        labelLarge: FontManager.instance.button,
+        displayLarge: TextStyleConstant.heading,
+        headlineMedium: TextStyleConstant.title,
+        bodyLarge: TextStyleConstant.body,
+        labelLarge: TextStyleConstant.button,
       ),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.white,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+          borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
           borderSide: const BorderSide(color: AppColors.earthBrown),
         ),
       ),
@@ -59,9 +49,9 @@ class AppTheme {
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.leafGreen,
           foregroundColor: AppColors.white,
-          padding: SizeManager().paddingHorizontalLarge,
+          padding: Dimens().paddingHorizontalLarge,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+            borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
           ),
         ),
       ),

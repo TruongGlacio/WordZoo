@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
+import '../../base/resizer/size_manager.dart';
 
 class ProgressBarWidget extends StatelessWidget {
   final int learned;
@@ -22,15 +22,15 @@ class ProgressBarWidget extends StatelessWidget {
       children: [
         Text(
           '$learned/$total',
-          style: AppTextStyles.small,
+          style: TextStyleConstant.small,
         ),
-        Gap(SizeManager().spacingSmall),
+        Gap(Dimens().spacingSmall),
         LinearProgressIndicator(
           value: progress,
-          minHeight: SizeManager().spacingSmall,
-          borderRadius: BorderRadius.circular(SizeManager().borderRadiusSmall),
+          minHeight: Dimens().spacingSmall,
+          borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall),
           backgroundColor: Colors.white,
-          valueColor: const AlwaysStoppedAnimation<Color>(AppColors.leafGreen),
+          valueColor: const AlwaysStoppedAnimation<Color>(ColorConst.leafGreen),
         ),
       ],
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import '../../utils/size_manager.dart';
+import '../base/resizer/size_manager.dart';
 
 enum NotificationType { success, error, warning, info }
 
@@ -45,7 +45,7 @@ class NotificationService {
       content: Row(
         children: [
           Icon(_getIcon(type), color: Colors.white),
-          Gap(SizeManager().spacing12),
+          Gap(Dimens().spacing12),
           Expanded(child: Text(message)),
         ],
       ),

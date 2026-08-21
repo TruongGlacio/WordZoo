@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../base/resizer/size_manager.dart';
 
 class MyPointWidget extends StatelessWidget {
   const MyPointWidget({
@@ -15,12 +15,12 @@ class MyPointWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.sunnyYellow.withValues(alpha: 1),
-        borderRadius: BorderRadius.circular(SizeManager().borderRadiusLarge),
-        border: Border.all(color: AppColors.grassGreen, width: SizeManager().spacing4),
+        color: ColorConst.sunnyYellow.withValues(alpha: 1),
+        borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
+        border: Border.all(color: ColorConst.grassGreen, width: Dimens().spacing4),
       ),
       padding: EdgeInsetsGeometry.symmetric(
-          horizontal: SizeManager().spacing8,
+          horizontal: Dimens().spacing8,
           vertical: 0),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -30,23 +30,23 @@ class MyPointWidget extends StatelessWidget {
             builder: (context, child) {
               return  Text(
                 DataManager().myPointModel.point.toString(),
-                style: AppTextStyles.body.copyWith(color: AppColors.coralRed),
+                style: TextStyleConstant.body.copyWith(color: ColorConst.coralRed),
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               );
             },
           ),
-          Gap(SizeManager().spacing4),
+          Gap(Dimens().spacing4),
           Card(
             elevation: 0,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium)
+                borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium)
               ),
-              color: AppColors.white,
+              color: ColorConst.white,
               child: Center(
                   child: Icon(Icons.add_circle_outlined,
-                size: SizeManager().iconSmall,color: AppColors.leafGreen,)))
+                size: Dimens().iconSmall,color: ColorConst.leafGreen,)))
         ],
       ),
     ).animate().scale(duration: 200.ms);

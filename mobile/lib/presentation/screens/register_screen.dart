@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:wordzoo/base/theme/text_stype_constant.dart';
 import 'package:wordzoo/generated/assets.dart';
 import '../../blocs/auth/auth_bloc.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../presentation/theme/app_text_styles.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../base/resizer/size_manager.dart';
 import '../../utils/notification_service.dart';
 import 'package:wordzoo/generated/l10n.dart';
 import 'login_screen.dart';
@@ -59,17 +59,17 @@ class RegisterScreen extends StatelessWidget {
                                     controller: displayNameController,
                                     decoration: InputDecoration(
                                       labelText: S().displayName,
-                                      prefixIcon: const Icon(Icons.person,color:AppColors.earthBrown),
+                                      prefixIcon: const Icon(Icons.person,color:ColorConst.earthBrown),
                                       border: OutlineInputBorder(
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       enabledBorder:  OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                                          borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                                           borderSide: const BorderSide(
-                                            color: AppColors.brown,
+                                            color: ColorConst.brown,
                                           )),
                                       filled: true,
-                                      fillColor: AppColors.white,
+                                      fillColor: ColorConst.white,
                                     ),
                                     validator: (value) {
                                       if (value == null || value.trim().isEmpty) {
@@ -78,19 +78,19 @@ class RegisterScreen extends StatelessWidget {
                                       return null;
                                     },
                                   ),
-                                  Gap(SizeManager().spacing16),
+                                  Gap(Dimens().spacing16),
                                   TextFormField(
                                     controller: emailController,
                                     decoration: InputDecoration(
                                       labelText: S().email,
-                                      prefixIcon: const Icon(Icons.email,color:AppColors.earthBrown),
+                                      prefixIcon: const Icon(Icons.email,color:ColorConst.earthBrown),
                                       enabledBorder:  OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                                          borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                                           borderSide: const BorderSide(
-                                            color: AppColors.brown,
+                                            color: ColorConst.brown,
                                           )),
                                       filled: true,
-                                      fillColor: AppColors.white,
+                                      fillColor: ColorConst.white,
                                     ),
                                     keyboardType: TextInputType.emailAddress,
                                     validator: (value) {
@@ -103,11 +103,11 @@ class RegisterScreen extends StatelessWidget {
                                       return null;
                                     },
                                   ),
-                                  Gap(SizeManager().spacing16),
+                                  Gap(Dimens().spacing16),
                                 ],
                               ),
                             ),
-                            Gap(SizeManager().spacing32),
+                            Gap(Dimens().spacing32),
                             Expanded(
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -116,14 +116,14 @@ class RegisterScreen extends StatelessWidget {
                                     controller: passwordController,
                                     decoration: InputDecoration(
                                       labelText: S().password,
-                                      prefixIcon: const Icon(Icons.lock,color:AppColors.earthBrown),
+                                      prefixIcon: const Icon(Icons.lock,color:ColorConst.earthBrown),
                                       enabledBorder:  OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                                          borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                                           borderSide: const BorderSide(
-                                            color: AppColors.brown,
+                                            color: ColorConst.brown,
                                           )),
                                       filled: true,
-                                      fillColor: AppColors.white,
+                                      fillColor: ColorConst.white,
                                     ),
                                     obscureText: true,
                                     validator: (value) {
@@ -136,19 +136,19 @@ class RegisterScreen extends StatelessWidget {
                                       return null;
                                     },
                                   ),
-                                  Gap(SizeManager().spacing16),
+                                  Gap(Dimens().spacing16),
                                   TextFormField(
                                     controller: confirmPasswordController,
                                     decoration: InputDecoration(
                                       labelText: S().confirmPassword,
-                                      prefixIcon: const Icon(Icons.lock_outline, color: AppColors.earthBrown),
+                                      prefixIcon: const Icon(Icons.lock_outline, color: ColorConst.earthBrown),
                                       enabledBorder: OutlineInputBorder(
-                                        borderRadius: BorderRadius.circular(SizeManager().borderRadiusMedium),
+                                        borderRadius: BorderRadius.circular(Dimens().borderRadiusMedium),
                                         borderSide: const BorderSide(
-                                          color: AppColors.brown,
+                                          color: ColorConst.brown,
                                         )),
                                       filled: true,
-                                      fillColor: AppColors.white,
+                                      fillColor: ColorConst.white,
                                     ),
                                     obscureText: true,
                                     validator: (value) {
@@ -161,13 +161,13 @@ class RegisterScreen extends StatelessWidget {
                                       return null;
                                     },
                                   ),
-                                  Gap(SizeManager().spacing16),
+                                  Gap(Dimens().spacing16),
                                 ],
                               ),
                             ),
                           ],
                         ),
-                        Gap(SizeManager().spacing16),
+                        Gap(Dimens().spacing16),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -187,8 +187,8 @@ class RegisterScreen extends StatelessWidget {
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.leafGreen,
-                                  foregroundColor: AppColors.white,
+                                  backgroundColor: ColorConst.leafGreen,
+                                  foregroundColor: ColorConst.white,
                                   padding: const EdgeInsets.symmetric(
                                     horizontal: 24,
                                     vertical: 16,
@@ -202,7 +202,7 @@ class RegisterScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        Gap(SizeManager().spacing16),
+                        Gap(Dimens().spacing16),
                         Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -215,7 +215,7 @@ class RegisterScreen extends StatelessWidget {
                                 color: Colors.transparent,
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.white,
+                                    color: ColorConst.white,
                                     blurRadius: 15,
                                   )
                                 ],
@@ -228,7 +228,7 @@ class RegisterScreen extends StatelessWidget {
                                 children: [
                                   Text(
                                     S().alreadyHaveAccount,
-                                    style: AppTextStyles.body,
+                                    style: TextStyleConstant.body,
                                   ),
                                   GestureDetector(
                                     onTap: () {
@@ -242,7 +242,7 @@ class RegisterScreen extends StatelessWidget {
                                     child: Text(
                                       S().signIn,
                                       style: const TextStyle(
-                                        color: AppColors.oceanBlue,
+                                        color: ColorConst.oceanBlue,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),

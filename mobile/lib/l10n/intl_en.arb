@@ -260,5 +260,9 @@
   "englishLabel": "EN: {text}",
   "chineseLabel": "ZH: {text}",
   "buy_premium": "Buy Premium",
-  "watching_ads": "Watching Ads"
+  "watching_ads": "Watching Ads",
+  "str_accept": "Agree",
+  "str_cancel": "Cancel",
+  "update_notify": "The application has a new version, please update to use the latest features"
 }
+

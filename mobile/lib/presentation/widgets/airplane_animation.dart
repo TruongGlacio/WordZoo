@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../presentation/theme/app_colors.dart';
-import '../../utils/size_manager.dart';
+import 'package:wordzoo/base/theme/colors_app.dart';
+import '../../base/resizer/size_manager.dart';
 
 class AirplaneAnimation extends StatefulWidget {
   final Widget child;
@@ -65,7 +65,7 @@ class _AirplaneAnimationState extends State<AirplaneAnimation>
             Positioned(
               left: _position.value.dx * size.width,
               top: _position.value.dy * size.height,
-              child: const Icon(Icons.airplanemode_active, size: 48, color: AppColors.earthBrown),
+              child: const Icon(Icons.airplanemode_active, size: 48, color: ColorConst.earthBrown),
             ),
             // Entity + Glow
             Transform.scale(
@@ -75,7 +75,7 @@ class _AirplaneAnimationState extends State<AirplaneAnimation>
                   boxShadow: _glowOpacity.value > 0
                       ? [
                           BoxShadow(
-                             color: AppColors.sunnyYellow
+                             color: ColorConst.sunnyYellow
                                  .withValues(alpha: _glowOpacity.value),
                             blurRadius: 50,
                             spreadRadius: 20,

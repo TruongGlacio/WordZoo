@@ -157,6 +157,7 @@ class $AssetsIconsGen {
   final AssetGenImage flight = const AssetGenImage('assets/icons/flight.png');
   final AssetGenImage iap = const AssetGenImage('assets/icons/iap.png');
   final AssetGenImage logout = const AssetGenImage('assets/icons/logout.png');
+  final AssetGenImage share = const AssetGenImage('assets/icons/share.png');
   final AssetGenImage vietnam = const AssetGenImage('assets/icons/vietnam.png');
   final AssetGenImage volumeOn = const AssetGenImage('assets/icons/volume_on.png');
 }

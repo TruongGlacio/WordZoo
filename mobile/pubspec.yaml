@@ -2,6 +2,7 @@ name: wordzoo
 description: "A new Flutter project."
 publish_to: 'none'
 version: 1.0.6+6
+#version: 1.0.0+0
 
 environment:
   sdk: ^3.12.2
@@ -18,7 +19,7 @@ dependencies:
   gap: ^3.0.1
   # Supabase
   supabase_flutter: ^2.17.2
-
+  share_plus: ^13.3.0
   # UI / Responsive
   responsive_framework: ^1.5.1
   flutter_animate: ^4.5.2
@@ -64,6 +65,10 @@ dependencies:
   syncfusion_flutter_sliders: ^34.2.4
   dropdown_button2: ^3.1.0
   applovin_max: ^4.6.4
+  app_version_update: ^7.0.0
+  flutter_in_store_app_version_checker: ^3.0.0
+  package_info_plus: ^10.2.1
+
 dependency_overrides:
   meta: ^1.19.0
   jni: 1.0.0
