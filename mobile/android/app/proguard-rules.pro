@@ -1,1 +1,6 @@
 # Project specific ProGuard rules.
+# Please add these rules to your existing keep rules in order to suppress warnings.
+# This is generated automatically by the Android Gradle plugin.
+-dontwarn com.amazon.privacypass.PrivacyPass
+-dontwarn com.amazon.privacypass.VerificationContext
+-dontwarn com.amazon.privacypass.callback.AttestAPICallback
