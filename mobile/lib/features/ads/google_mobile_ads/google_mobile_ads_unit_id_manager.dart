@@ -66,6 +66,6 @@ class GoogleMobileAdsUnitIdManager {
       return Platform.isAndroid ? rewardedAndroidTest : rewardedIOSTest;
     }
 
-    return Platform.isAndroid ? androidProductionAppOpen : iosProductionAppOpen;
+    return Platform.isAndroid ? androidProductionRewarded : iOSProductionRewarded;
   }
 }
