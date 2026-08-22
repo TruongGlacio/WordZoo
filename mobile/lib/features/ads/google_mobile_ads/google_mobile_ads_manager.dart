@@ -18,13 +18,21 @@ class GoogleMobileAdsManager {
   final BannerAdManager banner = BannerAdManager();
   final InterstitialAdManager interstitial = InterstitialAdManager();
   final RewardedAdManager rewarded = RewardedAdManager();
-
+  final configuration = RequestConfiguration(
+    testDeviceIds: [
+      '892975573E533C431F3AEE1D49F8A67F',
+    ],
+  );
   Future<void> initialize() async {
     await MobileAds.instance.initialize();
+
+
+    await MobileAds.instance.updateRequestConfiguration(configuration);
     appOpen.loadAd();
     banner.loadAd();
     interstitial.loadAd();
     rewarded.loadAd();
+
 
   }
 
