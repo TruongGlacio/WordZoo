@@ -121,7 +121,7 @@ class _DetailPanelState extends State<DetailPanel> {
                         children: [
                           Icon(AudioService().isPlaying == true ? Icons.volume_up : Icons.volume_down, color: ColorConst.earthBrown, size: Dimens().imageSmall),
                           Gap(Dimens().spacing8),
-                          Expanded(child: Text(widget.entity.names.getBy(_currentLang), style: TextStyleConstant.heading)),
+                          Expanded(child: Text(widget.entity.names.getBy(_currentLang)??'', style: TextStyleConstant.heading)),
                         ],
                       ),
                     );

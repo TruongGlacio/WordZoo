@@ -147,7 +147,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "helpCenter": MessageLookupByLibrary.simpleMessage("帮助中心"),
     "home": MessageLookupByLibrary.simpleMessage("首页"),
     "hoursAgo": m5,
-    "humanRelations": MessageLookupByLibrary.simpleMessage("人际关系"),
     "inProgress": MessageLookupByLibrary.simpleMessage("进行中"),
     "justNow": MessageLookupByLibrary.simpleMessage("刚刚"),
     "keepTrying": MessageLookupByLibrary.simpleMessage("继续努力！"),

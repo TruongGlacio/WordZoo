@@ -42,7 +42,7 @@ class Entity extends Equatable {
   factory Entity.fromJson(Map<String, dynamic> json) => _$EntityFromJson(json);
   Map<String, dynamic> toJson() => _$EntityToJson(this);
 
-  String getName(String lang) => names.getBy(lang);
+  String getName(String lang) => names.getBy(lang)??'';
 
   Future<String?> getLocalRealImage() async {
     return MediaCacheService.instance.getLocalPathIfExists(realImage??"", MediaType.image);

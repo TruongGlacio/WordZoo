@@ -35,12 +35,13 @@ ENTITY_FOLDER = "entitys"
 AUDIO_EXTENSION = ".mp3"
 FLATICON_API_KEY = "..."
 VOICE_MAP = {
-
     "vi": "vi-VN-HoaiMyNeural",
-
     "en": "en-US-JennyNeural",
-
-    "zh": "zh-CN-XiaoxiaoNeural"
+    "zh": "zh-CN-XiaoxiaoNeural",
+    "es": "es-ES-ElviraNeural",
+    "fr": "fr-FR-DeniseNeural",
+    "ja": "ja-JP-NanamiNeural",
+    "ko": "ko-KR-SunHiNeural",
 }
 # ==========================================================
 # Animal Sound

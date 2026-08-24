@@ -7,8 +7,7 @@ part of 'category.dart';
 // **************************************************************************
 
 Category _$CategoryFromJson(Map<String, dynamic> json) => $checkedCreate('Category', json, ($checkedConvert) {
-  $checkKeys(json,
-      allowedKeys: const ['id', 'type', 'names', 'icon', 'audio', 'background', 'real_image', 'signpost_style', 'subcategories','pronunciation', 'visual_description']);
+  $checkKeys(json, allowedKeys: const ['id', 'type', 'names', 'icon', 'audio', 'background', 'real_image', 'signpost_style', 'subcategories','pronunciation', 'visual_description']);
   String icon = $checkedConvert('real_image', (v) => (v ?? "") as String);
   String background = $checkedConvert('real_image', (v) => (v ?? "") as String);
   CategoryType type = $checkedConvert('type', (v) => $enumDecode(_$CategoryTypeEnumMap, v));

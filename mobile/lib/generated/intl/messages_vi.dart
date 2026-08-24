@@ -187,7 +187,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "helpCenter": MessageLookupByLibrary.simpleMessage("Trung tâm trợ giúp"),
     "home": MessageLookupByLibrary.simpleMessage("Trang chủ"),
     "hoursAgo": m5,
-    "humanRelations": MessageLookupByLibrary.simpleMessage("Quan hệ con người"),
+    "humanRelations": MessageLookupByLibrary.simpleMessage("Xã hội"),
     "inProgress": MessageLookupByLibrary.simpleMessage("Đang thực hiện"),
     "justNow": MessageLookupByLibrary.simpleMessage("Vừa xong"),
     "keepTrying": MessageLookupByLibrary.simpleMessage("Tiếp tục thử!"),

@@ -180,7 +180,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "helpCenter": MessageLookupByLibrary.simpleMessage("Help Center"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "hoursAgo": m5,
-    "humanRelations": MessageLookupByLibrary.simpleMessage("Human Relations"),
+    "humanRelations": MessageLookupByLibrary.simpleMessage("Society"),
     "inProgress": MessageLookupByLibrary.simpleMessage("In Progress"),
     "invalidEmail": MessageLookupByLibrary.simpleMessage(
       "Please enter a valid email",

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,7 @@ class HomeScreenState extends State<HomeScreen> {
       categoryListWidget.add(
         _CategoryCard(
           iconAsset: category.icon,
-          title: category.names.getBy(DataManager().getCurrentLocale().languageCode),
+          title: category.names.getBy(DataManager().getCurrentLocale().languageCode)??'',
           onTap: () {
             AudioService().playAssetSource(Assets.assets.sounds.ui.click);
             gotoCategoryScreen(context, category: category);
@@ -98,10 +99,9 @@ class HomeScreenState extends State<HomeScreen> {
                       } else {
                         return Center(
                           child: Container(
-                            constraints: BoxConstraints(
-                                maxHeight: constraints.maxHeight
-                            ),
-                            child: ListView(shrinkWrap: true,
+                            alignment: Alignment.center,
+                            child: ListView(
+                                shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 dragStartBehavior: DragStartBehavior.start,
                                 children: categoryListWidget),
@@ -238,11 +238,11 @@ class _CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
+      double height = MediaQuery.of(context).size.height/3;
       return Card(
         elevation: 1,
         color: Colors.transparent,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge)),
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
@@ -252,36 +252,29 @@ class _CategoryCard extends StatelessWidget {
               image: DecorationImage(image: AssetImage(iconAsset), fit: BoxFit.fill),
               borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
             ),
-            child: SizedBox(
-              width: Dimens().iconXXXXXLarge,
-              height: Dimens().iconXXXXXLarge,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Container(
-                    width: Dimens().iconXXXXLarge - Dimens().iconSmall,
-                    alignment: Alignment.centerRight,
-                   // color: Colors.white,
-                    margin: EdgeInsets.only(
-                        bottom: 12,
-                        right: Dimens().spacing8,
-                        left: Dimens().spacing4),
-                    padding: EdgeInsets.only(left: Dimens().spacing4),
-                    //color: Colors.white,
-                    child: FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Text(
-                        title,
-                        textAlign: TextAlign.right,
-                        style: TextStyle(fontSize: Dimens().captionFontSize, fontWeight: FontWeight.bold, color: ColorConst.white),
-                      ),
-                    ),
+            width: height,
+            height: height,
+            alignment: Alignment.bottomRight,
+            child: LayoutBuilder(builder: (context, constraints) {
+              return Container(
+                width: constraints.maxWidth/2-constraints.maxWidth/12,
+                height: constraints.maxHeight/6,
+                alignment: Alignment.centerRight,
+                padding: EdgeInsetsGeometry.symmetric(horizontal: Dimens().spacing4),
+                child: Center(
+                  child: AutoSizeText(
+                    title,
+                    textAlign: TextAlign.center,
+                    softWrap: true,
+                    maxLines: 2,
+                    stepGranularity: Dimens().extraSmallXXXFontSize/12,
+                    minFontSize: Dimens().extraSmallXXXFontSize,
+                    maxFontSize: Dimens().signpostFontSize,
+                    style: TextStyle(fontSize: Dimens().captionFontSize, fontWeight: FontWeight.bold, color: ColorConst.white),
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },),
           ),
         ),
       ).animate().scale(duration: 200.ms);

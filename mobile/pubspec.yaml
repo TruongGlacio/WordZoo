@@ -68,7 +68,7 @@ dependencies:
   app_version_update: ^7.0.0
   flutter_in_store_app_version_checker: ^3.0.0
   package_info_plus: ^10.2.1
-
+  auto_size_text: ^3.0.0
 dependency_overrides:
   meta: ^1.19.0
   jni: 1.0.0

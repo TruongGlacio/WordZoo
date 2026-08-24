@@ -800,14 +800,9 @@ class S {
     return Intl.message('Vehicles', name: 'vehicles', desc: '', args: []);
   }
 
-  /// `Human Relations`
+  /// `Society`
   String get humanRelations {
-    return Intl.message(
-      'Human Relations',
-      name: 'humanRelations',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Society', name: 'humanRelations', desc: '', args: []);
   }
 
   /// `Select a category`

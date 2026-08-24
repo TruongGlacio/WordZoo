@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gap/gap.dart';
@@ -7,6 +8,7 @@ import 'package:wordzoo/data/datasources/data_manager.dart';
 import 'package:wordzoo/data/models/subcategory.dart';
 import 'package:wordzoo/generated/assets.dart';
 import 'package:wordzoo/presentation/screens/entity_list_screen.dart';
+import 'package:wordzoo/presentation/theme/app_theme.dart';
 import 'package:wordzoo/utils/audio_service.dart';
 import '../../../data/models/category.dart';
 import 'package:wordzoo/base/theme/colors_app.dart';
@@ -35,7 +37,18 @@ class CategoryScreenState extends State<CategoryScreen> {
     category = widget.category;
     WidgetsFlutterBinding.ensureInitialized().addPostFrameCallback((_) {
       setState(() {
-        categoriesLayout = CategoryMapLayout(mapSize: Size(MediaQuery.of(context).size.width * 1.5, MediaQuery.of(context).size.height - 24 * 2), nodeSize: Size(nodeSize, nodeSize)).generate(category.subcategories);
+        nodeSize = MediaQuery.of(context).size.height/4;
+        if(nodeSize> Dimens().iconXXXXXLarge)
+          {
+            nodeSize = Dimens().iconXXXXXLarge;
+          }
+        else if(nodeSize < Dimens().iconXXXLarge)
+          {
+            nodeSize = Dimens().iconXXXLarge;
+          }
+        categoriesLayout = CategoryMapLayout(
+            mapSize: Size(MediaQuery.of(context).size.width * 1.5, MediaQuery.of(context).size.height - 24 * 2),
+            nodeSize: Size(nodeSize, nodeSize)).generate(category.subcategories);
       });
     });
   }
@@ -114,32 +127,32 @@ class _SubCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(Assets.assets.categoryCard.subCategoryCard.path),
-            fit: BoxFit.fill,
-            //colorFilter: const ColorFilter.mode(Colors.black12, BlendMode.dstOut)
-          ),
-          borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
-        ),
-        child: SizedBox(
-          width: nodeSize,
+    return LayoutBuilder(builder: (context, constraints) {
+      return InkWell(
+        onTap: onTap,
+        child: Container(
+          width: nodeSize*7/10,
           height: nodeSize,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            image: DecorationImage(
+              image: AssetImage(Assets.assets.categoryCard.subCategoryCard.path),
+              fit: BoxFit.fitHeight,
+              //colorFilter: const ColorFilter.mode(Colors.black12, BlendMode.dstOut)
+            ),
+            borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                height: Dimens().iconMediumX,
-                width: Dimens().iconMediumX,
+                height: nodeSize/3,
+                width: nodeSize/3,
                 margin: EdgeInsets.only(top: Dimens().spacingExtraSmall),
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimens().iconMediumX)
+                    borderRadius: BorderRadius.circular(Dimens().iconMediumX)
                 ),
                 clipBehavior: Clip.hardEdge,
                 //alignment: Alignment.center,
@@ -150,25 +163,29 @@ class _SubCategoryItem extends StatelessWidget {
               ),
               Container(
                 decoration: BoxDecoration(
-                 // color: AppColors.brown,
-                  borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall)
+                   //color: ColorConst.brown.withValues(alpha: 0.5),
+                    borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall)
                 ),
-                constraints: BoxConstraints(
-                  minHeight: Dimens().spacing40
-                ),
-                margin: EdgeInsets.only(bottom: Dimens().spacingSmall),
+                height: nodeSize/3,
+                width: nodeSize*7/10,
+                alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: Dimens().spacingExtraSmall, vertical: Dimens().spacingExtraSmall),
-                child: Text(
-                  subcategory.names.getBy(DataManager().getCurrentLocale().languageCode),
+                child: AutoSizeText(
+                  subcategory.names.getBy(DataManager().getCurrentLocale().languageCode)??'',
                   textAlign: TextAlign.center,
+                  softWrap: true,
+                  maxLines: 2,
+                  stepGranularity: Dimens().extraSmallXXXFontSize/12,
+                  minFontSize: Dimens().extraSmallXXXFontSize,
+                  maxFontSize: Dimens().signpostFontSize,
                   style: TextStyle(fontSize: Dimens().extraSmallFontSize, fontWeight: FontWeight.bold, color: Colors.black),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    ).animate().scale(duration: 200.ms);
+      );
+    },).animate().scale(duration: 200.ms);
   }
 
 }

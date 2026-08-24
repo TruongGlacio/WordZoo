@@ -10,7 +10,7 @@ class AudioService {
 
   double playbackRate = 0.8;
   final playbackRateMin =0.5;
-  final playbackRateMax = 2;
+  final playbackRateMax = 1.5;
   bool isPlaying = false;
 
   void setPlaybackRateValue(double rate) {

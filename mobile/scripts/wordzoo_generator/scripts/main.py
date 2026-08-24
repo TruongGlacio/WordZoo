@@ -76,7 +76,7 @@ async def main():
             "Loading categories.json"
         )
         data = load_json()
-        add_pronunciation(data)
+        #add_pronunciation(data)
         save_json(data)
         data = load_json()
         #generate_all_visual_descriptions(data)

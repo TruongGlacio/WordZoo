@@ -42,7 +42,7 @@ class Category extends Equatable {
       _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
 
-  String getName(String lang) => names.getBy(lang);
+  String getName(String lang) => names.getBy(lang)??'';
 
   String getLocalIconPath()  {
     return DataManager().getRootPath()+ icon;

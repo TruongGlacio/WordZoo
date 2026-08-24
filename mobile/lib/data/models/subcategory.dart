@@ -36,7 +36,7 @@ class Subcategory extends Equatable {
       _$SubcategoryFromJson(json);
   Map<String, dynamic> toJson() => _$SubcategoryToJson(this);
 
-  String getName(String lang) => names.getBy(lang);
+  String getName(String lang) => names.getBy(lang)??'';
 
   String getLocalIcon() {
     return DataManager().getRootPath()+ icon;

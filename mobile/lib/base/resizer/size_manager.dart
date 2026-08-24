@@ -29,6 +29,9 @@ class Dimens {
   double get smallFontSize => FetchPixels().getPixelHeight(14.0 * ratioWidth );
   double get captionFontSize => FetchPixels().getPixelHeight(12.0 * ratioWidth );
   double get extraSmallFontSize => FetchPixels().getPixelHeight(11.0 * ratioWidth );
+  double get extraSmallXFontSize => FetchPixels().getPixelHeight(9.0 * ratioWidth );
+  double get extraSmallXXFontSize => FetchPixels().getPixelHeight(7.0 * ratioWidth );
+  double get extraSmallXXXFontSize => FetchPixels().getPixelHeight(6.0 * ratioWidth );
 
   // Colors for text
   Color get headingColor => const Color(0xFF333333);
@@ -81,6 +84,10 @@ class Dimens {
   double get buttonHeightSmall => FetchPixels().getPixelHeight(40.0 * ratioWidth );
   double get buttonHeightMedium => FetchPixels().getPixelHeight(50.0 * ratioWidth );
   double get buttonHeightLarge => FetchPixels().getPixelHeight(60.0 * ratioWidth );
+  double get buttonHeightXLarge => FetchPixels().getPixelHeight(80.0 * ratioWidth );
+  double get buttonHeightXXLarge => FetchPixels().getPixelHeight(100.0 * ratioWidth );
+  double get buttonHeightXXXLarge => FetchPixels().getPixelHeight(150.0 * ratioWidth );
+  double get buttonHeightXXXXLarge => FetchPixels().getPixelHeight(150.0 * ratioWidth );
 
   // Spacing sizes
   double  get spacing1 => FetchPixels().getPixelHeight(1);

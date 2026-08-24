@@ -6,15 +6,30 @@ from config import OUTPUT_JSON
 
 
 # ============================================================
+# Supported languages
+# ============================================================
+
+LANGUAGES = [
+    "vi",
+    "en",
+    "zh",
+    "es",
+    "fr",
+    "ja",
+    "ko",
+]
+
+
+# ============================================================
 # Load / Save
 # ============================================================
 
 def load_json():
 
     with open(
-            INPUT_JSON,
-            "r",
-            encoding="utf-8"
+        INPUT_JSON,
+        "r",
+        encoding="utf-8"
     ) as f:
 
         return json.load(f)
@@ -23,9 +38,9 @@ def load_json():
 def save_json(data):
 
     with open(
-            OUTPUT_JSON,
-            "w",
-            encoding="utf-8"
+        OUTPUT_JSON,
+        "w",
+        encoding="utf-8"
     ) as f:
 
         json.dump(
@@ -67,11 +82,8 @@ def iter_subcategories(data):
         for subcategory in category["subcategories"]:
 
             yield (
-
                 category,
-
                 subcategory
-
             )
 
 
@@ -88,13 +100,9 @@ def iter_entities(data):
             for entity in subcategory["entities"]:
 
                 yield (
-
                     category,
-
                     subcategory,
-
                     entity
-
                 )
 
 
@@ -105,55 +113,38 @@ def iter_entities(data):
 def iter_all_nodes(data):
 
     """
-    Yield
+    Yield:
 
     category
-
     subcategory
-
     entity
     """
 
     for category in data["categories"]:
 
         yield (
-
             "category",
-
             category,
-
             None,
-
             None
-
         )
 
         for subcategory in category["subcategories"]:
 
             yield (
-
                 "subcategory",
-
                 category,
-
                 subcategory,
-
                 None
-
             )
 
             for entity in subcategory["entities"]:
 
                 yield (
-
                     "entity",
-
                     category,
-
                     subcategory,
-
                     entity
-
                 )
 
 
@@ -163,22 +154,50 @@ def iter_all_nodes(data):
 
 def iter_languages(node):
 
-    for language in [
+    """
+    Yield all languages that actually exist
+    in node["names"].
 
-        "vi",
+    Example:
 
-        "en",
+    {
+        "names": {
+            "vi": "...",
+            "en": "...",
+            "zh": "...",
+            "es": "...",
+            "fr": "...",
+            "ja": "...",
+            "ko": "..."
+        }
+    }
 
-        "zh"
+    -> yields all 7 languages.
 
-    ]:
+    Missing languages are skipped.
+    """
+
+    names = node.get(
+        "names",
+        {}
+    )
+
+    for language in LANGUAGES:
+
+        if language not in names:
+            continue
+
+        text = names[language]
+
+        if not isinstance(text, str):
+            continue
+
+        if not text.strip():
+            continue
 
         yield (
-
             language,
-
-            node["names"][language]
-
+            text
         )
 
 
@@ -194,23 +213,38 @@ def statistics(data):
 
     entity_count = 0
 
+    audio_count = 0
+
     for category in data["categories"]:
 
         category_count += 1
 
+        # Category audio languages
+        audio_count += len(
+            category.get("names", {})
+        )
+
         subcategory_count += len(
-
             category["subcategories"]
-
         )
 
         for subcategory in category["subcategories"]:
 
-            entity_count += len(
-
-                subcategory["entities"]
-
+            # Subcategory audio languages
+            audio_count += len(
+                subcategory.get("names", {})
             )
+
+            entity_count += len(
+                subcategory["entities"]
+            )
+
+            for entity in subcategory["entities"]:
+
+                # Entity audio languages
+                audio_count += len(
+                    entity.get("names", {})
+                )
 
     return {
 
@@ -220,32 +254,12 @@ def statistics(data):
 
         "entities": entity_count,
 
-        "audios": (
-
-                          category_count
-
-                          +
-
-                          subcategory_count
-
-                          +
-
-                          entity_count
-
-                  ) * 3,
+        "audios": audio_count,
 
         "images": (
-
-                category_count
-
-                +
-
-                subcategory_count
-
-                +
-
-                entity_count
-
+            category_count
+            + subcategory_count
+            + entity_count
         )
 
     }
@@ -255,7 +269,10 @@ def statistics(data):
 # Find
 # ============================================================
 
-def find_entity(data, entity_id):
+def find_entity(
+        data,
+        entity_id
+):
 
     for _, _, entity in iter_entities(data):
 
@@ -266,7 +283,10 @@ def find_entity(data, entity_id):
     return None
 
 
-def find_subcategory(data, subcategory_id):
+def find_subcategory(
+        data,
+        subcategory_id
+):
 
     for _, subcategory in iter_subcategories(data):
 
@@ -277,7 +297,10 @@ def find_subcategory(data, subcategory_id):
     return None
 
 
-def find_category(data, category_id):
+def find_category(
+        data,
+        category_id
+):
 
     for category in iter_categories(data):
 

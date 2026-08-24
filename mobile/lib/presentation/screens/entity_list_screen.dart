@@ -172,7 +172,11 @@ class _EntityListScreenState extends State<EntityListScreen> {
                     children: [
                       Container(
                         width: Dimens().imageSmall,
-                        height: Dimens().imageLarge,
+                        height: MediaQuery.of(context).size.height/3,
+                        constraints: BoxConstraints(
+                          maxHeight: Dimens().size300,
+                          minHeight: Dimens().size120,
+                        ),
                         decoration: BoxDecoration(
                           color: ColorConst.white,
                           borderRadius: BorderRadius.circular(Dimens().borderRadiusSmall)
