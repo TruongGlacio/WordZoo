@@ -48,7 +48,7 @@ class LocalizedNames extends Equatable {
   }
 
   @override
-  List<Object?> get props => [vi, en, zh];
+  List<Object?> get props => [vi, en, zh, es, fr,ja,ko];
 }
 class PronunciationInfo {
   IpaInfo? en;

@@ -1,16 +1,30 @@
 {
-  "version": "1.0.1",
+  "version": "1.0.13",
   "zip_files": {
-    "animals": "animals.zip",
-    "plants": "plants.zip",
-    "vehicles": "vehicles.zip",
-    "human_relations": "human_relations.zip"
+    "animals": [
+      "animals_001.zip"
+    ],
+    "plants": [
+      "plants_001.zip"
+    ],
+    "vehicles": [
+      "vehicles_001.zip"
+    ],
+    "human_relations": [
+      "human_relations_001.zip"
+    ],
+    "basics": [
+      "basics_001.zip",
+      "basics_002.zip",
+      "basics_003.zip"
+    ]
   },
   "zip_files_version": {
-    "animals": "v1.0.1",
-    "plants": "v1.0.1",
-    "vehicles": "v1.0.1",
-    "human_relations": "v1.0.1"
+    "animals": "v1.0.13",
+    "plants": "v1.0.13",
+    "vehicles": "v1.0.13",
+    "human_relations": "v1.0.13",
+    "basics": "v1.0.13"
   },
   "categories": [
     {

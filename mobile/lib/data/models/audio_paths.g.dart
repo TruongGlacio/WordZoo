@@ -8,14 +8,19 @@ part of 'audio_paths.dart';
 
 AudioPaths _$AudioPathsFromJson(Map<String, dynamic> json) =>
     $checkedCreate('AudioPaths', json, ($checkedConvert) {
-      $checkKeys(json, allowedKeys: const ['vi', 'en', 'zh']);
+      $checkKeys(json, allowedKeys: const  ['vi', 'en', 'zh','es', 'fr', 'ja', 'ko']);
       final val = AudioPaths(
         vi: $checkedConvert('vi', (v) => v as String),
         en: $checkedConvert('en', (v) => v as String),
         zh: $checkedConvert('zh', (v) => v as String),
+        es: $checkedConvert('es', (v) => v as String?),
+        fr: $checkedConvert('fr', (v) => v as String?),
+        ja: $checkedConvert('ja', (v) => v as String?),
+        ko: $checkedConvert('ko', (v) => v as String?),
       );
       return val;
     });
 
 Map<String, dynamic> _$AudioPathsToJson(AudioPaths instance) =>
-    <String, dynamic>{'vi': instance.vi, 'en': instance.en, 'zh': instance.zh};
+<String, dynamic>{'vi': instance.vi, 'en': instance.en, 'zh': instance.zh,
+'es': instance.es, 'fr': instance.fr, 'ja': instance.ja,'ko': instance.ko,};

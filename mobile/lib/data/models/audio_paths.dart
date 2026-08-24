@@ -8,11 +8,18 @@ class AudioPaths extends Equatable {
   final String vi;
   final String en;
   final String zh;
-
+  final String? es;
+  final String? fr;
+  final String? ja;
+  final String? ko;
   const AudioPaths({
     required this.vi,
     required this.en,
     required this.zh,
+    this.ko,
+    this.ja,
+    this.fr,
+    this.es
   });
 
   factory AudioPaths.fromJson(Map<String, dynamic> json) =>
@@ -20,5 +27,4 @@ class AudioPaths extends Equatable {
   Map<String, dynamic> toJson() => _$AudioPathsToJson(this);
 
   @override
-  List<Object?> get props => [vi, en, zh];
-}
+  List<Object?> get props => [vi, en, zh, es, fr,ja,ko];}

@@ -64,11 +64,9 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       if (needUpdate) {
         AppLogger.i('getData: data is outdated, syncing...');
         //await syncData();
+      } else {
+        return cached;
       }
-      else
-        {
-          return cached;
-        }
     }
 
     AppLogger.i('getData: no cache found, syncing...');
@@ -88,13 +86,7 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       final localVersion = box.get(AppConstants.dataVersionKey);
       if (localVersion == null) return true;
 
-      final response = await _client
-          .from('data_versions')
-          .select()
-          .eq('is_active', true)
-          .order('created_at', ascending: false)
-          .limit(1)
-          .single();
+      final response = await _client.from('data_versions').select().eq('is_active', true).order('created_at', ascending: false).limit(1).single();
 
       final remoteVersion = response['version'] as String;
       return remoteVersion != localVersion;
@@ -109,13 +101,7 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     try {
       final box = Hive.box<String>('app_data');
 
-      final response = await _client
-          .from('data_versions')
-          .select()
-          .eq('is_active', true)
-          .order('created_at', ascending: false)
-          .limit(1)
-          .single();
+      final response = await _client.from('data_versions').select().eq('is_active', true).order('created_at', ascending: false).limit(1).single();
       final remoteVersion = response['version'] as String;
       final fileName = 'data-v$remoteVersion.json';
       AppLogger.i('Downloading data.json version $remoteVersion');
@@ -278,6 +264,78 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
   Future<void> syncCategoryZip(Map<String, dynamic> json) async {
     final zipFiles = json['zip_files'] as Map<String, dynamic>?;
 
+    if (zipFiles == null || zipFiles.isEmpty) {
+      return;
+    }
+
+    int completedCategories = 0;
+    final totalCategories = zipFiles.length;
+
+    DataManager()
+        .downloadProgressModel
+        .notiDownloadProgress(0, true);
+
+    for (final item in zipFiles.entries) {
+      final categoryId = item.key;
+
+      final List<String> zipNames = (item.value as List)
+          .map((e) => e.toString())
+          .toList();
+
+      print(
+        'Downloading category: $categoryId '
+            '(${zipNames.length} parts)',
+      );
+
+      // Download + extract toàn bộ ZIP của category
+      for (int i = 0; i < zipNames.length; i++) {
+        final zipName = zipNames[i];
+
+        print(
+          '  [$categoryId] '
+              '${i + 1}/${zipNames.length}: $zipName',
+        );
+
+        await ZipAssetService.instance.downloadAndExtractCategoryZip(
+          categoryId,
+          zipName,
+        );
+      }
+
+      completedCategories++;
+
+      final progress =
+      (completedCategories * 100 / totalCategories).toInt();
+
+      DataManager()
+          .downloadProgressModel
+          .notiDownloadProgress(
+        progress,
+        true,
+      );
+
+      print(
+        '✓ Category $categoryId completed '
+            '($progress%)',
+      );
+    }
+
+    DataManager()
+        .downloadProgressModel
+        .notiDownloadProgress(100, true);
+
+    Future.delayed(
+      const Duration(seconds: 1),
+          () {
+        DataManager()
+            .downloadProgressModel
+            .notiDownloadProgress(100, false);
+      },
+    );
+  }
+  /*  Future<void> syncCategoryZip(Map<String, dynamic> json) async {
+    final zipFiles = json['zip_files'] as Map<String, dynamic>?;
+
     if (zipFiles == null) {
       return;
     }
@@ -297,5 +355,5 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
         });
       }
     }
-  }
+  }*/
 }

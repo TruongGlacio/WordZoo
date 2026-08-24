@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -53,49 +54,46 @@ class _DetailPanelState extends State<DetailPanel> {
                       AudioService().playDeviceFileSource(widget.entity.soundEffect!);
                     }
                   },
-                  child: LayoutBuilder(builder: (context, constraints) {
-                    return Container(
-                      width: constraints.maxHeight- Dimens().spacing12*2,
-                      height: constraints.maxHeight,
-                      constraints: BoxConstraints(
-                        maxWidth: MediaQuery.of(context).size.width/4,
-                        maxHeight: MediaQuery.of(context).size.width/2,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
-                        //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
-                      ),
-                      clipBehavior: Clip.hardEdge,
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.only(left: Dimens().spacing12),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
-                        child: Image.file(
-                          File(widget.entity.getLocalIcon()),
-                          fit: BoxFit.fitWidth,
-                          //width: SizeManager().imageXXXLarge,
-                          //height: SizeManager().imageXXLarge,
-                          errorBuilder: (context, error, stackTrace) {
-                            return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
-                          },
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      return Container(
+                        width: constraints.maxHeight - Dimens().spacing12 * 2,
+                        height: constraints.maxHeight,
+                        constraints: BoxConstraints(maxWidth: MediaQuery.of(context).size.width / 4, maxHeight: MediaQuery.of(context).size.width / 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
+                          //boxShadow: const [BoxShadow(color: AppColors.softShadow, blurRadius: 20, spreadRadius: 5)],
                         ),
-                      ),
-                    );
-                  },)
+                        clipBehavior: Clip.hardEdge,
+                        alignment: Alignment.center,
+                        margin: EdgeInsets.only(left: Dimens().spacing12),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(Dimens().borderRadiusLarge),
+                          child: Image.file(
+                            File(widget.entity.getLocalIcon()),
+                            fit: BoxFit.fitWidth,
+                            //width: SizeManager().imageXXXLarge,
+                            //height: SizeManager().imageXXLarge,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(color: Colors.grey[300], child: const Icon(Icons.image, size: 80));
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
           ),
           Gap(Dimens().spacing8),
-          LayoutBuilder(builder: (context, constraints) {
-            return Center(
-              child: Container(
-                height: constraints.maxHeight/2,
-                width: Dimens().spacing4/4,
-                color: ColorConst.darkText,
-              ),
-            );
-          },),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              return Center(
+                child: Container(height: constraints.maxHeight / 2, width: Dimens().spacing4 / 4, color: ColorConst.darkText),
+              );
+            },
+          ),
           Gap(Dimens().spacing8),
           Expanded(
             flex: 6,
@@ -110,57 +108,108 @@ class _DetailPanelState extends State<DetailPanel> {
                         final audioPath = widget.entity.getLocalAudio(_currentLang);
                         print('check exit audio file ${File(audioPath!).existsSync()}');
                         setState(() {
-                          AudioService().playDeviceFileSource(audioPath, onEnd: () {
-                            setState(() {
-                              print('check exit audio file ${File(audioPath!).existsSync()}');
-                            },);
-                          },);
+                          AudioService().playDeviceFileSource(
+                            audioPath,
+                            onEnd: () {
+                              setState(() {
+                                print('check exit audio file ${File(audioPath!).existsSync()}');
+                              });
+                            },
+                          );
                         });
                       },
                       child: Row(
                         children: [
                           Icon(AudioService().isPlaying == true ? Icons.volume_up : Icons.volume_down, color: ColorConst.earthBrown, size: Dimens().imageSmall),
                           Gap(Dimens().spacing8),
-                          Expanded(child: Text(widget.entity.names.getBy(_currentLang)??'', style: TextStyleConstant.heading)),
+                          Expanded(child: AutoSizeText(
+                              widget.entity.names.getBy(_currentLang) ?? '',
+                              maxLines: 1,
+                              stepGranularity: Dimens().smallFontSize/14,
+                              minFontSize: Dimens().smallFontSize,
+                              maxFontSize: Dimens().titleFontSize,
+                              style: TextStyleConstant.heading)
+                          ),
                         ],
                       ),
                     );
                   },
                 ),
-                Gap(Dimens().spacing8),
+                //Gap(Dimens().spacing8),
                 Visibility(
                   visible: widget.entity.pronunciationInfo?.getBy(_currentLang) != null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? '').isNotEmpty ?
-                      "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? ''}/ -" : '',
+                      AutoSizeText(
+                          ((widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? '').isNotEmpty ? "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.ipa ?? ''}/ -" : '').replaceAll('//', '/'),
                           style: TextStyleConstant.body.copyWith(color: ColorConst.oceanBlue)),
                       Gap(Dimens().spacing8),
-                      Text((widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? '').isNotEmpty ?
-                      "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? ''}/" : '',
+                      AutoSizeText(((widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? '').isNotEmpty ? "/${widget.entity.pronunciationInfo?.getBy(_currentLang)?.syllable ?? ''}/" : '').replaceAll('//', '/'),
                           style: TextStyleConstant.body.copyWith(color: ColorConst.oceanBlue)),
                     ],
                   ),
                 ),
                 Gap(Dimens().spacing8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    _LangButton(label: 'VI', isSelected: _currentLang == 'vi', onTap:() {
-                      setCurrentLocaleForEntity(currentLang: 'vi');
-                    },),
-                    Gap(Dimens().spacing12),
-                    _LangButton(label: 'EN', isSelected: _currentLang == 'en', onTap: () {
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    return Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: Dimens().size12,
+                      children: [
+                        _LangButton(
+                          label: 'VI',
+                          isSelected: _currentLang == 'vi',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'vi');
+                          },
+                        ),
+                        _LangButton(
+                          label: 'EN',
+                          isSelected: _currentLang == 'en',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'en');
+                          },
+                        ),
+                        _LangButton(
+                          label: 'ZH',
+                          isSelected: _currentLang == 'zh',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'zh');
+                          },
+                        ),
 
-                      setCurrentLocaleForEntity(currentLang: 'en');
-
-                    },),
-                    Gap(Dimens().spacing12),
-                    _LangButton(label: 'ZH', isSelected: _currentLang == 'zh', onTap: () {
-                      setCurrentLocaleForEntity(currentLang: 'zh');
-                    },),
-                  ],
+                        _LangButton(
+                          label: 'ES',
+                          isSelected: _currentLang == 'es',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'es');
+                          },
+                        ),
+                        _LangButton(
+                          label: 'FR',
+                          isSelected: _currentLang == 'fr',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'fr');
+                          },
+                        ),
+                        _LangButton(
+                          label: 'JA',
+                          isSelected: _currentLang == 'ja',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'ja');
+                          },
+                        ),
+                        _LangButton(
+                          label: 'KO',
+                          isSelected: _currentLang == 'ko',
+                          onTap: () {
+                            setCurrentLocaleForEntity(currentLang: 'ko');
+                          },
+                        ),
+                      ],
+                    );
+                  },
                 ),
                 Gap(Dimens().spacing8),
                 Visibility(
@@ -190,11 +239,12 @@ class _DetailPanelState extends State<DetailPanel> {
       ),
     );
   }
-  void setCurrentLocaleForEntity({required String currentLang}){
+
+  void setCurrentLocaleForEntity({required String currentLang}) {
     setState(() {
       _currentLang = currentLang;
       DataManager().setCurrentLocaleForEntity(Locale(_currentLang));
-    },);
+    });
     final audioPath = widget.entity.getLocalAudio(_currentLang);
     AudioService().playDeviceFileSource(audioPath!);
   }
@@ -209,10 +259,19 @@ class _LangButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onTap,
-      style: ElevatedButton.styleFrom(backgroundColor: isSelected ? ColorConst.leafGreen : Colors.grey[300], foregroundColor: isSelected ? Colors.white : ColorConst.darkText),
-      child: Text(label),
+    return SizedBox(
+      width: Dimens().size50,
+      child: ElevatedButton(
+        onPressed: onTap,
+        style: ElevatedButton.styleFrom
+          (backgroundColor: isSelected ? ColorConst.leafGreen : Colors.grey[300],
+            foregroundColor: isSelected ? Colors.white : ColorConst.darkText,
+          padding: EdgeInsets.symmetric(horizontal: Dimens().spacing4)
+        ),
+        child: FittedBox(
+          fit: BoxFit.fitWidth,
+            child: Text(label, style: TextStyleConstant.button2,)),
+      ),
     );
   }
 }

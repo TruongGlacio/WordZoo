@@ -3,22 +3,31 @@
 """
 Sync WordZoo data and media to Supabase.
 
-Features:
-- Normalize paths in JSON.
-- Zip each category.
-- Maximum ZIP size: 49 MB.
-- Automatically split large categories into multiple independent ZIP files.
-- Upload ZIP files to Supabase Storage/assets.
+ZIP strategy:
+
+Category
+    ├── subcategory A
+    ├── subcategory B
+    ├── subcategory C
+    └── ...
+
+=> animals_001.zip
+=> animals_002.zip
+=> animals_003.zip
+
+Rules:
+- Maximum ZIP size: 48 MB
+- Keep whole subcategory together whenever possible.
+- If one subcategory > 48 MB, split it by entity.
+- Every generated ZIP is a valid independent ZIP.
 - Update data["zip_files"] automatically.
-- Update data["zip_files_version"].
-- Upload updated data JSON.
 """
 
+import argparse
 import json
 import os
-import argparse
-import tempfile
 import shutil
+import tempfile
 import zipfile
 
 from pathlib import Path
@@ -29,28 +38,22 @@ from typing import Dict, List
 # CONFIG
 ###############################################################################
 
-# Supabase hard limit is 50 MB.
-# Keep a safety margin.
-MAX_ZIP_SIZE = 49 * 1024 * 1024
+MAX_ZIP_SIZE = 48 * 1024 * 1024
+
+ASSETS_BUCKET = "assets"
+DATA_BUCKET = "data"
 
 
 ###############################################################################
-# Normalize Path
+# PATH
 ###############################################################################
 
-def normalize_path(
-        path: str,
-        wordzoo_dir: Path,
-) -> str:
+def normalize_path(path: str, wordzoo_dir: Path) -> str:
 
     if not path:
         return path
 
-    if (
-        path.startswith("wordzoo/")
-        or
-        path.startswith("wordzoo\\")
-    ):
+    if path.startswith("wordzoo/") or path.startswith("wordzoo\\"):
         return path.replace("\\", "/")
 
     try:
@@ -59,33 +62,23 @@ def normalize_path(
 
         if p.is_absolute():
 
-            rel = p.relative_to(
-                wordzoo_dir
-            )
+            rel = p.relative_to(wordzoo_dir)
 
-            return str(
-                rel
-            ).replace(
-                "\\",
-                "/"
-            )
+            return str(rel).replace("\\", "/")
 
     except Exception:
         pass
 
-    return path.replace(
-        "\\",
-        "/"
-    )
+    return path.replace("\\", "/")
 
 
 ###############################################################################
-# Normalize Entity
+# NORMALIZE ENTITY
 ###############################################################################
 
 def normalize_entity(
         entity: Dict,
-        wordzoo_dir: Path,
+        wordzoo_dir: Path
 ) -> Dict:
 
     normalized = dict(entity)
@@ -94,19 +87,16 @@ def normalize_entity(
 
         normalized["real_image"] = normalize_path(
             normalized["real_image"],
-            wordzoo_dir,
+            wordzoo_dir
         )
 
-    if isinstance(
-        normalized.get("audio"),
-        dict,
-    ):
+    if isinstance(normalized.get("audio"), dict):
 
         normalized["audio"] = {
 
             lang: normalize_path(
                 path,
-                wordzoo_dir,
+                wordzoo_dir
             )
 
             for lang, path
@@ -118,61 +108,50 @@ def normalize_entity(
 
         normalized["animal_sound"] = normalize_path(
             normalized["animal_sound"],
-            wordzoo_dir,
+            wordzoo_dir
         )
 
     if normalized.get("animation_image"):
 
         normalized["animation_image"] = normalize_path(
             normalized["animation_image"],
-            wordzoo_dir,
+            wordzoo_dir
         )
 
     return normalized
 
 
 ###############################################################################
-# Normalize SubCategory
+# NORMALIZE SUBCATEGORY
 ###############################################################################
 
 def normalize_subcategory(
         sub: Dict,
-        wordzoo_dir: Path,
+        wordzoo_dir: Path
 ) -> Dict:
 
     normalized = dict(sub)
 
-    if normalized.get("real_image"):
+    for field in [
+        "real_image",
+        "icon",
+        "background"
+    ]:
 
-        normalized["real_image"] = normalize_path(
-            normalized["real_image"],
-            wordzoo_dir,
-        )
+        if normalized.get(field):
 
-    if normalized.get("icon"):
+            normalized[field] = normalize_path(
+                normalized[field],
+                wordzoo_dir
+            )
 
-        normalized["icon"] = normalize_path(
-            normalized["icon"],
-            wordzoo_dir,
-        )
-
-    if normalized.get("background"):
-
-        normalized["background"] = normalize_path(
-            normalized["background"],
-            wordzoo_dir,
-        )
-
-    if isinstance(
-        normalized.get("audio"),
-        dict,
-    ):
+    if isinstance(normalized.get("audio"), dict):
 
         normalized["audio"] = {
 
             lang: normalize_path(
                 path,
-                wordzoo_dir,
+                wordzoo_dir
             )
 
             for lang, path
@@ -180,20 +159,16 @@ def normalize_subcategory(
 
         }
 
-    if isinstance(
-        normalized.get("entities"),
-        list,
-    ):
+    if isinstance(normalized.get("entities"), list):
 
         normalized["entities"] = [
 
             normalize_entity(
-                e,
-                wordzoo_dir,
+                entity,
+                wordzoo_dir
             )
 
-            for e
-            in normalized["entities"]
+            for entity in normalized["entities"]
 
         ]
 
@@ -201,47 +176,36 @@ def normalize_subcategory(
 
 
 ###############################################################################
-# Normalize Category
+# NORMALIZE CATEGORY
 ###############################################################################
 
 def normalize_category(
-        cat: Dict,
-        wordzoo_dir: Path,
+        category: Dict,
+        wordzoo_dir: Path
 ) -> Dict:
 
-    normalized = dict(cat)
+    normalized = dict(category)
 
-    if normalized.get("icon"):
+    for field in [
+        "icon",
+        "background",
+        "real_image"
+    ]:
 
-        normalized["icon"] = normalize_path(
-            normalized["icon"],
-            wordzoo_dir,
-        )
+        if normalized.get(field):
 
-    if normalized.get("background"):
+            normalized[field] = normalize_path(
+                normalized[field],
+                wordzoo_dir
+            )
 
-        normalized["background"] = normalize_path(
-            normalized["background"],
-            wordzoo_dir,
-        )
-
-    if normalized.get("real_image"):
-
-        normalized["real_image"] = normalize_path(
-            normalized["real_image"],
-            wordzoo_dir,
-        )
-
-    if isinstance(
-        normalized.get("audio"),
-        dict,
-    ):
+    if isinstance(normalized.get("audio"), dict):
 
         normalized["audio"] = {
 
             lang: normalize_path(
                 path,
-                wordzoo_dir,
+                wordzoo_dir
             )
 
             for lang, path
@@ -249,19 +213,16 @@ def normalize_category(
 
         }
 
-    if isinstance(
-        normalized.get("subcategories"),
-        list,
-    ):
+    if isinstance(normalized.get("subcategories"), list):
 
         normalized["subcategories"] = [
 
             normalize_subcategory(
-                s,
-                wordzoo_dir,
+                sub,
+                wordzoo_dir
             )
 
-            for s
+            for sub
             in normalized["subcategories"]
 
         ]
@@ -270,29 +231,29 @@ def normalize_category(
 
 
 ###############################################################################
-# Normalize Whole JSON
+# NORMALIZE DATA
 ###############################################################################
 
 def normalize_data(
         data: Dict,
-        wordzoo_dir: Path,
+        wordzoo_dir: Path
 ) -> Dict:
 
     normalized = dict(data)
 
     if isinstance(
-        normalized.get("categories"),
-        list,
+            normalized.get("categories"),
+            list
     ):
 
         normalized["categories"] = [
 
             normalize_category(
-                c,
-                wordzoo_dir,
+                category,
+                wordzoo_dir
             )
 
-            for c
+            for category
             in normalized["categories"]
 
         ]
@@ -301,451 +262,623 @@ def normalize_data(
 
 
 ###############################################################################
-# ZIP FILE LIST
+# FILE SIZE
 ###############################################################################
 
-def get_category_files(
-        category_folder: Path,
-) -> List[Path]:
+def get_folder_size(folder: Path) -> int:
 
-    files = []
+    total = 0
 
-    for file in category_folder.rglob("*"):
+    for file in folder.rglob("*"):
 
         if file.is_file():
 
-            files.append(file)
+            total += file.stat().st_size
 
-    # Stable ordering
-    files.sort(
-        key=lambda p: str(p).lower()
-    )
-
-    return files
+    return total
 
 
 ###############################################################################
-# Create ZIP
+# FILE LIST
 ###############################################################################
 
-def create_zip(
-        category_folder: Path,
+def get_files(folder: Path) -> List[Path]:
+
+    return [
+
+        file
+
+        for file
+        in folder.rglob("*")
+
+        if file.is_file()
+
+    ]
+
+
+###############################################################################
+# ZIP FILES
+###############################################################################
+
+def zip_files(
         files: List[Path],
-        output_zip: Path,
+        root: Path,
+        output_zip: Path
 ):
-    """
-    Create one independent ZIP containing selected files.
-    """
 
     with zipfile.ZipFile(
-        output_zip,
-        mode="w",
-        compression=zipfile.ZIP_DEFLATED,
-        compresslevel=9,
+            output_zip,
+            "w",
+            compression=zipfile.ZIP_DEFLATED,
+            compresslevel=6
     ) as zipf:
 
         for file in files:
 
-            arcname = file.relative_to(
-                category_folder
-            )
+            arcname = file.relative_to(root)
 
             zipf.write(
                 file,
-                arcname,
+                arcname
             )
 
 
 ###############################################################################
-# Find groups that fit under 49 MB
+# TEST ZIP SIZE
 ###############################################################################
 
-def split_category_files(
-        category_folder: Path,
-) -> List[List[Path]]:
+def estimate_zip_size(
+        files: List[Path],
+        root: Path,
+        temp_dir: Path,
+        test_name: str
+) -> int:
 
-    files = get_category_files(
-        category_folder
+    test_zip = temp_dir / test_name
+
+    zip_files(
+        files,
+        root,
+        test_zip
     )
 
-    if not files:
-        return []
+    size = test_zip.stat().st_size
 
-    groups = []
-
-    current_group = []
-
-    temp_dir = Path(
-        tempfile.mkdtemp(
-            prefix="wordzoo_zip_test_"
-        )
+    test_zip.unlink(
+        missing_ok=True
     )
 
-    try:
-
-        group_index = 1
-
-        for file in files:
-
-            # ---------------------------------------------------------------
-            # Test adding this file to current group
-            # ---------------------------------------------------------------
-
-            test_files = current_group + [file]
-
-            test_zip = (
-                temp_dir
-                /
-                f"test_{group_index}.zip"
-            )
-
-            if test_zip.exists():
-
-                test_zip.unlink()
-
-            create_zip(
-                category_folder,
-                test_files,
-                test_zip,
-            )
-
-            size = test_zip.stat().st_size
-
-            # ---------------------------------------------------------------
-            # File itself is too large
-            # ---------------------------------------------------------------
-
-            if not current_group:
-
-                if size > MAX_ZIP_SIZE:
-
-                    raise RuntimeError(
-                        "\n"
-                        f"File cannot fit into a ZIP <= 49 MB:\n"
-                        f"{file}\n"
-                        f"ZIP size: "
-                        f"{size / 1024 / 1024:.2f} MB\n"
-                        "\n"
-                        "This individual file must be "
-                        "compressed/resized separately."
-                    )
-
-                current_group = [
-                    file
-                ]
-
-                continue
-
-            # ---------------------------------------------------------------
-            # Still fits
-            # ---------------------------------------------------------------
-
-            if size <= MAX_ZIP_SIZE:
-
-                current_group.append(
-                    file
-                )
-
-                continue
-
-            # ---------------------------------------------------------------
-            # Does not fit -> close current group
-            # ---------------------------------------------------------------
-
-            groups.append(
-                current_group
-            )
-
-            group_index += 1
-
-            current_group = [
-                file
-            ]
-
-        # Last group
-        if current_group:
-
-            groups.append(
-                current_group
-            )
-
-    finally:
-
-        shutil.rmtree(
-            temp_dir,
-            ignore_errors=True,
-        )
-
-    return groups
+    return size
 
 
 ###############################################################################
-# Create Category ZIPs
+# CREATE ZIP PART
 ###############################################################################
 
-def create_category_zips(
+def create_zip_part(
+        files: List[Path],
+        root: Path,
+        output_zip: Path
+):
+
+    print(
+        f"    Creating {output_zip.name} "
+        f"({len(files)} files)..."
+    )
+
+    zip_files(
+        files,
+        root,
+        output_zip
+    )
+
+    size_mb = (
+        output_zip.stat().st_size
+        / 1024
+        / 1024
+    )
+
+    print(
+        f"    [OK] {output_zip.name} "
+        f"{size_mb:.2f} MB"
+    )
+
+
+###############################################################################
+# BUILD CATEGORY ZIP
+###############################################################################
+
+def build_category_zips(
         category_folder: Path,
         category_id: str,
-        temp_dir: Path,
+        temp_dir: Path
 ) -> List[Path]:
 
-    print(
-        f"\nScanning category: "
-        f"{category_id}"
-    )
+    print()
+    print("=" * 60)
+    print(f"Scanning category: {category_id}")
+    print("=" * 60)
 
-    groups = split_category_files(
-        category_folder
-    )
+    subfolders = [
 
-    if not groups:
+        folder
 
-        print(
-            f"[WARNING] "
-            f"No files found in {category_id}"
-        )
+        for folder
+        in category_folder.iterdir()
 
-        return []
+        if folder.is_dir()
 
-    zip_paths = []
+    ]
 
-    total_parts = len(
-        groups
+    subfolders.sort(
+        key=lambda p: p.name.lower()
     )
 
     print(
-        f"  Files: "
-        f"{sum(len(g) for g in groups):,}"
+        f"Subcategories found: {len(subfolders)}"
     )
 
-    print(
-        f"  ZIP parts: "
-        f"{total_parts}"
-    )
+    parts = []
 
-    for index, files in enumerate(
-        groups,
-        start=1,
-    ):
+    current_files = []
+    current_root = category_folder
 
-        # ---------------------------------------------------------------
-        # Single ZIP -> preserve old name
-        # ---------------------------------------------------------------
+    part_index = 1
 
-        if total_parts == 1:
+    def flush():
 
-            zip_name = (
-                f"{category_id}.zip"
-            )
+        nonlocal current_files
+        nonlocal part_index
 
-        else:
+        if not current_files:
+            return
 
-            zip_name = (
-                f"{category_id}_"
-                f"{index:03d}.zip"
-            )
-
-        zip_path = (
-            temp_dir
-            /
-            zip_name
+        zip_name = (
+            f"{category_id}_"
+            f"{part_index:03d}.zip"
         )
 
-        print(
-            f"\n  Creating "
-            f"{zip_name} ..."
-        )
+        zip_path = temp_dir / zip_name
 
-        create_zip(
-            category_folder,
-            files,
-            zip_path,
-        )
-
-        size = zip_path.stat().st_size
-
-        print(
-            f"    Files: "
-            f"{len(files):,}"
-        )
-
-        print(
-            f"    Size: "
-            f"{size / 1024 / 1024:.2f} MB"
-        )
-
-        # ---------------------------------------------------------------
-        # Safety check
-        # ---------------------------------------------------------------
-
-        if size > MAX_ZIP_SIZE:
-
-            raise RuntimeError(
-                f"\n"
-                f"[FAIL] {zip_name} is "
-                f"{size / 1024 / 1024:.2f} MB "
-                f"> 49 MB"
-            )
-
-        zip_paths.append(
+        create_zip_part(
+            current_files,
+            current_root,
             zip_path
         )
 
-    return zip_paths
+        parts.append(zip_path)
+
+        current_files = []
+
+        part_index += 1
+
+    ###########################################################################
+    # SUBCATEGORY
+    ###########################################################################
+
+    for subfolder in subfolders:
+
+        print(
+            f"\n  Subcategory: {subfolder.name}"
+        )
+
+        sub_files = get_files(
+            subfolder
+        )
+
+        if not sub_files:
+            print(
+                "    Empty - skip"
+            )
+            continue
+
+        #######################################################################
+        # Test entire subcategory
+        #######################################################################
+
+        candidate = (
+            current_files
+            + sub_files
+        )
+
+        candidate_size = estimate_zip_size(
+            candidate,
+            current_root,
+            temp_dir,
+            "__test.zip"
+        )
+
+        candidate_mb = (
+            candidate_size
+            / 1024
+            / 1024
+        )
+
+        print(
+            f"    Size with current ZIP: "
+            f"{candidate_mb:.2f} MB"
+        )
+
+        #######################################################################
+        # Fits
+        #######################################################################
+
+        if candidate_size <= MAX_ZIP_SIZE:
+
+            current_files = candidate
+
+            continue
+
+        #######################################################################
+        # Current ZIP has content -> flush
+        #######################################################################
+
+        if current_files:
+
+            flush()
+
+        #######################################################################
+        # Try subcategory alone
+        #######################################################################
+
+        sub_size = estimate_zip_size(
+            sub_files,
+            current_root,
+            temp_dir,
+            "__test_sub.zip"
+        )
+
+        sub_mb = (
+            sub_size
+            / 1024
+            / 1024
+        )
+
+        print(
+            f"    Subcategory size: "
+            f"{sub_mb:.2f} MB"
+        )
+
+        #######################################################################
+        # Entire subcategory fits
+        #######################################################################
+
+        if sub_size <= MAX_ZIP_SIZE:
+
+            current_files = list(
+                sub_files
+            )
+
+            continue
+
+        #######################################################################
+        # Subcategory itself too large
+        #######################################################################
+
+        print(
+            "    Subcategory > 48 MB"
+        )
+
+        print(
+            "    Splitting by entity/files..."
+        )
+
+        entity_groups = []
+
+        entity_dirs = [
+
+            folder
+
+            for folder
+            in subfolder.iterdir()
+
+            if folder.is_dir()
+
+        ]
+
+        entity_dirs.sort(
+            key=lambda p: p.name.lower()
+        )
+
+        #######################################################################
+        # Entity directories
+        #######################################################################
+
+        if entity_dirs:
+
+            for entity_dir in entity_dirs:
+
+                entity_files = get_files(
+                    entity_dir
+                )
+
+                if not entity_files:
+                    continue
+
+                entity_size = estimate_zip_size(
+                    entity_files,
+                    current_root,
+                    temp_dir,
+                    "__test_entity.zip"
+                )
+
+                entity_mb = (
+                    entity_size
+                    / 1024
+                    / 1024
+                )
+
+                print(
+                    f"      Entity "
+                    f"{entity_dir.name}: "
+                    f"{entity_mb:.2f} MB"
+                )
+
+                candidate = (
+                    current_files
+                    + entity_files
+                )
+
+                candidate_size = estimate_zip_size(
+                    candidate,
+                    current_root,
+                    temp_dir,
+                    "__test_entity_group.zip"
+                )
+
+                ################################################################
+                # Fits
+                ################################################################
+
+                if candidate_size <= MAX_ZIP_SIZE:
+
+                    current_files = candidate
+
+                    continue
+
+                ################################################################
+                # Flush previous
+                ################################################################
+
+                if current_files:
+
+                    flush()
+
+                ################################################################
+                # Single entity > limit
+                ################################################################
+
+                if entity_size > MAX_ZIP_SIZE:
+
+                    print(
+                        f"      WARNING: "
+                        f"{entity_dir.name} "
+                        f"itself exceeds 48 MB"
+                    )
+
+                    ################################################################
+                    # Last resort: individual files
+                    ################################################################
+
+                    entity_current = []
+
+                    for file in entity_files:
+
+                        candidate = (
+                            entity_current
+                            + [file]
+                        )
+
+                        size = estimate_zip_size(
+                            candidate,
+                            current_root,
+                            temp_dir,
+                            "__test_file.zip"
+                        )
+
+                        if (
+                                size <= MAX_ZIP_SIZE
+                                or not entity_current
+                        ):
+
+                            entity_current = candidate
+
+                        else:
+
+                            flush()
+
+                            current_files = list(
+                                entity_current
+                            )
+
+                            flush()
+
+                            entity_current = [
+                                file
+                            ]
+
+                    if entity_current:
+
+                        current_files = entity_current
+
+                else:
+
+                    current_files = list(
+                        entity_files
+                    )
+
+        #######################################################################
+        # No entity directories
+        #######################################################################
+
+        else:
+
+            print(
+                "    No entity folders. "
+                "Splitting files..."
+            )
+
+            for file in sub_files:
+
+                candidate = (
+                    current_files
+                    + [file]
+                )
+
+                size = estimate_zip_size(
+                    candidate,
+                    current_root,
+                    temp_dir,
+                    "__test_file.zip"
+                )
+
+                if (
+                        size <= MAX_ZIP_SIZE
+                        or not current_files
+                ):
+
+                    current_files = candidate
+
+                else:
+
+                    flush()
+
+                    current_files = [
+                        file
+                    ]
+
+    ###########################################################################
+    # Final
+    ###########################################################################
+
+    flush()
+
+    print()
+    print(
+        f"Category {category_id}: "
+        f"{len(parts)} ZIP file(s)"
+    )
+
+    return parts
 
 
 ###############################################################################
-# Upload ZIP
+# UPLOAD ZIP
 ###############################################################################
 
 def upload_zip(
         supabase,
-        bucket_name: str,
-        zip_file: Path,
+        zip_file: Path
 ):
-    """
-    Upload one ZIP to Supabase.
-    """
-
-    size = zip_file.stat().st_size
-
-    if size > MAX_ZIP_SIZE:
-
-        raise RuntimeError(
-            f"{zip_file.name} exceeds "
-            f"49 MB"
-        )
-
-    print(
-        f"  Uploading "
-        f"{zip_file.name} "
-        f"({size / 1024 / 1024:.2f} MB)..."
-    )
 
     with open(
-        zip_file,
-        "rb",
+            zip_file,
+            "rb"
     ) as f:
 
-        supabase.storage.from_(
-            bucket_name
-        ).upload(
+        supabase.storage \
+            .from_(ASSETS_BUCKET) \
+            .upload(
+                zip_file.name,
+                f,
+                file_options={
+                    "content-type": "application/zip",
+                    "upsert": "true"
+                }
+            )
 
-            zip_file.name,
-
-            f,
-
-            file_options={
-                "content-type":
-                    "application/zip",
-                "upsert":
-                    "true",
-            },
-
-        )
+    size_mb = (
+        zip_file.stat().st_size
+        / 1024
+        / 1024
+    )
 
     print(
-        f"  [OK] Uploaded "
-        f"{zip_file.name}"
+        f"[OK] Uploaded "
+        f"{zip_file.name} "
+        f"({size_mb:.2f} MB)"
     )
 
 
 ###############################################################################
-# Delete all files in bucket
+# CLEAR BUCKET
 ###############################################################################
 
 def clear_bucket(
         supabase,
-        bucket_name: str,
+        bucket_name: str
 ):
 
     print(
         f"\nCleaning bucket "
-        f"'{bucket_name}' ..."
+        f"'{bucket_name}'..."
     )
 
-    def _delete_folder(
-            prefix: str = ""
-    ):
+    def delete_folder(prefix=""):
 
-        files = (
-            supabase
-            .storage
-            .from_(bucket_name)
+        items = supabase.storage \
+            .from_(bucket_name) \
             .list(
                 path=prefix
             )
-        )
 
-        file_paths = []
+        files = []
 
-        for item in files:
+        for item in items:
 
             name = item["name"]
 
-            if prefix:
-
-                full_path = (
-                    f"{prefix}/{name}"
-                )
-
-            else:
-
-                full_path = name
-
-            # Folder
-            if item.get("id") is None:
-
-                _delete_folder(
-                    full_path
-                )
-
-            else:
-
-                file_paths.append(
-                    full_path
-                )
-
-        if file_paths:
-
-            (
-                supabase
-                .storage
-                .from_(bucket_name)
-                .remove(
-                    file_paths
-                )
+            full_path = (
+                f"{prefix}/{name}"
+                if prefix
+                else name
             )
 
-            for path in file_paths:
+            if item.get("id") is None:
 
-                print(
-                    f"  [DELETE] "
-                    f"{path}"
+                delete_folder(
+                    full_path
                 )
 
-    _delete_folder()
+            else:
+
+                files.append(
+                    full_path
+                )
+
+        if files:
+
+            supabase.storage \
+                .from_(bucket_name) \
+                .remove(files)
+
+            for file in files:
+
+                print(
+                    f"  [DELETE] {file}"
+                )
+
+    delete_folder()
 
     print(
-        f"[OK] Bucket "
-        f"'{bucket_name}' cleaned."
+        f"[OK] Bucket '{bucket_name}' cleaned."
     )
 
 
 ###############################################################################
-# Upload Category ZIP Files
+# UPLOAD ALL CATEGORY ZIPS
 ###############################################################################
 
 def upload_all_category_zip(
         wordzoo_dir: Path,
         data: Dict,
         version: str,
-        supabase,
+        supabase
 ):
 
     temp_dir = Path(
         tempfile.mkdtemp(
-            prefix="wordzoo_upload_"
+            prefix="wordzoo_zip_"
         )
     )
 
@@ -760,8 +893,7 @@ def upload_all_category_zip(
 
             category_folder = (
                 wordzoo_dir
-                /
-                category_id
+                / category_id
             )
 
             if not category_folder.exists():
@@ -774,81 +906,31 @@ def upload_all_category_zip(
 
                 continue
 
-            print()
-            print(
-                "=" * 60
+            parts = build_category_zips(
+                category_folder,
+                category_id,
+                temp_dir
             )
 
-            print(
-                f"Category: "
-                f"{category_id}"
-            )
-
-            print(
-                "=" * 60
-            )
-
-            # -----------------------------------------------------------
-            # Create ZIP parts
-            # -----------------------------------------------------------
-
-            zip_paths = create_category_zips(
-                category_folder=category_folder,
-                category_id=category_id,
-                temp_dir=temp_dir,
-            )
-
-            if not zip_paths:
-
+            if not parts:
                 continue
 
-            # -----------------------------------------------------------
-            # Upload every part
-            # -----------------------------------------------------------
+            zip_names = []
 
-            uploaded_files = []
-
-            for zip_path in zip_paths:
+            for zip_path in parts:
 
                 upload_zip(
-                    supabase=supabase,
-                    bucket_name="assets",
-                    zip_file=zip_path,
+                    supabase,
+                    zip_path
                 )
 
-                uploaded_files.append(
+                zip_names.append(
                     zip_path.name
                 )
 
-            # -----------------------------------------------------------
-            # Update JSON
-            # -----------------------------------------------------------
-
-            if len(uploaded_files) == 1:
-
-                # Preserve old JSON format
-                data["zip_files"][
-                    category_id
-                ] = uploaded_files[0]
-
-            else:
-
-                # Multiple ZIP files
-                data["zip_files"][
-                    category_id
-                ] = uploaded_files
-
-                print(
-                    f"\n  [INFO] "
-                    f"{category_id} split into "
-                    f"{len(uploaded_files)} ZIP files:"
-                )
-
-                for name in uploaded_files:
-
-                    print(
-                        f"    - {name}"
-                    )
+            data["zip_files"][
+                category_id
+            ] = zip_names
 
             data["zip_files_version"][
                 category_id
@@ -858,112 +940,93 @@ def upload_all_category_zip(
 
         shutil.rmtree(
             temp_dir,
-            ignore_errors=True,
+            ignore_errors=True
         )
 
 
 ###############################################################################
-# Upload data.json
+# UPLOAD DATA JSON
 ###############################################################################
 
 def upload_data_json(
         supabase,
-        data: Dict,
+        data: Dict
 ):
 
     data_json = json.dumps(
         data,
         indent=2,
-        ensure_ascii=False,
+        ensure_ascii=False
     )
 
-    data_bytes = data_json.encode(
-        "utf-8"
+    filename = (
+        f"data-v"
+        f"{data['version']}.json"
     )
 
-    print(
-        f"Uploading "
-        f"data-v{data['version']}.json ..."
-    )
-
-    (
-        supabase
-        .storage
-        .from_("data")
+    supabase.storage \
+        .from_(DATA_BUCKET) \
         .upload(
-
-            f"data-v{data['version']}.json",
-
-            data_bytes,
-
+            filename,
+            data_json.encode("utf-8"),
             file_options={
                 "content-type":
                     "application/json",
-                "upsert":
-                    "true",
-            },
-
+                "upsert": "true"
+            }
         )
-    )
 
     print(
-        f"[OK] Uploaded "
-        f"data-v{data['version']}.json"
+        f"[OK] Uploaded {filename}"
     )
 
 
 ###############################################################################
-# Update data_versions
+# UPDATE VERSION
 ###############################################################################
 
 def update_data_version(
         supabase,
-        version: str,
+        version: str
 ):
 
-    (
-        supabase
-        .table("data_versions")
-        .upsert(
-            {
-                "version":
-                    version,
-                "is_active":
-                    True,
-            }
-        )
-        .execute()
-    )
+    supabase.table(
+        "data_versions"
+    ).upsert(
+        {
+            "version": version,
+            "is_active": True
+        }
+    ).execute()
 
     print(
-        f"[OK] Updated version "
-        f"{version}"
+        f"[OK] Updated version {version}"
     )
 
 
 ###############################################################################
-# Upload To Supabase
+# SUPABASE
 ###############################################################################
 
 def upload_to_supabase(
         wordzoo_dir: Path,
         data: Dict,
         supabase_url: str,
-        supabase_key: str,
+        supabase_key: str
 ):
 
     try:
 
         from supabase import (
             create_client,
-            Client,
+            Client
         )
 
     except ImportError:
 
         print(
-            "Error: supabase-py not installed.\n"
-            "Install:\n"
+            "supabase-py not installed.\n"
+            "Run:\n"
             "pip install supabase"
         )
 
@@ -971,118 +1034,82 @@ def upload_to_supabase(
 
     supabase: Client = create_client(
         supabase_url,
-        supabase_key,
+        supabase_key
     )
 
     try:
 
-        # ===============================================================
-        # Cleaning
-        # ===============================================================
+        #######################################################################
+        # CLEAN
+        #######################################################################
 
         print()
-        print(
-            "==================================================="
-        )
+        print("=" * 60)
+        print("Cleaning Storage")
+        print("=" * 60)
 
-        print(
-            "Cleaning Storage"
-        )
-
-        print(
-            "==================================================="
+        clear_bucket(
+            supabase,
+            ASSETS_BUCKET
         )
 
         clear_bucket(
-            supabase=supabase,
-            bucket_name="assets",
+            supabase,
+            DATA_BUCKET
         )
 
-        clear_bucket(
-            supabase=supabase,
-            bucket_name="data",
-        )
-
-        # ===============================================================
-        # ZIP
-        # ===============================================================
+        #######################################################################
+        # ZIP + UPLOAD
+        #######################################################################
 
         print()
-        print(
-            "==================================================="
-        )
-
-        print(
-            "Upload Category ZIP"
-        )
-
-        print(
-            "==================================================="
-        )
+        print("=" * 60)
+        print("Creating and Uploading ZIP")
+        print("=" * 60)
 
         upload_all_category_zip(
-            wordzoo_dir=wordzoo_dir,
-            data=data,
-            version=data["version"],
-            supabase=supabase,
+            wordzoo_dir,
+            data,
+            data["version"],
+            supabase
         )
 
-        # ===============================================================
-        # Upload data JSON
-        # ===============================================================
+        #######################################################################
+        # DATA JSON
+        #######################################################################
 
         print()
-        print(
-            "==================================================="
-        )
-
-        print(
-            "Upload data.json"
-        )
-
-        print(
-            "==================================================="
-        )
+        print("=" * 60)
+        print("Uploading data.json")
+        print("=" * 60)
 
         upload_data_json(
-            supabase=supabase,
-            data=data,
+            supabase,
+            data
         )
 
-        # ===============================================================
-        # Update version
-        # ===============================================================
+        #######################################################################
+        # VERSION
+        #######################################################################
 
         print()
-        print(
-            "==================================================="
-        )
-
-        print(
-            "Update data_versions"
-        )
-
-        print(
-            "==================================================="
-        )
+        print("=" * 60)
+        print("Updating Version")
+        print("=" * 60)
 
         update_data_version(
-            supabase=supabase,
-            version=data["version"],
+            supabase,
+            data["version"]
         )
+
+        #######################################################################
+        # DONE
+        #######################################################################
 
         print()
-        print(
-            "==================================================="
-        )
-
-        print(
-            "DONE"
-        )
-
-        print(
-            "==================================================="
-        )
+        print("=" * 60)
+        print("DONE")
+        print("=" * 60)
 
         return True
 
@@ -1097,48 +1124,43 @@ def upload_to_supabase(
 
 
 ###############################################################################
-# Main
+# MAIN
 ###############################################################################
 
 def main():
 
     parser = argparse.ArgumentParser(
-        description=(
-            "Sync WordZoo data to Supabase"
-        )
+        description="Sync WordZoo data to Supabase"
     )
 
     parser.add_argument(
         "--wordzoo-dir",
-        required=True,
-        help="Path to wordzoo folder",
+        required=True
     )
 
     parser.add_argument(
         "--json-file",
-        required=True,
-        help="Path to data JSON",
+        required=True
     )
 
     parser.add_argument(
         "--version",
-        required=True,
-        help="Data version, example: 1.0.2",
+        required=True
     )
 
     parser.add_argument(
         "--supabase-url",
-        default=None,
+        default=None
     )
 
     parser.add_argument(
         "--supabase-key",
-        default=None,
+        default=None
     )
 
     parser.add_argument(
         "--upload",
-        action="store_true",
+        action="store_true"
     )
 
     args = parser.parse_args()
@@ -1151,9 +1173,9 @@ def main():
         args.json_file
     )
 
-    # ===============================================================
-    # Validate
-    # ===============================================================
+    ###########################################################################
+    # CHECK
+    ###########################################################################
 
     if not wordzoo_dir.exists():
 
@@ -1167,22 +1189,24 @@ def main():
     if not json_file.exists():
 
         print(
-            f"Json file not found:\n"
+            f"JSON file not found:\n"
             f"{json_file}"
         )
 
         return 1
 
+    ###########################################################################
+    # SUPABASE CONFIG
+    ###########################################################################
+
     supabase_url = (
         args.supabase_url
-        or
-        os.getenv("SUPABASE_URL")
+        or os.getenv("SUPABASE_URL")
     )
 
     supabase_key = (
         args.supabase_key
-        or
-        os.getenv("SUPABASE_KEY")
+        or os.getenv("SUPABASE_KEY")
     )
 
     if args.upload:
@@ -1203,26 +1227,48 @@ def main():
 
             return 1
 
-    # ===============================================================
-    # Load JSON
-    # ===============================================================
+    ###########################################################################
+    # LOAD JSON
+    ###########################################################################
 
-    print()
     print(
-        f"Loading {json_file}"
+        f"\nLoading {json_file}"
     )
 
-    with open(
-        json_file,
-        "r",
-        encoding="utf-8",
-    ) as f:
+    try:
 
-        data = json.load(f)
+        with open(
+                json_file,
+                "r",
+                encoding="utf-8"
+        ) as f:
 
-    # ===============================================================
-    # Normalize
-    # ===============================================================
+            data = json.load(f)
+
+    except json.JSONDecodeError as e:
+
+        print()
+        print(
+            "[ERROR] Invalid JSON"
+        )
+
+        print(
+            f"Line: {e.lineno}"
+        )
+
+        print(
+            f"Column: {e.colno}"
+        )
+
+        print(
+            f"Message: {e.msg}"
+        )
+
+        return 1
+
+    ###########################################################################
+    # NORMALIZE
+    ###########################################################################
 
     print(
         "Normalizing paths..."
@@ -1230,30 +1276,22 @@ def main():
 
     data = normalize_data(
         data,
-        wordzoo_dir,
+        wordzoo_dir
     )
 
     data["version"] = args.version
 
-    # ===============================================================
-    # Summary
-    # ===============================================================
+    ###########################################################################
+    # SUMMARY
+    ###########################################################################
 
     print()
-    print(
-        "=============================="
-    )
+    print("=" * 60)
+    print("Summary")
+    print("=" * 60)
 
     print(
-        "Summary"
-    )
-
-    print(
-        "=============================="
-    )
-
-    print(
-        f"Version : "
+        f"Version    : "
         f"{data['version']}"
     )
 
@@ -1276,68 +1314,83 @@ def main():
             )
 
             for sub
-            in category[
-                "subcategories"
-            ]
+            in category["subcategories"]
 
         )
 
-        total_entities += (
-            entity_count
-        )
+        total_entities += entity_count
 
         print(
-            f"- {category['id']}"
-            f" ("
-            f"{len(category['subcategories'])}"
-            f" subcategories, "
-            f"{entity_count}"
-            f" entities)"
+            f"- {category['id']} "
+            f"("
+            f"{len(category['subcategories'])} "
+            f"subcategories, "
+            f"{entity_count} entities"
+            f")"
         )
-
-    print(
-        f"\nTotal entities : "
-        f"{total_entities}"
-    )
 
     print()
     print(
-        f"Maximum ZIP size: "
-        f"{MAX_ZIP_SIZE / 1024 / 1024:.0f} MB"
+        f"Total entities: "
+        f"{total_entities}"
     )
 
-    # ===============================================================
-    # Dry run
-    # ===============================================================
+    ###########################################################################
+    # DRY RUN
+    ###########################################################################
 
     if not args.upload:
 
+        print()
         print(
-            "\nDry run finished."
+            "Dry run finished."
         )
 
         return 0
 
-    # ===============================================================
-    # Upload
-    # ===============================================================
+    ###########################################################################
+    # UPLOAD
+    ###########################################################################
 
+    print()
     print(
-        "\nUploading..."
+        "Uploading..."
     )
 
     success = upload_to_supabase(
-        wordzoo_dir=wordzoo_dir,
-        data=data,
-        supabase_url=supabase_url,
-        supabase_key=supabase_key,
+        wordzoo_dir,
+        data,
+        supabase_url,
+        supabase_key
     )
 
     if success:
 
+        #######################################################################
+        # IMPORTANT:
+        # Save the generated JSON locally too.
+        #######################################################################
+
+        with open(
+                json_file,
+                "w",
+                encoding="utf-8"
+        ) as f:
+
+            json.dump(
+                data,
+                f,
+                ensure_ascii=False,
+                indent=2
+            )
+
         print()
         print(
-            "==================================="
+            "=" * 60
+        )
+
+        print(
+            "Local JSON updated."
         )
 
         print(
@@ -1345,14 +1398,14 @@ def main():
         )
 
         print(
-            "==================================="
+            "=" * 60
         )
 
         return 0
 
     print()
     print(
-        "==================================="
+        "=" * 60
     )
 
     print(
@@ -1360,18 +1413,18 @@ def main():
     )
 
     print(
-        "==================================="
+        "=" * 60
     )
 
     return 1
 
 
 ###############################################################################
-# Entry
+# ENTRY
 ###############################################################################
 
 if __name__ == "__main__":
 
-    exit(
+    raise SystemExit(
         main()
     )
