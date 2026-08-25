@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
   workflow_dispatch:
 
 jobs:
@@ -16,61 +17,39 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Check B_REPO_TOKEN
+      - name: Verify B token
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
-          if [ -z "$TOKEN" ]; then
-            echo "❌ B_REPO_TOKEN IS EMPTY"
-            exit 1
-          fi
+          test -n "$TOKEN"
+          echo "B_REPO_TOKEN exists"
 
-          echo "✅ B_REPO_TOKEN exists"
-          echo "Token length: ${#TOKEN}"
-
-      - name: Test access to B
+      - name: Verify B account
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
-          git ls-remote \
-            "https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git"
-
-      - name: Check B_REPO_TOKEN
-        env:
-          TOKEN: ${{ secrets.B_REPO_TOKEN }}
-        run: |
-          if [ -z "$TOKEN" ]; then
-            echo "❌ B_REPO_TOKEN is EMPTY"
-            exit 1
-          fi
-
-          echo "✅ B_REPO_TOKEN exists"
-          echo "Token length: ${#TOKEN}"
-
-      - name: Test authentication to B
-        env:
-          TOKEN: ${{ secrets.B_REPO_TOKEN }}
-        run: |
-          curl -sS \
+          curl -fsS \
             -H "Authorization: Bearer ${TOKEN}" \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/user
+            https://api.github.com/user \
+            | grep '"login": "buixuantruongtb2-ops"'
 
-
-      - name: Check B repository permission
+      - name: Verify B repository
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
-          curl -sS \
+          curl -fsS \
             -H "Authorization: Bearer ${TOKEN}" \
             -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/buixuantruongtb2-ops/WordZoo
-            
-      - name: Push to B
+            https://api.github.com/repos/buixuantruongtb2-ops/WordZoo \
+            | grep '"push": true'
+
+      - name: Push A to B
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
           git remote add backup \
-            "https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git"
+            https://github.com/buixuantruongtb2-ops/WordZoo.git
 
-          git push backup main:main --force
+          git -c http.extraheader="AUTHORIZATION: bearer ${TOKEN}" \
+            push backup HEAD:main --force
