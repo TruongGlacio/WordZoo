@@ -68,11 +68,40 @@ class Entity extends Equatable {
     return isOpen;
   }
   String? getLocalAudio(String lang) {
-    final path = lang == 'vi'
-        ? audio?.vi
-        : lang == 'en'
-            ? audio?.en
-            : audio?.zh;
+    SupportLanguages supportLanguages = stringToSupportLanguages[lang]??SupportLanguages.vi;
+    String? path = audio?.vi;
+    switch(supportLanguages)
+    {
+      case SupportLanguages.vi:
+        // TODO: Handle this case.
+        path = audio?.vi;
+        break;
+      case SupportLanguages.en:
+        // TODO: Handle this case.
+        path = audio?.en;
+        break;
+      case SupportLanguages.zh:
+        // TODO: Handle this case.
+        path = audio?.zh;
+        break;
+      case SupportLanguages.es:
+        // TODO: Handle this case.
+        path = audio?.es;
+        break;
+      case SupportLanguages.fr:
+        // TODO: Handle this case.
+        path = audio?.fr;
+        break;
+      case SupportLanguages.ja:
+        // TODO: Handle this case.
+        path = audio?.ja;
+        break;
+      case SupportLanguages.ko:
+        // TODO: Handle this case.
+        path = audio?.ko;
+        break;
+    }
+
     if((path??'').isNotEmpty) {
       return DataManager().getRootPath()+ (path??'');
     }

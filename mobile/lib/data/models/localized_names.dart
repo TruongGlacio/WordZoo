@@ -3,6 +3,18 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'localized_names.g.dart';
 
+enum SupportLanguages{
+  vi, en, zh, es, fr,ja,ko
+}
+Map<String, SupportLanguages> stringToSupportLanguages= {
+'vi':SupportLanguages.vi,
+'en':SupportLanguages.en,
+'zh':SupportLanguages.zh,
+'es':SupportLanguages.es,
+'fr':SupportLanguages.fr,
+'ja':SupportLanguages.ja,
+'ko':SupportLanguages.ko,
+};
 @JsonSerializable()
 class LocalizedNames extends Equatable {
   final String vi;
@@ -25,6 +37,10 @@ class LocalizedNames extends Equatable {
   factory LocalizedNames.fromJson(Map<String, dynamic> json) =>
       _$LocalizedNamesFromJson(json);
   Map<String, dynamic> toJson() => _$LocalizedNamesToJson(this);
+
+  SupportLanguages getByString(String lang){
+    return stringToSupportLanguages[lang]??SupportLanguages.vi;
+  }
 
   String? getBy(String lang) {
     switch (lang) {

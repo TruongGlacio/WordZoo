@@ -85,7 +85,7 @@ JSON_FILE = Path(
 
 VERSION = os.getenv(
     "VERSION",
-    "1.0.14"
+    "1.0.15"
 )
 
 

@@ -103,6 +103,8 @@ async def main():
             "Starting audio generation..."
         )
         await generate_all_audio(data)
+    
+        save_json(data)
         success(
             "Audio generation finished"
         )
