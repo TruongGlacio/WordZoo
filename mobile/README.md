@@ -26,7 +26,7 @@ build intro:
   - dart run flutter_launcher_icons:generate
 - Build
   - Android
-    - flutter build appbundle -t lib/main.dart --release
-  - 
     - flutter build apk -t lib/main.dart --release
+    - flutter build apk --dart-define=USE_TEST_ADS=false -t lib/main.dart --release
+    - flutter build appbundle -t lib/main.dart --release
     - flutter build appbundle --dart-define=USE_TEST_ADS=false -t lib/main.dart --release
