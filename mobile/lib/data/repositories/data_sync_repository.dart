@@ -4,6 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wordzoo/data/datasources/data_manager.dart';
+import 'package:wordzoo/data/repositories/r2_repository.dart';
 import 'package:wordzoo/data/service/zip_asset_service.dart';
 import 'package:wordzoo/utils/premium_entity_manager.dart';
 import '../models/word_zoo_data.dart';
@@ -96,6 +97,7 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     }
   }
 
+  /*
   @override
   Future<void> syncData() async {
     try {
@@ -126,6 +128,95 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       //await _cacheMediaFromJson(json);
     } catch (e, st) {
       AppLogger.e('syncData failed', e, st);
+      rethrow;
+    }
+  }
+*/
+
+  @override
+  Future<void> syncData() async {
+    try {
+      final box = Hive.box<String>('app_data');
+
+      // ============================================================
+      // 1. Lấy version từ Supabase DB
+      // ============================================================
+
+      final response = await _client.from('data_versions').select().eq('is_active', true).order('created_at', ascending: false).limit(1).single();
+
+      final remoteVersion = response['version'] as String;
+
+      final fileName = 'data-v$remoteVersion.json';
+
+      AppLogger.i('Remote data version: $remoteVersion');
+
+      // ============================================================
+      // 2. Download data.json từ R2
+      // ============================================================
+
+      AppLogger.i('Downloading $fileName from R2...');
+
+      final file = await R2RepositoryImplement.instance.downloadFile(fileName, localFileName: fileName);
+
+      // ============================================================
+      // 3. Đọc JSON từ file
+      // ============================================================
+
+      if (!await file.exists()) {
+        throw Exception('Downloaded file does not exist: $fileName');
+      }
+
+      final jsonStr = await file.readAsString();
+
+      if (jsonStr.isEmpty) {
+        throw Exception('Downloaded data file is empty: $fileName');
+      }
+
+      // ============================================================
+      // 4. Parse JSON
+      // ============================================================
+
+      final json = jsonDecode(jsonStr) as Map<String, dynamic>;
+
+      if (json['version'] == null || json['categories'] == null) {
+        throw Exception('Invalid data.json structure');
+      }
+
+      // ============================================================
+      // 5. Kiểm tra version
+      // ============================================================
+
+      final dataVersion = json['version'].toString();
+
+      if (dataVersion != remoteVersion) {
+        throw Exception(
+          'Version mismatch: '
+          'DB=$remoteVersion, '
+          'JSON=$dataVersion',
+        );
+      }
+
+      // ============================================================
+      // 6. Cache data.json vào Hive
+      // ============================================================
+
+      await box.put(AppConstants.dataJsonKey, jsonStr);
+
+      await box.put(AppConstants.dataVersionKey, remoteVersion);
+
+      AppLogger.i(
+        'Data synced successfully: '
+        'version $remoteVersion',
+      );
+
+      // ============================================================
+      // 7. Download ZIP từ R2
+      // ============================================================
+
+      await syncCategoryZip(json);
+    } catch (e, st) {
+      AppLogger.e('syncData failed', e, st);
+
       rethrow;
     }
   }
@@ -271,20 +362,16 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
     int completedCategories = 0;
     final totalCategories = zipFiles.length;
 
-    DataManager()
-        .downloadProgressModel
-        .notiDownloadProgress(0, true);
+    DataManager().downloadProgressModel.notiDownloadProgress(0, true);
 
     for (final item in zipFiles.entries) {
       final categoryId = item.key;
 
-      final List<String> zipNames = (item.value as List)
-          .map((e) => e.toString())
-          .toList();
+      final List<String> zipNames = (item.value as List).map((e) => e.toString()).toList();
 
       print(
         'Downloading category: $categoryId '
-            '(${zipNames.length} parts)',
+        '(${zipNames.length} parts)',
       );
 
       // Download + extract toàn bộ ZIP của category
@@ -293,46 +380,31 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
 
         print(
           '  [$categoryId] '
-              '${i + 1}/${zipNames.length}: $zipName',
+          '${i + 1}/${zipNames.length}: $zipName',
         );
 
-        await ZipAssetService.instance.downloadAndExtractCategoryZip(
-          categoryId,
-          zipName,
-        );
+        await ZipAssetService.instance.downloadAndExtractCategoryZip(categoryId, zipName);
       }
 
       completedCategories++;
 
-      final progress =
-      (completedCategories * 100 / totalCategories).toInt();
+      final progress = (completedCategories * 100 / totalCategories).toInt();
 
-      DataManager()
-          .downloadProgressModel
-          .notiDownloadProgress(
-        progress,
-        true,
-      );
+      DataManager().downloadProgressModel.notiDownloadProgress(progress, true);
 
       print(
         '✓ Category $categoryId completed '
-            '($progress%)',
+        '($progress%)',
       );
     }
 
-    DataManager()
-        .downloadProgressModel
-        .notiDownloadProgress(100, true);
+    DataManager().downloadProgressModel.notiDownloadProgress(100, true);
 
-    Future.delayed(
-      const Duration(seconds: 1),
-          () {
-        DataManager()
-            .downloadProgressModel
-            .notiDownloadProgress(100, false);
-      },
-    );
+    Future.delayed(const Duration(seconds: 1), () {
+      DataManager().downloadProgressModel.notiDownloadProgress(100, false);
+    });
   }
+
   /*  Future<void> syncCategoryZip(Map<String, dynamic> json) async {
     final zipFiles = json['zip_files'] as Map<String, dynamic>?;
 
