@@ -22,8 +22,13 @@ jobs:
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
-          test -n "$TOKEN"
+          if [ -z "$TOKEN" ]; then
+            echo "B_REPO_TOKEN is empty"
+            exit 1
+          fi
+
           echo "B_REPO_TOKEN exists"
+          echo "Token length: ${#TOKEN}"
 
       - name: Verify B account
         env:
@@ -35,22 +40,9 @@ jobs:
             https://api.github.com/user \
             | grep '"login": "buixuantruongtb2-ops"'
 
-      - name: Verify B repository
-        env:
-          TOKEN: ${{ secrets.B_REPO_TOKEN }}
-        run: |
-          curl -fsS \
-            -H "Authorization: Bearer ${TOKEN}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/buixuantruongtb2-ops/WordZoo \
-            | grep '"push": true'
-
       - name: Push A to B
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
-          git remote add backup \
-            https://github.com/buixuantruongtb2-ops/WordZoo.git
-
-          git -c http.extraheader="AUTHORIZATION: bearer ${TOKEN}" \
-            push backup HEAD:main --force
+          git remote add backup "https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git"
+          git push backup HEAD:main --force
