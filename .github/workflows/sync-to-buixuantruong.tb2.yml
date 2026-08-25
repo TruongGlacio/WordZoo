@@ -1,9 +1,11 @@
-name: Sync WordZoo to Account B
+name: Sync WordZoo to B
 
 on:
   push:
     branches:
       - main
+
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -15,7 +17,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Push to Account B
+      - name: Push to B
         env:
           TOKEN: ${{ secrets.B_REPO_TOKEN }}
         run: |
