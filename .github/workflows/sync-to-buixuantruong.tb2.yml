@@ -1,0 +1,23 @@
+name: Sync WordZoo to Account B
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout A
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Account B
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          git remote add backup https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git
+          git push backup main:main --force
