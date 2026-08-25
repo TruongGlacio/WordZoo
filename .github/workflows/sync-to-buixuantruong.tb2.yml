@@ -1,20 +1,67 @@
-- name: Check B_REPO_TOKEN
-  env:
-    TOKEN: ${{ secrets.B_REPO_TOKEN }}
-  run: |
-    if [ -z "$TOKEN" ]; then
-      echo "❌ B_REPO_TOKEN is EMPTY"
-      exit 1
-    fi
+name: Sync WordZoo to B
 
-    echo "✅ B_REPO_TOKEN exists"
-    echo "Token length: ${#TOKEN}"
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
 
-- name: Test authentication to B
-  env:
-    TOKEN: ${{ secrets.B_REPO_TOKEN }}
-  run: |
-    curl -sS \
-      -H "Authorization: Bearer ${TOKEN}" \
-      -H "Accept: application/vnd.github+json" \
-      https://api.github.com/user
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout A
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check B_REPO_TOKEN
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "❌ B_REPO_TOKEN IS EMPTY"
+            exit 1
+          fi
+
+          echo "✅ B_REPO_TOKEN exists"
+          echo "Token length: ${#TOKEN}"
+
+      - name: Test access to B
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          git ls-remote \
+            "https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git"
+
+      - name: Check B_REPO_TOKEN
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "❌ B_REPO_TOKEN is EMPTY"
+            exit 1
+          fi
+
+          echo "✅ B_REPO_TOKEN exists"
+          echo "Token length: ${#TOKEN}"
+
+      - name: Test authentication to B
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          curl -sS \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/user
+
+            
+      - name: Push to B
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          git remote add backup \
+            "https://x-access-token:${TOKEN}@github.com/buixuantruongtb2-ops/WordZoo.git"
+
+          git push backup main:main --force
