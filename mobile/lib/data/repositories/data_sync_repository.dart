@@ -200,9 +200,6 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       // 6. Cache data.json vào Hive
       // ============================================================
 
-      await box.put(AppConstants.dataJsonKey, jsonStr);
-
-      await box.put(AppConstants.dataVersionKey, remoteVersion);
 
       AppLogger.i(
         'Data synced successfully: '
@@ -214,6 +211,9 @@ class DataSyncRepositoryImpl implements DataSyncRepository {
       // ============================================================
 
       await syncCategoryZip(json);
+      await box.put(AppConstants.dataJsonKey, jsonStr);
+      await box.put(AppConstants.dataVersionKey, remoteVersion);
+
     } catch (e, st) {
       AppLogger.e('syncData failed', e, st);
 
