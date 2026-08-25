@@ -56,6 +56,15 @@ jobs:
             -H "Accept: application/vnd.github+json" \
             https://api.github.com/user
 
+
+      - name: Check B repository permission
+        env:
+          TOKEN: ${{ secrets.B_REPO_TOKEN }}
+        run: |
+          curl -sS \
+            -H "Authorization: Bearer ${TOKEN}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/buixuantruongtb2-ops/WordZoo
             
       - name: Push to B
         env:
